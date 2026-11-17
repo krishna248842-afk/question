@@ -3,20 +3,20 @@
 export const BANK_MANIFEST = {
   "generatedAt": "2026-11-17",
   "bankComplete": false,
-  "totalValid": 575,
+  "totalValid": 950,
   "totalRequired": 12800,
-  "completeChapters": 1,
-  "inProgressChapters": 31,
+  "completeChapters": 2,
+  "inProgressChapters": 30,
   "totalChapters": 32,
   "stageTotals": {
-    "Class 11": 335,
+    "Class 11": 586,
     "Class 12": 36,
-    "NEET practice": 204
+    "NEET practice": 328
   },
   "diffTotals": {
-    "easy": 223,
-    "medium": 251,
-    "hard": 101
+    "easy": 376,
+    "medium": 406,
+    "hard": 168
   },
   "chapters": [
     {
@@ -60,35 +60,35 @@ export const BANK_MANIFEST = {
       "order": 2,
       "classStage": "Class 11",
       "title": "Biological Classification",
-      "validCount": 25,
+      "validCount": 400,
       "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
+      "status": "complete",
+      "reviewComplete": true,
       "stageCounts": {
-        "Class 11": 17,
+        "Class 11": 268,
         "Class 12": 0,
-        "NEET practice": 8
+        "NEET practice": 132
       },
       "diffCounts": {
-        "easy": 10,
-        "medium": 10,
-        "hard": 5
+        "easy": 163,
+        "medium": 165,
+        "hard": 72
       },
       "typeCounts": {
-        "recall": 6,
-        "concept": 10,
-        "application": 5,
-        "statement-analysis": 2,
-        "case-based": 1,
-        "data-based": 1
+        "recall": 119,
+        "concept": 131,
+        "application": 71,
+        "statement-analysis": 21,
+        "case-based": 28,
+        "data-based": 30
       },
       "sectionCounts": {
-        "c11-02-s1": 4,
-        "c11-02-s2": 5,
-        "c11-02-s3": 5,
-        "c11-02-s4": 5,
-        "c11-02-s5": 2,
-        "c11-02-s6": 4
+        "c11-02-s1": 55,
+        "c11-02-s2": 80,
+        "c11-02-s3": 85,
+        "c11-02-s4": 90,
+        "c11-02-s5": 30,
+        "c11-02-s6": 60
       }
     },
     {

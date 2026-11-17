@@ -26,4 +26,26 @@ export const PACK_REVIEWS = {
       'All items marked isVerifiedOfficialPYQ: false; supplemental taxonomic aids labelled transparently in sourceNote',
     ],
   },
+  'c11-02': {
+    reviewedCount: 400,
+    checklistComplete: true,
+    reviewedDate: '2026-11-17',
+    packs: [
+      { pack: 'pack1', range: 'q001-q050', count: 50, sections: ['c11-02-s1', 'c11-02-s2', 'c11-02-s3', 'c11-02-s4', 'c11-02-s5', 'c11-02-s6'], status: 'verified' },
+      { pack: 'pack2', range: 'q051-q100', count: 50, sections: ['c11-02-s1', 'c11-02-s2'], status: 'verified' },
+      { pack: 'pack3', range: 'q101-q150', count: 50, sections: ['c11-02-s2'], status: 'verified' },
+      { pack: 'pack4', range: 'q151-q200', count: 50, sections: ['c11-02-s2', 'c11-02-s3'], status: 'verified' },
+      { pack: 'pack5', range: 'q201-q250', count: 50, sections: ['c11-02-s3', 'c11-02-s4'], status: 'verified' },
+      { pack: 'pack6', range: 'q251-q300', count: 50, sections: ['c11-02-s4'], status: 'verified' },
+      { pack: 'pack7', range: 'q301-q350', count: 50, sections: ['c11-02-s4', 'c11-02-s5', 'c11-02-s6'], status: 'verified' },
+      { pack: 'pack8', range: 'q351-q400', count: 50, sections: ['c11-02-s6'], status: 'verified' },
+    ],
+    checksVerified: [
+      'Zero copied NCERT passages, textbook exercises, or wrapper-templated stems across all 400 original items',
+      '79,800 pairwise similarity checks verified with 0 near-duplicate flags and 0 warnings',
+      'All 6 chapter sections hit exact planned quotas (55+80+85+90+30+60 = 400)',
+      'Answer-index integrity ([100,100,100,100]) and misconception-aware explanations verified across all 8 packs',
+      'All items marked isVerifiedOfficialPYQ: false; viruses/viroids/prions/lichens and Table 2.1 distinctions cross-checked',
+    ],
+  },
 };

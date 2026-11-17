@@ -1,154 +1,20 @@
-// Chapter c11-02: Biological Classification — Verified Pack 1 (Q001–Q025 of 400, IN PROGRESS)
-import { createChapterPack } from '../packHelper.js';
+// Chapter c11-02: Biological Classification — Complete Validated 400-Question Pack (Q001–Q400)
+import { pack1 } from './c11-02/pack1.js';
+import { pack2 } from './c11-02/pack2.js';
+import { pack3 } from './c11-02/pack3.js';
+import { pack4 } from './c11-02/pack4.js';
+import { pack5 } from './c11-02/pack5.js';
+import { pack6 } from './c11-02/pack6.js';
+import { pack7 } from './c11-02/pack7.js';
+import { pack8 } from './c11-02/pack8.js';
 
-export const questions = createChapterPack('c11-02', [
-  [1, 's1', 'aristotle-earliest-scientific-criteria', 'C', 'Aristotle’s biological classification', 'recall', 'easy',
-    'Aristotle made the earliest scientific attempt at classification by dividing plants by habit and sorting animals into two groups based on',
-    ['presence or absence of red blood', 'presence or absence of a true coelom', 'radial versus bilateral body symmetry', 'mode of nitrogenous waste excretion'],
-    'Aristotle used simple morphological characters to group plants into trees, shrubs, and herbs, and divided animals into those possessing red blood (Enaima) and those lacking red blood (Anaima).',
-    'NCERT Class 11 Ch.2 — Section 2.0: Aristotle’s earliest scientific basis of classification'],
-
-  [2, 's1', 'linnaeus-two-kingdom-flaws', 'C', 'Limitations of Linnaeus’s two-kingdom system', 'concept', 'medium',
-    'Which triad of fundamental biological distinctions failed to be separated under Linnaeus’s two-kingdom system (Plantae and Animalia)?',
-    ['Eukaryotes versus prokaryotes, unicellular versus multicellular forms, and photosynthetic versus non-photosynthetic fungi', 'Flowering herbs versus woody trees, terrestrial versus aquatic animals, and males versus females', 'Vertebrates with jaws versus jawless fishes, insects versus spiders, and mosses versus liverworts', 'Autotrophic dicots versus monocots, placental mammals versus birds, and freshwater versus marine algae'],
-    'By placing bacteria, cyanobacteria, fungi, algae, bryophytes, and vascular plants all inside Plantae (solely on cell-wall presence), the two-kingdom scheme failed to distinguish prokaryotes from eukaryotes, unicells from multicells, and green algae from heterotrophic fungi.',
-    'NCERT Class 11 Ch.2 — Section 2.0: Drawbacks of Two-Kingdom classification'],
-
-  [3, 's1', 'whittaker-five-kingdom-criteria', 'C', 'Whittaker’s 1969 five-kingdom criteria', 'recall', 'easy',
-    'Which complete set of five main criteria formed the foundation of R. H. Whittaker’s (1969) five-kingdom classification?',
-    ['Cell structure, body organisation, mode of nutrition, reproduction, and phylogenetic relationships', 'Habitat altitude, leaf venation, blood pigment colour, seed dormancy, and lifespan', 'Gram staining, flagellar count, chromosome number, floral symmetry, and geographical range', 'Spore coat thickness, locomotion speed, seasonal breeding, vocalisation, and body mass'],
-    'Whittaker (1969) separated Monera, Protista, Fungi, Plantae, and Animalia using five core criteria: cell structure, body (thallus) organisation, mode of nutrition, reproduction, and phylogenetic relationships.',
-    'NCERT Class 11 Ch.2 — Section 2.0 & Table 2.1: Main criteria of Whittaker’s five-kingdom system'],
-
-  [4, 's1', 'table-2-1-cell-wall-comparison', 'N', 'Cell-wall chemistry across five kingdoms', 'data-based', 'medium',
-    'Comparing NCERT Table 2.1 across kingdoms, which match between kingdom and characteristic cell-wall composition is strictly accurate?',
-    ['Monera — noncellulosic (polysaccharide + amino acid); Fungi — present with chitin; Animalia — absent', 'Monera — cellulosic; Protista — uniformly chitinous; Fungi — peptidoglycan wall', 'Monera — absent in all members; Fungi — cellulosic only; Plantae — chitinous wall', 'Protista — present in every species; Fungi — absent; Plantae — polysaccharide + amino acid'],
-    'In Table 2.1, Monera possess noncellulosic walls made of polysaccharide plus amino acid (peptidoglycan, except Mycoplasma), Protista have walls only in some groups, Fungi possess chitinous walls without cellulose, Plantae have cellulosic walls, and Animalia lack walls.',
-    'NCERT Class 11 Ch.2 — Table 2.1: Characteristics of the Five Kingdoms (cell wall)'],
-
-  [5, 's2', 'archaebacteria-cell-wall-extremes', 'C', 'Survival of archaebacteria in harsh habitats', 'concept', 'easy',
-    'What distinctive structural trait enables archaebacteria—halophiles, thermoacidophiles, and methanogens—to thrive in extreme environments lethal to most eubacteria?',
-    ['A specialised cell wall structure (coupled with unique membrane lipids) differing from eubacterial peptidoglycan', 'Presence of a double-membraned nucleus shielding circular DNA from osmotic shock', 'Thick multilayered cellulose-pectin walls reinforced with suberin and lignin', 'Compartmentalisation of oxidative phosphorylation inside true mitochondria'],
-    'Archaebacteria differ fundamentally from other bacteria in possessing a different cell wall structure (lacking typical murein/peptidoglycan), which accounts for their survival in extreme salty regions, hot springs, and anaerobic marshes.',
-    'NCERT Class 11 Ch.2 — Section 2.1.1 Archaebacteria: cell wall feature enabling extreme survival'],
-
-  [6, 's2', 'methanogens-ruminant-biogas', 'C', 'Habitat and function of methanogens', 'application', 'easy',
-    'Cattle dung serves as an effective feedstock for rural biogas (methane) generation primarily because the gut of ruminant animals such as cows and buffaloes harbours anaerobic',
-    ['methanogenic archaebacteria', 'thermoacidophilic cyanobacteria', 'chemosynthetic nitrifying bacilli', 'halophilic mycoplasmas'],
-    'Methanogens are obligate anaerobic archaebacteria inhabiting marshy habitats and the rumen/gut of cows and buffaloes, where they generate methane (biogas) from dung.',
-    'NCERT Class 11 Ch.2 — Section 2.1.1: Methanogens in ruminant gut and biogas production'],
-
-  [7, 's2', 'cyanobacteria-heterocyst-nostoc', 'C', 'Atmospheric nitrogen fixation in Nostoc and Anabaena', 'recall', 'easy',
-    'Filamentous cyanobacteria such as Nostoc and Anabaena possess chlorophyll a resembling green plants AND fix atmospheric dinitrogen inside specialised thick-walled cells called',
-    ['heterocysts', 'hormogonia', 'conidiophores', 'trichocysts'],
-    'Cyanobacteria (blue-green algae) are oxygenic photosynthetic autotrophs carrying chlorophyll a; filamentous forms like Nostoc and Anabaena enclosed in gelatinous sheaths fix N2 inside specialised cells termed heterocysts.',
-    'NCERT Class 11 Ch.2 — Section 2.1.2 Eubacteria: Cyanobacteria and heterocysts'],
-
-  [8, 's2', 'chemosynthetic-bacteria-nutrient-recycling', 'C', 'Energy source and ecological role of chemosynthetic autotrophs', 'concept', 'medium',
-    'How do chemosynthetic autotrophic bacteria generate ATP for food manufacture, and which biogeochemical cycles do they strongly support?',
-    ['By oxidising inorganic substances such as nitrates, nitrites, and ammonia, playing a major role in recycling N, P, Fe, and S', 'By splitting water using bacteriorhodopsin and chlorophyll b inside stromal lamellae', 'By engulfing decaying wood particles via phagocytosis inside acidic food vacuoles', 'By fermenting host blood haemoglobin strictly inside vertebrate erythrocytes'],
-    'Chemosynthetic autotrophic bacteria capture energy liberated from oxidising inorganic substrates (nitrites, nitrates, ammonia, iron/sulphur compounds) to drive ATP production and cycle nitrogen, phosphorus, iron, and sulphur.',
-    'NCERT Class 11 Ch.2 — Section 2.1.2: Chemosynthetic autotrophic bacteria'],
-
-  [9, 's2', 'mycoplasma-triple-hallmark', 'N', 'Diagnostic profile of Mycoplasma', 'statement-analysis', 'medium',
-    'Evaluate three statements regarding Mycoplasma: (I) They completely lack a cell wall. (II) They represent the smallest known free-living cells. (III) They can survive without oxygen and cause diseases in both animals and plants. Which are true?',
-    ['Statements I, II, and III are all true', 'Statements I and II only', 'Statements I and III only', 'Statements II and III only'],
-    'Mycoplasma completely lack a cell wall (rendering them pleomorphic and insensitive to wall-targeting beta-lactam antibiotics), are the smallest living cells known, can survive anaerobically without oxygen, and include many animal and plant pathogens.',
-    'NCERT Class 11 Ch.2 — Section 2.1.2: Mycoplasma characteristics'],
-
-  [10, 's3', 'diatoms-soapbox-silica-diatomaceous-earth', 'C', 'Cell wall architecture of diatoms (Chrysophytes)', 'concept', 'medium',
-    'Why do dead diatoms leave massive ocean-floor deposits of gritty "diatomaceous earth" useful in polishing and filtration of oils and syrups?',
-    ['Their two thin overlapping soap-box-like cell wall shells are embedded with nearly indestructible silica', 'Their pellicle consists of flexible cross-linked elastin resistant to bacterial proteases', 'Their walls accumulate heavy layers of chitin and calcium oxalate during mitosis', 'Their spores secrete lignified sporopollenin coats across deep benthic vents'],
-    'In diatoms (chief producers in oceans, grouped with golden algae/desmids in Chrysophytes), the cell walls form two thin overlapping shells fitting like a soap box and impregnated with indestructible silica, accumulating over billions of years as diatomaceous earth.',
-    'NCERT Class 11 Ch.2 — Section 2.2.1 Chrysophytes: siliceous diatom walls and diatomaceous earth'],
-
-  [11, 's3', 'dinoflagellates-gonyaulax-red-tide', 'C', 'Flagellation and red tides in dinoflagellates', 'application', 'medium',
-    'Rapid population explosion of the marine dinoflagellate Gonyaulax turns coastal seawater reddish ("red tides") and kills marine fishes mainly because',
-    ['dense populations release potent toxins into surrounding water while swimming via one longitudinal and one transverse flagellum', 'their silica frustules mechanically clog every gill slit without releasing chemicals', 'they consume 100% of dissolved nitrogen through heterocyst fixation at noon', 'they invade fish red blood cells directly as non-motile intracellular sporozoans'],
-    'Dinoflagellates bear stiff outer cellulose plates and typically two flagella (one longitudinal, one transverse in a furrow between wall plates); rapid multiplication of red forms like Gonyaulax creates red tides whose released toxins kill marine life.',
-    'NCERT Class 11 Ch.2 — Section 2.2.2 Dinoflagellates: flagellar arrangement and Gonyaulax red tides'],
-
-  [12, 's3', 'euglenoids-pellicle-mixotrophy', 'C', 'Flexible pellicle and dual nutrition in Euglena', 'concept', 'medium',
-    'A freshwater protist placed in bright sunlight photosynthesises using pigments identical to higher plants, yet switches to preying on smaller organisms when kept in darkness and bends smoothly because it replaces a cell wall with a protein-rich pellicle. Identify the group.',
-    ['Euglenoids (exemplified by Euglena)', 'Slime moulds (saprophytic protists)', 'Chrysophytes (desmids and diatoms)', 'Ciliated protozoans (exemplified by Paramecium)'],
-    'Euglenoids inhabit stagnant fresh water, possess a flexible protein-rich layer (pellicle) instead of a cell wall, bear two unequal flagella (one short, one long), and behave mixotrophically—photosynthetic in light and heterotrophic predators in dark.',
-    'NCERT Class 11 Ch.2 — Section 2.2.3 Euglenoids: pellicle and light-dependent nutrition shift'],
-
-  [13, 's3', 'slime-mould-plasmodium-vs-spores', 'N', 'Life-cycle response of slime moulds to environmental conditions', 'application', 'hard',
-    'Contrast the behaviour of acellular slime moulds under favourable moist nutrient abundance versus harsh unfavourable conditions.',
-    ['Favourable conditions yield a multinucleate creeping aggregation (plasmodium), whereas unfavourable conditions trigger fruiting bodies bearing spores with true resistant walls', 'Favourable conditions produce silica-shelled cysts, whereas unfavourable conditions yield parasitic blood sporozoites', 'Favourable conditions form chitinous basidiocarps, whereas unfavourable conditions induce heterocyst differentiation', 'Both conditions maintain solitary flagellated cells dispersed exclusively by aquatic insects'],
-    'Note the distinction between slime-mould plasmodium and malarial Plasmodium: saprophytic slime moulds form an expansive feeding plasmodium under suitable conditions and differentiate during stress into fruiting bodies carrying air-dispersed spores equipped with extremely resistant true walls.',
-    'NCERT Class 11 Ch.2 — Section 2.2.4 Slime Moulds: plasmodium and true-walled air-dispersed spores'],
-
-  [14, 's3', 'protozoans-four-groups-matching', 'C', 'Matching major protozoan lineages and representatives', 'recall', 'medium',
-    'Select the option that accurately pairs all four major groups of protozoans with a diagnostic feature or disease example.',
-    ['Amoeboid — silica shells in marine forms / Entamoeba; Flagellated — Trypanosoma (sleeping sickness); Ciliated — Paramecium with gullet; Sporozoans — Plasmodium (malaria)', 'Amoeboid — Trypanosoma; Flagellated — Paramecium; Ciliated — Entamoeba; Sporozoans — Euglena', 'Amoeboid — coordinated cilia; Flagellated — infectious spore stage; Ciliated — pseudopodia; Sporozoans — pellicle gullet', 'Amoeboid — Gonyaulax; Flagellated — Nostoc; Ciliated — Amoeba; Sporozoans — Albugo'],
-    'Protozoans divide into amoeboid (Amoeba with pseudopodia, marine silica-shelled forms, parasitic Entamoeba), flagellated (Trypanosoma causing sleeping sickness), ciliated (Paramecium sweeping prey into its gullet), and sporozoans (Plasmodium with infectious spore-like stage).',
-    'NCERT Class 11 Ch.2 — Section 2.2.5 Protozoans: four major groups and examples'],
-
-  [15, 's4', 'fungi-sexual-cycle-dikaryophase', 'N', 'Sequence of fungal sexual cycle and dikaryophase', 'concept', 'hard',
-    'In the fungal sexual cycle (plasmogamy → karyogamy → meiosis in zygote producing haploid spores), which two classes characteristically exhibit an intervening dikaryophase (n + n, two nuclei per cell) before karyogamy occurs?',
-    ['Ascomycetes and Basidiomycetes', 'Phycomycetes and Deuteromycetes', 'Phycomycetes and Chrysophytes', 'Deuteromycetes and Euglenoids'],
-    'Whereas diploid formation follows plasmogamy promptly in many lower fungi, in Ascomycetes and Basidiomycetes an extended dikaryotic stage (n + n, dikaryon) intervenes between plasmogamy and delayed karyogamy, followed by reductional meiosis in asci or basidia.',
-    'NCERT Class 11 Ch.2 — Section 2.3 Kingdom Fungi: three-step sexual cycle and dikaryophase'],
-
-  [16, 's4', 'phycomycetes-coenocytic-examples', 'C', 'Diagnostic traits and genera of Phycomycetes', 'recall', 'easy',
-    'An aseptate, coenocytic mycelium producing endogenous asexual spores (motile zoospores or non-motile aplanospores) inside a sporangium is diagnostic of Phycomycetes, represented by',
-    ['Mucor, Rhizopus (bread mould), and Albugo (parasitic fungus on mustard)', 'Aspergillus, Claviceps, and Neurospora', 'Agaricus, Ustilago (smut), and Puccinia (rust)', 'Alternaria, Colletotrichum, and Trichoderma'],
-    'Phycomycetes possess aseptate and coenocytic (multinucleate) mycelium, generate endogenous zoospores/aplanospores inside sporangia, and encompass Mucor, Rhizopus, and the mustard white-rust parasite Albugo.',
-    'NCERT Class 11 Ch.2 — Section 2.3.1 Phycomycetes: coenocytic mycelium, endogenous spores, and examples'],
-
-  [17, 's4', 'ascomycetes-vs-basidiomycetes-spore-origin', 'N', 'Endogenous versus exogenous spore origin in higher fungi', 'concept', 'hard',
-    'Contrast spore origin carefully between Ascomycetes (sac fungi) and Basidiomycetes (club fungi).',
-    ['Ascomycetes form exogenous asexual conidia and endogenous sexual ascospores, whereas Basidiomycetes lack common asexual spores and form four exogenous sexual basidiospores per basidium', 'Ascomycetes form endogenous conidia and exogenous ascospores, whereas Basidiomycetes form endogenous basidiospores inside sporangia', 'Both classes form exclusively motile biflagellate zoospores inside aseptate coenocytic hyphae', 'Basidiomycetes lack dikaryotisation entirely, whereas Ascomycetes lack fruiting bodies'],
-    'A classic NEET trap: in Ascomycetes (Aspergillus, Claviceps, Neurospora, Penicillium, yeast, morels, truffles), asexual conidia arise EXOGENOUSLY on conidiophores while sexual ascospores form ENDOGENOUSLY in sac-like asci; in Basidiomycetes (Agaricus, Ustilago, Puccinia), 4 haploid basidiospores arise EXOGENOUSLY on each basidium.',
-    'NCERT Class 11 Ch.2 — Sections 2.3.2 & 2.3.3: Exogenous vs endogenous spore origin'],
-
-  [18, 's4', 'deuteromycetes-imperfect-fungi-reason', 'C', 'Why Deuteromycetes are termed imperfect fungi', 'concept', 'easy',
-    'Alternaria, Colletotrichum, and Trichoderma are placed in Deuteromycetes ("imperfect fungi") and possess septate branched mycelia reproducing solely via asexual conidia because',
-    ['only their asexual or vegetative phases are known; once sexual stages are found they are transferred mostly to Ascomycetes or Basidiomycetes', 'their cell walls lack chitin completely and collapse in aerobic soil', 'they fail to decompose litter or participate in mineral cycling', 'they consist solely of unicellular prokaryotic cells dividing by binary fission'],
-    'Deuteromycetes earn the name imperfect fungi because sexual (perfect) stages are undiscovered/absent; discovery of sexual linkage routinely moves them into Ascomycetes or Basidiomycetes. Many are litter decomposers aiding mineral cycling.',
-    'NCERT Class 11 Ch.2 — Section 2.3.4 Deuteromycetes: imperfect fungi and examples'],
-
-  [19, 's4', 'neurospora-and-edible-fungi-applications', 'C', 'Research model and edible delicacies among Ascomycetes', 'application', 'easy',
-    'Which member of Ascomycetes is used extensively in biochemical and genetic research, and which fruiting bodies from the same class are prized as edible delicacies?',
-    ['Neurospora for biochemical and genetic research; morels and truffles as edible delicacies', 'Ustilago for biochemical genetics; Albugo and Puccinia as edible delicacies', 'Alternaria for biochemical genetics; Rhizopus and Claviceps as edible delicacies', 'Colletotrichum for genetic mapping; Mucor and Trichoderma as edible delicacies'],
-    'Neurospora (pink bread mould, the "Drosophila of plant kingdom") is used extensively in biochemical and genetic studies, while many members of Ascomycetes such as morels (Morchella) and truffles (Tuber) are prized edible delicacies.',
-    'NCERT Class 11 Ch.2 — Section 2.3.2: Neurospora, morels, and truffles'],
-
-  [20, 's5', 'partially-heterotrophic-plants-bladderwort-cuscuta', 'C', 'Nutritional exceptions retained inside Kingdom Plantae', 'recall', 'easy',
-    'Although Kingdom Plantae consists predominantly of chlorophyll-bearing eukaryotic autotrophs, a few members are partially heterotrophic or parasitic—exemplified specifically by',
-    ['insectivorous Bladderwort and Venus fly trap, and the parasitic plant Cuscuta', 'saprophytic Agaricus and Mucor, and mixotrophic Euglena', 'chemosynthetic Nitrosomonas and parasitic Trypanosoma', 'holozoic Hydra and Planaria possessing glycogen reserves'],
-    'Section 2.4 notes that within Kingdom Plantae, insectivorous plants such as Bladderwort (Utricularia) and Venus fly trap (Dionaea) are partially heterotrophic, while Cuscuta (dodder) is a parasitic angiosperm.',
-    'NCERT Class 11 Ch.2 — Section 2.4 Kingdom Plantae: insectivorous and parasitic examples'],
-
-  [21, 's5', 'animalia-diagnostic-summary', 'C', 'Diagnostic profile of Kingdom Animalia', 'concept', 'medium',
-    'Which combination distinguishes members of Kingdom Animalia cleanly from both Fungi and Plantae?',
-    ['Multicellular wall-less eukaryotes with holozoic ingestion into an internal cavity, glycogen/fat storage, determinate adult shape, and neuromotor response in higher forms', 'Multicellular chitin-walled eukaryotes practicing extracellular absorptive nutrition and storing starch', 'Unicellular pellicle-covered organisms alternating between autotrophy in light and predation in dark', 'Indeterminately growing eukaryotes storing paramylon and lacking sexual embryogenesis'],
-    'Kingdom Animalia comprises heterotrophic multicellular eukaryotes lacking cell walls, digesting ingested food in an internal cavity (holozoic), storing reserves as glycogen or fat, growing into a definite adult shape and size, and showing elaborate sensory-neuromotor mechanisms in higher forms.',
-    'NCERT Class 11 Ch.2 — Section 2.5 Kingdom Animalia: diagnostic hallmarks'],
-
-  [22, 's6', 'virus-pioneers-ivanowsky-beijerinck-stanley', 'N', 'Landmark discoveries of Ivanowsky, Beijerinck, and Stanley', 'statement-analysis', 'medium',
-    'Verify the historical milestones in virology: (I) Dmitri Ivanowsky (1892) showed tobacco mosaic causal agents pass through bacteria-proof filters. (II) M. W. Beijerinck (1898) coined Contagium vivum fluidum. (III) W. M. Stanley (1935) crystallised viruses, showing crystals consist largely of proteins. Which are accurate?',
-    ['Statements I, II, and III are all accurate', 'Statements I and II only', 'Statements II and III only', 'Statements I and III only'],
-    'Ivanowsky (1892) proved tobacco mosaic agents are smaller than bacteria by passing through bacteria-proof filters; Beijerinck (1898) showed infected plant extract causes infection ("Contagium vivum fluidum"); Stanley (1935) crystallised TMV, proving crystals consist largely of proteins.',
-    'NCERT Class 11 Ch.2 — Section 2.6: Historical virology discoveries'],
-
-  [23, 's6', 'viral-genome-rule-plant-animal-phage', 'N', 'Nucleic acid distribution across host categories of viruses', 'concept', 'hard',
-    'No virus ever contains both RNA and DNA together. Which generalisation correctly matches host group with typical viral genetic material?',
-    ['Plant-infecting viruses generally carry ssRNA; animal viruses carry ssRNA, dsRNA, or dsDNA; bacteriophages usually carry dsDNA', 'Plant-infecting viruses invariably carry dsDNA; bacteriophages invariably carry naked ssRNA without a capsid', 'Animal viruses carry strictly circular viroid RNA lacking protein coats; plant viruses carry only prions', 'Every known virus carries identical double-stranded RNA enclosed inside a chitinous envelope'],
-    'A virus is a nucleoprotein with infectious genetic material (either RNA OR DNA, never both) protected by a capsid built of capsomeres: plant viruses generally have ssRNA, animal viruses have ssRNA, dsRNA, or dsDNA, and bacteriophages are usually dsDNA viruses.',
-    'NCERT Class 11 Ch.2 — Section 2.6: Viral nucleic acid types across plants, animals, and bacteriophages'],
-
-  [24, 's6', 'viroids-vs-prions-comparison', 'N', 'Comparing viroids and prions on composition and diseases', 'case-based', 'hard',
-    'A pathology panel contrasts Agent X (discovered by T. O. Diener in 1971; low-molecular-weight free infectious RNA lacking any protein coat; causes potato spindle tuber disease) with Agent Y (similar in size to viruses; composed solely of abnormally folded protein lacking nucleic acid; causes BSE in cattle and Creutzfeldt–Jakob disease in humans). Identify X and Y.',
-    ['Agent X: Viroid; Agent Y: Prion', 'Agent X: Prion; Agent Y: Bacteriophage', 'Agent X: TMV virion; Agent Y: Mycoplasma', 'Agent X: Viroid; Agent Y: Lichen phycobiont'],
-    'Viroids (T. O. Diener, 1971) are naked low-molecular-weight infectious RNAs lacking a capsid (causing potato spindle tuber disease), whereas prions are infectious abnormally folded proteins causing neurological disorders such as bovine spongiform encephalopathy (BSE, mad cow disease) and its analogous human variant Creutzfeldt–Jakob disease (CJD).',
-    'NCERT Class 11 Ch.2 — Section 2.6: Viroids and Prions'],
-
-  [25, 's6', 'lichen-phycobiont-mycobiont-so2', 'C', 'Partner roles and pollution indication in lichens', 'application', 'easy',
-    'In a lichen thallus, how do the phycobiont and mycobiont divide labour, and what does the total absence of lichens across an industrial city indicate?',
-    ['The autotrophic algal phycobiont prepares food while the heterotrophic fungal mycobiont provides shelter and absorbs water and mineral nutrients; absence signals severe air pollution', 'The fungal phycobiont fixes carbon while the algal mycobiont digests insects; absence signals pristine oxygen-rich air', 'Both partners are prokaryotic archaebacteria producing methane; absence signals excessive soil nitrogen', 'The algal partner causes root rust on the fungus; absence signals low photoperiod duration'],
-    'Lichens are mutually intimate symbioses between an autotrophic algal component (phycobiont, synthesising food) and a heterotrophic fungal component (mycobiont, providing shelter and absorbing water/minerals). Because they do not grow in polluted areas (especially SO2-rich air), they are very good pollution indicators.',
-    'NCERT Class 11 Ch.2 — Section 2.6: Lichens — phycobiont, mycobiont, and pollution indication'],
-]);
+export const questions = [
+  ...pack1,
+  ...pack2,
+  ...pack3,
+  ...pack4,
+  ...pack5,
+  ...pack6,
+  ...pack7,
+  ...pack8,
+];
