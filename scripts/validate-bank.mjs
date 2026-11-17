@@ -5,6 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
   CHAPTER_TARGET,
+  ARCHIVED_SYLLABUS_CHAPTERS,
   QUALITY_TOLERANCES,
   SYLLABUS_CHAPTERS,
   SYLLABUS_META,
@@ -140,7 +141,7 @@ async function main() {
     for (const entry of entries) {
       if (entry.isFile() && entry.name.endsWith('.js')) {
         const id = entry.name.replace(/\.js$/, '');
-        if (!seenChapterIds.has(id)) {
+        if (!seenChapterIds.has(id) && !ARCHIVED_SYLLABUS_CHAPTERS.some(ch => ch.chapterId === id)) {
           qualityErrors.push(`Unexpected chapter pack file not in syllabus inventory: ${entry.name}`);
         }
       }
@@ -182,7 +183,7 @@ async function main() {
     const diffCounts = { easy: 0, medium: 0, hard: 0 };
     const typeCounts = Object.fromEntries(VALID_QUESTION_TYPES.map((t) => [t, 0]));
     const answerCounts = [0, 0, 0, 0];
-    const stageCounts = { 'Class 11': 0, 'Class 12': 0, 'NEET practice': 0 };
+    const stageCounts = { 'Class 11': 0, 'NEET practice': 0 };
 
     const preparedForSimilarity = [];
     let consecutiveAnswer = -1;
@@ -226,7 +227,7 @@ async function main() {
         qualityErrors.push(`${label}: classStage "${q.classStage}" must match chapter classStage "${ch.classStage}"`);
         recordOk = false;
       }
-      if ((q.stage === 'Class 11' || q.stage === 'Class 12') && q.stage !== ch.classStage) {
+      if (q.stage === 'Class 11' && q.stage !== ch.classStage) {
         qualityErrors.push(`${label}: stage "${q.stage}" conflicts with chapter classStage "${ch.classStage}"`);
         recordOk = false;
       }

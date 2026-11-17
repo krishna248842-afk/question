@@ -39,6 +39,7 @@ import {
   X,
 } from 'lucide-react';
 import {
+  ARCHIVED_CHAPTER_BY_ID,
   CHAPTER_BY_ID,
   CHAPTER_TARGET,
   SYLLABUS_CHAPTERS,
@@ -66,6 +67,8 @@ import {
   saveStudyNote,
 } from './lib/storage.js';
 import {
+  activePersonalQuestions,
+  activeStudyIds,
   computeProgressSummary,
   filterQuestions,
   getChapterCompletionMeta,
@@ -84,7 +87,6 @@ const QUESTION_TYPE_LABELS = {
 
 const STAGE_DISPLAY = {
   'Class 11': 'Class 11 Biology',
-  'Class 12': 'Class 12 Biology',
   'NEET practice': 'Original NEET-pattern practice',
 };
 
@@ -102,7 +104,6 @@ export default function App() {
   const [difficulty, setDifficulty] = useState('all');
   const [search, setSearch] = useState('');
   const [visibleLimit, setVisibleLimit] = useState(PAGE_SIZE);
-  const [syllabusClassFilter, setSyllabusClassFilter] = useState('All');
 
   // Lazy-loaded verified curriculum bank state
   const [loadedVerified, setLoadedVerified] = useState([]);
@@ -210,12 +211,16 @@ export default function App() {
 
   const activeChapter = chapterId !== 'all' ? CHAPTER_BY_ID.get(chapterId) : null;
 
+  const activePersonal = useMemo(() => activePersonalQuestions(study.customQuestions), [study.customQuestions]);
+  const activeBookmarks = useMemo(() => activeStudyIds(study.bookmarks, activePersonal), [study.bookmarks, activePersonal]);
+  const archivedPersonalCount = study.customQuestions.length - activePersonal.length;
+
   // Filtered question list
   const combinedPool = useMemo(() => {
-    if (page === 'My questions') return study.customQuestions;
+    if (page === 'My questions') return activePersonal;
     if (page === 'Question bank') return loadedVerified;
-    return [...study.customQuestions, ...loadedVerified];
-  }, [page, study.customQuestions, loadedVerified]);
+    return [...activePersonal, ...loadedVerified];
+  }, [page, activePersonal, loadedVerified]);
 
   const filteredQuestions = useMemo(
     () =>
@@ -246,8 +251,8 @@ export default function App() {
 
   // Study statistics (verified progress + separate personal count)
   const overallProgress = useMemo(
-    () => computeProgressSummary(study.answered),
-    [study.answered]
+    () => computeProgressSummary(study.answered, activeStudyIds(Object.keys(study.answered), activePersonal)),
+    [study.answered, activePersonal]
   );
 
   const chapterAnswerStats = useMemo(() => {
@@ -321,7 +326,7 @@ export default function App() {
       setBankLoading(true);
       const allVerified = await loadChapterPacks(SYLLABUS_CHAPTERS.map((c) => c.chapterId));
       setBankLoading(false);
-      const wrongQueue = [...study.customQuestions, ...allVerified].filter(
+      const wrongQueue = [...activePersonal, ...allVerified].filter(
         (q) => study.answered[q.id]?.correct === false
       );
       if (!wrongQueue.length) {
@@ -333,7 +338,7 @@ export default function App() {
       setBankLoading(false);
       notify('Could not prepare wrong-answer retry queue.');
     }
-  }, [study.answered, study.customQuestions, startPracticeSession, notify]);
+  }, [study.answered, activePersonal, startPracticeSession, notify]);
 
   const handleSelectAnswer = useCallback(
     async (displayIdx) => {
@@ -619,18 +624,12 @@ export default function App() {
     const q = noteSearch.trim().toLowerCase();
     if (!q) return study.notes;
     return study.notes.filter((n) => {
-      const chTitle = n.chapterId !== 'all' ? CHAPTER_BY_ID.get(n.chapterId)?.title || '' : '';
+      const chTitle = n.chapterId !== 'all' ? (CHAPTER_BY_ID.get(n.chapterId) || ARCHIVED_CHAPTER_BY_ID.get(n.chapterId))?.title || '' : '';
       return `${n.title} ${n.text} ${chTitle}`.toLowerCase().includes(q);
     });
   }, [study.notes, noteSearch]);
 
-  const visibleSyllabusChapters = useMemo(
-    () =>
-      SYLLABUS_CHAPTERS.filter(
-        (ch) => syllabusClassFilter === 'All' || ch.classStage === syllabusClassFilter
-      ),
-    [syllabusClassFilter]
-  );
+  const visibleSyllabusChapters = SYLLABUS_CHAPTERS;
 
   const isListView = [
     'Question bank',
@@ -690,7 +689,7 @@ export default function App() {
             icon={Bookmark}
             label="Bookmarks"
             active={page === 'Bookmarks'}
-            badge={study.bookmarks.length ? String(study.bookmarks.length) : undefined}
+            badge={activeBookmarks.size ? String(activeBookmarks.size) : undefined}
             onClick={() => navigatePage('Bookmarks')}
           />
           <NavItem
@@ -711,7 +710,7 @@ export default function App() {
             icon={UserCheck}
             label="My questions"
             active={page === 'My questions'}
-            badge={study.customQuestions.length ? String(study.customQuestions.length) : undefined}
+            badge={activePersonal.length ? String(activePersonal.length) : undefined}
             onClick={() => {
               clearAllFilters();
               navigatePage('My questions');
@@ -726,7 +725,7 @@ export default function App() {
           />
         </nav>
 
-        <div className="nav-label stage-label">THREE STUDY STAGES</div>
+        <div className="nav-label stage-label">CLASS 11 STUDY TRACKS</div>
         <nav className="stage-nav" aria-label="Study stages">
           <NavItem
             icon={Flower2}
@@ -734,13 +733,6 @@ export default function App() {
             active={page === 'Question bank' && stage === 'Class 11'}
             badge={String(BANK_MANIFEST.stageTotals['Class 11'])}
             onClick={() => openStage('Class 11')}
-          />
-          <NavItem
-            icon={Leaf}
-            label="Class 12 Biology"
-            active={page === 'Question bank' && stage === 'Class 12'}
-            badge={String(BANK_MANIFEST.stageTotals['Class 12'])}
-            onClick={() => openStage('Class 12')}
           />
           <NavItem
             icon={Target}
@@ -915,8 +907,8 @@ export default function App() {
                   label="Questions answered"
                   value={String(overallProgress.attempted)}
                   hint={
-                    study.customQuestions.length
-                      ? `+ ${study.customQuestions.length} personal item(s) separate`
+                    activePersonal.length
+                      ? `+ ${activePersonal.length} personal item(s) separate`
                       : 'Saved in device IndexedDB'
                   }
                   tone="blue"
@@ -944,14 +936,14 @@ export default function App() {
               <div className="section-heading">
                 <div>
                   <h3>Choose your study stage</h3>
-                  <p>Three clearly separated study tracks across the 32-chapter NCERT Biology syllabus.</p>
+                  <p>Class 11 biology and original NEET-pattern practice across 19 chapters.</p>
                 </div>
                 <button
                   type="button"
                   className="text-button"
                   onClick={() => navigatePage('Syllabus')}
                 >
-                  Full 32-chapter progress table <ArrowRight size={15} />
+                  Full 19-chapter progress table <ArrowRight size={15} />
                 </button>
               </div>
 
@@ -967,18 +959,8 @@ export default function App() {
                   onClick={() => openStage('Class 11')}
                 />
                 <StageCard
-                  tone="lavender"
-                  number="02"
-                  label="CLASS 12 BIOLOGY · 13 CHAPTERS"
-                  title="Master core mechanisms"
-                  count={BANK_MANIFEST.stageTotals['Class 12']}
-                  statusNote="13 chapters in progress"
-                  desc="Reproduction, Mendelian & molecular genetics, evolution, human health, microbes, biotechnology & ecology."
-                  onClick={() => openStage('Class 12')}
-                />
-                <StageCard
                   tone="peach"
-                  number="03"
+                  number="02"
                   label="ORIGINAL NEET-PATTERN PRACTICE"
                   title="Train analytical reasoning"
                   count={BANK_MANIFEST.stageTotals['NEET practice']}
@@ -1000,7 +982,7 @@ export default function App() {
                       className="text-button"
                       onClick={() => navigatePage('Syllabus')}
                     >
-                      All 32 <ChevronRight size={15} />
+                      All 19 <ChevronRight size={15} />
                     </button>
                   </div>
                   <div className="topic-list">
@@ -1116,28 +1098,15 @@ export default function App() {
                   <div className="eyebrow">
                     <FolderCheck size={14} /> {SYLLABUS_META.editionLabel.toUpperCase()}
                   </div>
-                  <h1>32-chapter syllabus &amp; 400-question gate</h1>
+                  <h1>Class 11 syllabus &amp; 400-question gate</h1>
                   <p className="subhead">
                     Overall bank complete: <b>{BANK_MANIFEST.bankComplete ? 'Yes' : 'No (In progress)'}</b>{' '}
                     · {BANK_MANIFEST.totalValid.toLocaleString()} of{' '}
                     {BANK_MANIFEST.totalRequired.toLocaleString()} automatically checked records (
-                    {BANK_MANIFEST.completeChapters}/32 chapters at 400/400).
+                    {BANK_MANIFEST.completeChapters}/{BANK_MANIFEST.totalChapters} chapters at 400/400).
                   </p>
                 </div>
-                <div className="seg-tabs" role="tablist" aria-label="Filter syllabus by class">
-                  {['All', 'Class 11', 'Class 12'].map((tab) => (
-                    <button
-                      key={tab}
-                      type="button"
-                      role="tab"
-                      aria-selected={syllabusClassFilter === tab}
-                      className={syllabusClassFilter === tab ? 'active' : ''}
-                      onClick={() => setSyllabusClassFilter(tab)}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
+
               </div>
 
               <div className="panel migration-panel">
@@ -1158,20 +1127,12 @@ export default function App() {
                   <div>
                     <b>Retired rationalised-out chapters (documented):</b>
                     <ul>
-                      {SYLLABUS_MIGRATION.retiredChapters.slice(0, 2).map((item) => (
+                      {SYLLABUS_MIGRATION.retiredChapters.filter(item => item.formerClassStage === 'Class 11').map((item) => (
                         <li key={item.title}>
                           <b>{item.title}</b> (former {item.formerClassStage} Ch.{' '}
                           {item.formerNcertNumber}) — {item.reason}
                         </li>
                       ))}
-                      <li>
-                        Also confirmed excluded per rationalised NCERT &amp; NMC NEET (UG):{' '}
-                        <i>
-                          Transport in Plants, Mineral Nutrition, Reproduction in Organisms, Strategies
-                          for Enhancement in Food Production
-                        </i>
-                        .
-                      </li>
                     </ul>
                   </div>
                 </div>
@@ -1286,7 +1247,7 @@ export default function App() {
                   <h1>{page === 'Question bank' ? 'Biology question bank' : page}</h1>
                   <p className="subhead">
                     {page === 'My questions'
-                      ? 'Create, edit, and practice your own questions. Personal items never inflate chapter counts.'
+                      ? `Create and practice personal Class 11 questions. ${archivedPersonalCount ? `${archivedPersonalCount} archived Class 12 item(s) remain in your backup but are hidden from practice.` : 'Personal items never inflate chapter counts.'}`
                       : page === 'Wrong answers'
                         ? 'Revisit missed concepts with full explanations and freshly shuffled options.'
                         : activeChapter
@@ -1333,7 +1294,7 @@ export default function App() {
                 </div>
                 <div className="summary-line" />
                 <div>
-                  <b>{study.bookmarks.length}</b>
+                  <b>{activeBookmarks.size}</b>
                   <span>bookmarked</span>
                 </div>
                 <div className="summary-line" />
@@ -1343,7 +1304,7 @@ export default function App() {
                 </div>
                 <div className="summary-line" />
                 <div>
-                  <b>{study.customQuestions.length}</b>
+                  <b>{activePersonal.length}</b>
                   <span>personal (separate)</span>
                 </div>
               </div>
@@ -1371,7 +1332,6 @@ export default function App() {
                   <select value={stage} onChange={(e) => setStage(e.target.value)}>
                     <option value="All stages">All stages</option>
                     <option value="Class 11">Class 11 Biology</option>
-                    <option value="Class 12">Class 12 Biology</option>
                     <option value="NEET practice">NEET-pattern practice</option>
                   </select>
                   <ChevronDown size={14} aria-hidden="true" />
@@ -1380,7 +1340,7 @@ export default function App() {
                 <label className="select-wrap chapter-select">
                   <span className="sr-only">Chapter</span>
                   <select value={chapterId} onChange={(e) => setChapterId(e.target.value)}>
-                    <option value="all">All 32 chapters</option>
+                    <option value="all">All 19 chapters</option>
                     {SYLLABUS_CHAPTERS.map((c) => {
                       const man = MANIFEST_BY_CHAPTER_ID.get(c.chapterId);
                       return (
@@ -1465,11 +1425,7 @@ export default function App() {
                           <div className="q-tags">
                             <span
                               className={`stage-tag ${
-                                q.stage === 'Class 11'
-                                  ? 'tag-green'
-                                  : q.stage === 'Class 12'
-                                    ? 'tag-purple'
-                                    : 'tag-orange'
+                                q.stage === 'Class 11' ? 'tag-green' : 'tag-orange'
                               }`}
                             >
                               {STAGE_DISPLAY[q.stage] || q.stage}
@@ -1642,6 +1598,9 @@ export default function App() {
                       onChange={(e) => setNoteForm((f) => ({ ...f, chapterId: e.target.value }))}
                     >
                       <option value="all">General note (all chapters)</option>
+                      {ARCHIVED_CHAPTER_BY_ID.has(noteForm.chapterId) && (
+                        <option value={noteForm.chapterId}>Archived: {ARCHIVED_CHAPTER_BY_ID.get(noteForm.chapterId).title}</option>
+                      )}
                       {SYLLABUS_CHAPTERS.map((c) => (
                         <option key={c.chapterId} value={c.chapterId}>
                           {c.title}
@@ -1699,12 +1658,12 @@ export default function App() {
                     </div>
                   ) : (
                     filteredNotes.map((n) => {
-                      const ch = n.chapterId !== 'all' ? CHAPTER_BY_ID.get(n.chapterId) : null;
+                      const ch = n.chapterId !== 'all' ? CHAPTER_BY_ID.get(n.chapterId) || ARCHIVED_CHAPTER_BY_ID.get(n.chapterId) : null;
                       return (
                         <article key={n.id} className="question-card note-card">
                           <div className="q-card-top">
                             <div className="q-tags">
-                              <span className="chapter-tag">{ch ? ch.title : 'General Biology'}</span>
+                              <span className="chapter-tag">{ch ? `${ch.title}${ARCHIVED_CHAPTER_BY_ID.has(n.chapterId) ? ' (archived)' : ''}` : 'General Biology'}</span>
                               <span className="chapter-tag">
                                 {new Date(n.updatedAt).toLocaleDateString('en-IN')}
                               </span>
@@ -2346,7 +2305,7 @@ function SettingsModal({
             <div>
               <b>Offline chapter pack verification</b>
               <p>
-                Storage backend: <b>{study.storageBackend}</b>. Preload all 32 bundled chapter packs
+                Storage backend: <b>{study.storageBackend}</b>. Preload all 19 bundled Class 11 chapter packs
                 now for instant airplane-mode switching.
               </p>
             </div>

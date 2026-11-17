@@ -20,12 +20,11 @@ if (report.qualityErrorCount > 0) {
   process.exit(1);
 }
 
-const stageTotals = { 'Class 11': 0, 'Class 12': 0, 'NEET practice': 0 };
+const stageTotals = { 'Class 11': 0, 'NEET practice': 0 };
 const diffTotals = { easy: 0, medium: 0, hard: 0 };
 
 const chapters = report.chapters.map((c) => {
   stageTotals['Class 11'] += c.stageCounts['Class 11'] || 0;
-  stageTotals['Class 12'] += c.stageCounts['Class 12'] || 0;
   stageTotals['NEET practice'] += c.stageCounts['NEET practice'] || 0;
   diffTotals.easy += c.diffCounts.easy || 0;
   diffTotals.medium += c.diffCounts.medium || 0;

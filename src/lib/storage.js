@@ -2,7 +2,7 @@
 // Keeps user study data 100% on-device with no login/cloud account, migrates legacy localStorage once,
 // isolates personal questions from the verified curriculum bank, and provides JSON export/import backup.
 
-import { CHAPTER_BY_ID, CHAPTER_BY_TITLE, VALID_DIFFICULTIES, VALID_QUESTION_TYPES, VALID_STAGES } from '../data/syllabus.js';
+import { ARCHIVED_CHAPTER_BY_ID, ARCHIVED_CHAPTER_BY_TITLE, CHAPTER_BY_ID, CHAPTER_BY_TITLE, VALID_DIFFICULTIES, VALID_QUESTION_TYPES, VALID_STAGES } from '../data/syllabus.js';
 
 export const DB_NAME = 'memoneet-study-db';
 export const DB_VERSION = 1;
@@ -93,8 +93,10 @@ function runWriteTx(db, storeNames, work) {
 }
 
 export function sanitizePersonalQuestion(input, existingId = null) {
-  const chById = input.chapterId ? CHAPTER_BY_ID.get(input.chapterId) : null;
-  const chByTitle = input.chapter ? CHAPTER_BY_TITLE.get(input.chapter) : null;
+  // Preserve archived Class 12 associations in imported backups rather than
+  // silently reassigning the user's own questions to a Class 11 chapter.
+  const chById = input.chapterId ? CHAPTER_BY_ID.get(input.chapterId) || ARCHIVED_CHAPTER_BY_ID.get(input.chapterId) : null;
+  const chByTitle = input.chapter ? CHAPTER_BY_TITLE.get(input.chapter) || ARCHIVED_CHAPTER_BY_TITLE.get(input.chapter) : null;
   const ch = chById || chByTitle || CHAPTER_BY_ID.get('c11-01');
 
   const question = String(input.question || '').trim();
@@ -117,7 +119,8 @@ export function sanitizePersonalQuestion(input, existingId = null) {
   }
   if (!explanation) throw new Error('Explanation is required.');
 
-  const stage = VALID_STAGES.includes(input.stage) ? input.stage : ch.classStage;
+  const stage = VALID_STAGES.includes(input.stage) || (ch.classStage === 'Class 12' && input.stage === 'Class 12')
+    ? input.stage : ch.classStage;
   const questionType = VALID_QUESTION_TYPES.includes(input.questionType)
     ? input.questionType
     : 'concept';
@@ -159,7 +162,7 @@ export function sanitizeNote(input, existingId = null) {
   if (!text) throw new Error('Note text is required.');
   const title = String(input.title || '').trim().slice(0, 100);
   const chapterId =
-    input.chapterId && CHAPTER_BY_ID.has(input.chapterId) ? input.chapterId : 'all';
+    input.chapterId && (CHAPTER_BY_ID.has(input.chapterId) || ARCHIVED_CHAPTER_BY_ID.has(input.chapterId)) ? input.chapterId : 'all';
   const now = Date.now();
   const id =
     existingId ||

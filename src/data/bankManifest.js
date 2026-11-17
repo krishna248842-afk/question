@@ -3,20 +3,19 @@
 export const BANK_MANIFEST = {
   "generatedAt": "2026-11-17",
   "bankComplete": false,
-  "totalValid": 1595,
-  "totalRequired": 12800,
+  "totalValid": 1530,
+  "totalRequired": 7600,
   "completeChapters": 2,
-  "inProgressChapters": 30,
-  "totalChapters": 32,
+  "inProgressChapters": 17,
+  "totalChapters": 19,
   "stageTotals": {
     "Class 11": 1018,
-    "Class 12": 36,
-    "NEET practice": 541
+    "NEET practice": 512
   },
   "diffTotals": {
-    "easy": 571,
-    "medium": 735,
-    "hard": 289
+    "easy": 551,
+    "medium": 705,
+    "hard": 274
   },
   "chapters": [
     {
@@ -31,7 +30,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 267,
-        "Class 12": 0,
         "NEET practice": 133
       },
       "diffCounts": {
@@ -68,7 +66,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 268,
-        "Class 12": 0,
         "NEET practice": 132
       },
       "diffCounts": {
@@ -105,7 +102,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": false,
       "stageCounts": {
         "Class 11": 210,
-        "Class 12": 0,
         "NEET practice": 115
       },
       "diffCounts": {
@@ -141,7 +137,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 145,
-        "Class 12": 0,
         "NEET practice": 60
       },
       "diffCounts": {
@@ -177,7 +172,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -213,7 +207,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -249,7 +242,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -285,7 +277,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": false,
       "stageCounts": {
         "Class 11": 86,
-        "Class 12": 0,
         "NEET practice": 44
       },
       "diffCounts": {
@@ -321,7 +312,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -357,7 +347,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -393,7 +382,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -429,7 +417,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -465,7 +452,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -501,7 +487,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -537,7 +522,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -573,7 +557,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -609,7 +592,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -645,7 +627,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -681,7 +662,6 @@ export const BANK_MANIFEST = {
       "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
-        "Class 12": 0,
         "NEET practice": 2
       },
       "diffCounts": {
@@ -703,474 +683,6 @@ export const BANK_MANIFEST = {
         "c11-19-s3": 1,
         "c11-19-s4": 1,
         "c11-19-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-01",
-      "order": 20,
-      "classStage": "Class 12",
-      "title": "Sexual Reproduction in Flowering Plants",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 0,
-        "concept": 2,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-01-s1": 1,
-        "c12-01-s2": 1,
-        "c12-01-s3": 1,
-        "c12-01-s4": 1,
-        "c12-01-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-02",
-      "order": 21,
-      "classStage": "Class 12",
-      "title": "Human Reproduction",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 0,
-        "application": 2,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-02-s1": 1,
-        "c12-02-s2": 1,
-        "c12-02-s3": 1,
-        "c12-02-s4": 1,
-        "c12-02-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-03",
-      "order": 22,
-      "classStage": "Class 12",
-      "title": "Reproductive Health",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 1,
-        "data-based": 0
-      },
-      "sectionCounts": {
-        "c12-03-s1": 1,
-        "c12-03-s2": 1,
-        "c12-03-s3": 1,
-        "c12-03-s4": 1,
-        "c12-03-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-04",
-      "order": 23,
-      "classStage": "Class 12",
-      "title": "Principles of Inheritance and Variation",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 2,
-        "NEET practice": 3
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 2,
-        "hard": 2
-      },
-      "typeCounts": {
-        "recall": 0,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 2
-      },
-      "sectionCounts": {
-        "c12-04-s1": 1,
-        "c12-04-s2": 1,
-        "c12-04-s3": 1,
-        "c12-04-s4": 1,
-        "c12-04-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-05",
-      "order": 24,
-      "classStage": "Class 12",
-      "title": "Molecular Basis of Inheritance",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 2,
-        "NEET practice": 3
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 3,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 0,
-        "case-based": 1,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-05-s1": 1,
-        "c12-05-s2": 1,
-        "c12-05-s3": 1,
-        "c12-05-s4": 1,
-        "c12-05-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-06",
-      "order": 25,
-      "classStage": "Class 12",
-      "title": "Evolution",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 3,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 2,
-        "concept": 0,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-06-s1": 1,
-        "c12-06-s2": 1,
-        "c12-06-s3": 1,
-        "c12-06-s4": 1,
-        "c12-06-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-07",
-      "order": 26,
-      "classStage": "Class 12",
-      "title": "Human Health and Disease",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 3,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-07-s1": 1,
-        "c12-07-s2": 1,
-        "c12-07-s3": 1,
-        "c12-07-s4": 1,
-        "c12-07-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-08",
-      "order": 27,
-      "classStage": "Class 12",
-      "title": "Microbes in Human Welfare",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 2,
-        "concept": 0,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
-      },
-      "sectionCounts": {
-        "c12-08-s1": 1,
-        "c12-08-s2": 1,
-        "c12-08-s3": 1,
-        "c12-08-s4": 1,
-        "c12-08-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-09",
-      "order": 28,
-      "classStage": "Class 12",
-      "title": "Biotechnology: Principles and Processes",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 2,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 0
-      },
-      "sectionCounts": {
-        "c12-09-s1": 1,
-        "c12-09-s2": 1,
-        "c12-09-s3": 1,
-        "c12-09-s4": 1,
-        "c12-09-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-10",
-      "order": 29,
-      "classStage": "Class 12",
-      "title": "Biotechnology and its Applications",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 2,
-        "statement-analysis": 0,
-        "case-based": 1,
-        "data-based": 0
-      },
-      "sectionCounts": {
-        "c12-10-s1": 1,
-        "c12-10-s2": 1,
-        "c12-10-s3": 1,
-        "c12-10-s4": 1,
-        "c12-10-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-11",
-      "order": 30,
-      "classStage": "Class 12",
-      "title": "Organisms and Populations",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 2,
-        "NEET practice": 3
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 2,
-        "hard": 2
-      },
-      "typeCounts": {
-        "recall": 0,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 2
-      },
-      "sectionCounts": {
-        "c12-11-s1": 1,
-        "c12-11-s2": 1,
-        "c12-11-s3": 1,
-        "c12-11-s4": 1,
-        "c12-11-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-12",
-      "order": 31,
-      "classStage": "Class 12",
-      "title": "Ecosystem",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 1,
-        "concept": 0,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 2
-      },
-      "sectionCounts": {
-        "c12-12-s1": 1,
-        "c12-12-s2": 1,
-        "c12-12-s3": 1,
-        "c12-12-s4": 1,
-        "c12-12-s5": 1
-      }
-    },
-    {
-      "chapterId": "c12-13",
-      "order": 32,
-      "classStage": "Class 12",
-      "title": "Biodiversity and Conservation",
-      "validCount": 5,
-      "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
-      "stageCounts": {
-        "Class 11": 0,
-        "Class 12": 3,
-        "NEET practice": 2
-      },
-      "diffCounts": {
-        "easy": 1,
-        "medium": 3,
-        "hard": 1
-      },
-      "typeCounts": {
-        "recall": 0,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 2
-      },
-      "sectionCounts": {
-        "c12-13-s1": 1,
-        "c12-13-s2": 1,
-        "c12-13-s3": 1,
-        "c12-13-s4": 1,
-        "c12-13-s5": 1
       }
     }
   ]

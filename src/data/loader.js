@@ -22,19 +22,6 @@ export const CHAPTER_IMPORTERS = {
   'c11-17': () => import('./chapters/c11-17.js'),
   'c11-18': () => import('./chapters/c11-18.js'),
   'c11-19': () => import('./chapters/c11-19.js'),
-  'c12-01': () => import('./chapters/c12-01.js'),
-  'c12-02': () => import('./chapters/c12-02.js'),
-  'c12-03': () => import('./chapters/c12-03.js'),
-  'c12-04': () => import('./chapters/c12-04.js'),
-  'c12-05': () => import('./chapters/c12-05.js'),
-  'c12-06': () => import('./chapters/c12-06.js'),
-  'c12-07': () => import('./chapters/c12-07.js'),
-  'c12-08': () => import('./chapters/c12-08.js'),
-  'c12-09': () => import('./chapters/c12-09.js'),
-  'c12-10': () => import('./chapters/c12-10.js'),
-  'c12-11': () => import('./chapters/c12-11.js'),
-  'c12-12': () => import('./chapters/c12-12.js'),
-  'c12-13': () => import('./chapters/c12-13.js'),
 };
 
 const packCache = new Map();
@@ -73,9 +60,10 @@ export async function loadChapterPacks(chapterIds) {
 
 export function resolveChapterIdsForSelection({ stage = 'All stages', chapterId = 'all' } = {}) {
   if (chapterId && chapterId !== 'all') {
-    return [chapterId];
+    return SYLLABUS_CHAPTERS.some((ch) => ch.chapterId === chapterId) ? [chapterId] : [];
   }
-  if (stage === 'Class 11' || stage === 'Class 12') {
+  if (stage === 'Class 12') return []; // legacy saved selections are out of scope
+  if (stage === 'Class 11') {
     return SYLLABUS_CHAPTERS.filter((ch) => ch.classStage === stage).map((ch) => ch.chapterId);
   }
   return SYLLABUS_CHAPTERS.map((ch) => ch.chapterId);

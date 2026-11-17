@@ -47,7 +47,7 @@ jobs:
             echo "artifact_name=memoneet-complete-debug-apk" >> "$GITHUB_OUTPUT"
             echo "apk_filename=memoneet-complete-debug.apk" >> "$GITHUB_OUTPUT"
           else
-            echo "::warning::Question bank completion gate is IN PROGRESS (fewer than 32/32 chapters at 400/400). Packaging clearly labelled IN-PROGRESS debug APK."
+            echo "::warning::Question bank completion gate is IN PROGRESS (19 Class 11 chapters must meet the 400-question and automated quality checks). Packaging clearly labelled IN-PROGRESS debug APK."
             echo "complete=false" >> "$GITHUB_OUTPUT"
             echo "artifact_name=memoneet-in-progress-debug-apk" >> "$GITHUB_OUTPUT"
             echo "apk_filename=memoneet-in-progress-debug.apk" >> "$GITHUB_OUTPUT"

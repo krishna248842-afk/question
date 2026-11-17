@@ -6,22 +6,22 @@
 export const CHAPTER_TARGET = 400;
 
 export const SYLLABUS_META = {
-  id: 'ncert-bio-rationalised-neet-ug-2026',
-  editionLabel: 'Rationalised NCERT Biology (Class 11 & Class 12, 2025–26 Edition)',
+  id: 'ncert-bio-class11-neet-ug-2026',
+  editionLabel: 'Rationalised NCERT Biology (Class 11, 2025–26 Edition)',
   examAlignmentLabel: 'NMC NEET (UG) Biology Syllabus (2024–2026)',
   verifiedDate: '2026-11-17',
   chapterTarget: CHAPTER_TARGET,
-  totalChapters: 32,
+  totalChapters: 19,
   class11Chapters: 19,
-  class12Chapters: 13,
-  totalTargetQuestions: 32 * CHAPTER_TARGET,
+  class12Chapters: 0,
+  totalTargetQuestions: 19 * CHAPTER_TARGET,
   copyrightPolicy:
     'All items are original NCERT-aligned and original NEET-pattern practice questions. No NCERT passages, textbook exercises, answer keys, or diagrams are reproduced. Not endorsed by NCERT, NMC, or NTA. No item is represented as a verified official PYQ unless independently source-verified. Practice supports exam preparation and never guarantees any score, rank, or qualification.',
 };
 
 export const SYLLABUS_MIGRATION = {
   summary:
-    'Audited the prior 32-item UI chapter list against Rationalised NCERT Biology (Class 11 & Class 12) and the NMC NEET (UG) Biology syllabus. Added two omitted required Class 11 Human Physiology chapters and retired two chapters deleted from rationalised NCERT and NMC NEET (UG), preserving an exact 32-chapter verified syllabus (19 Class 11 + 13 Class 12).',
+    'The active scope is the 19 Class 11 chapters only. The previous Class 12 chapter data remains archived, excluded from practice and all completion counts. Two previously omitted Class 11 physiology chapters were added during the original syllabus audit.',
   addedRequiredChapters: [
     {
       chapterId: 'c11-17',
@@ -86,7 +86,6 @@ export const SYLLABUS_MIGRATION = {
     'The Living World (c11-01): Core sections follow rationalised NCERT (1.1 Diversity in the Living World, 1.2 Taxonomic Categories); Section c11-01-s6 covers taxonomic study methods, classical reference aids (marked as NEET supplemental context), and integrative hierarchy analysis.',
     'Morphology of Flowering Plants (c11-05): Covers Solanaceae alongside NMC NEET (UG) listed families (Malvaceae, Brassicaceae/Cruciferae, Fabaceae/Leguminosae, Asteraceae/Compositae, Poaceae/Gramineae).',
     'Structural Organisation in Animals (c11-07): Covers animal tissues and morphology/anatomy of frog (Rana tigrina) plus NMC-referenced insect (Periplaneta americana) organisation.',
-    'Human Health and Disease (c12-07): Includes dengue and chikungunya alongside core NCERT infectious diseases, immunity, AIDS, cancer, and substance abuse.',
   ],
 };
 
@@ -100,8 +99,8 @@ export const VALID_QUESTION_TYPES = [
 ];
 
 export const VALID_DIFFICULTIES = ['easy', 'medium', 'hard'];
-export const VALID_STAGES = ['Class 11', 'Class 12', 'NEET practice'];
-export const VALID_CLASS_STAGES = ['Class 11', 'Class 12'];
+export const VALID_STAGES = ['Class 11', 'NEET practice'];
+export const VALID_CLASS_STAGES = ['Class 11'];
 
 // Documented per-chapter distribution tolerances enforced by validate-bank.mjs
 export const QUALITY_TOLERANCES = {
@@ -130,7 +129,7 @@ export const QUALITY_TOLERANCES = {
   nearDuplicateWarnJaccard: 0.58,
 };
 
-export const SYLLABUS_CHAPTERS = [
+const ALL_SYLLABUS_CHAPTERS = [
   // ======================== CLASS 11 BIOLOGY (19 CHAPTERS) ========================
   {
     chapterId: 'c11-01',
@@ -714,6 +713,12 @@ export const SYLLABUS_CHAPTERS = [
   },
 ];
 
+// Class 12 definitions are retained solely to preserve metadata on older personal
+// notes, questions and backups; their question packs are not in the active curriculum or bundle.
+export const SYLLABUS_CHAPTERS = ALL_SYLLABUS_CHAPTERS.filter((ch) => ch.classStage === 'Class 11');
+export const ARCHIVED_SYLLABUS_CHAPTERS = ALL_SYLLABUS_CHAPTERS.filter((ch) => ch.classStage === 'Class 12');
+export const ARCHIVED_CHAPTER_BY_ID = new Map(ARCHIVED_SYLLABUS_CHAPTERS.map((ch) => [ch.chapterId, ch]));
+export const ARCHIVED_CHAPTER_BY_TITLE = new Map(ARCHIVED_SYLLABUS_CHAPTERS.map((ch) => [ch.title, ch]));
 export const CHAPTER_BY_ID = new Map(SYLLABUS_CHAPTERS.map((ch) => [ch.chapterId, ch]));
 export const CHAPTER_BY_TITLE = new Map(SYLLABUS_CHAPTERS.map((ch) => [ch.title, ch]));
 export const CHAPTER_TITLES = SYLLABUS_CHAPTERS.map((ch) => ch.title);

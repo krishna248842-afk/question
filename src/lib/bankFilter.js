@@ -1,4 +1,18 @@
-import { CHAPTER_TARGET } from '../data/syllabus.js';
+import { CHAPTER_BY_ID, CHAPTER_TARGET } from '../data/syllabus.js';
+
+// Archived user data stays in IndexedDB/backups, but is excluded from active
+// Class 11 practice and statistics instead of being reassigned or deleted.
+export function activePersonalQuestions(questions = []) {
+  return questions.filter((q) => CHAPTER_BY_ID.has(q.chapterId));
+}
+
+export function activeStudyIds(ids = [], personalQuestions = []) {
+  const personalIds = new Set(activePersonalQuestions(personalQuestions).map((q) => q.id));
+  return new Set(ids.filter((id) => {
+    const chapter = /^(c11-\d{2})-q\d+$/.exec(id);
+    return personalIds.has(id) || Boolean(chapter && CHAPTER_BY_ID.has(chapter[1]));
+  }));
+}
 
 /**
  * Pure filter for verified curriculum and personal study questions.
@@ -28,7 +42,7 @@ export function filterQuestions(
     if (page === 'Wrong answers' && answered[q.id]?.correct !== false) return false;
     if (page === 'Completed' && !answered[q.id]) return false;
 
-    // Stage scoping: Class 11, Class 12, and clearly separated NEET-pattern practice
+    // Stage scoping: Class 11 and Class 11 NEET-pattern practice
     if (stage !== 'All stages' && q.stage !== stage) return false;
 
     // Chapter, section, question type, difficulty

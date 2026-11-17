@@ -43,6 +43,8 @@ import {
   toDateKey,
 } from '../src/lib/storage.js';
 import {
+  activePersonalQuestions,
+  activeStudyIds,
   computeProgressSummary,
   filterQuestions,
   getChapterCompletionMeta,
@@ -60,11 +62,11 @@ async function wipeTestDb() {
 }
 
 describe('Syllabus audit & completion honesty gates', () => {
-  it('establishes all 32 rationalised NCERT / NMC NEET Biology chapters totaling 12,800 target questions', () => {
-    expect(SYLLABUS_CHAPTERS).toHaveLength(32);
+  it('scopes the active syllabus to 19 Class 11 chapters totaling 7,600 target questions', () => {
+    expect(SYLLABUS_CHAPTERS).toHaveLength(19);
     expect(SYLLABUS_CHAPTERS.filter((c) => c.classStage === 'Class 11')).toHaveLength(19);
-    expect(SYLLABUS_CHAPTERS.filter((c) => c.classStage === 'Class 12')).toHaveLength(13);
-    expect(SYLLABUS_META.totalTargetQuestions).toBe(12800);
+    expect(SYLLABUS_CHAPTERS.filter((c) => c.classStage === 'Class 12')).toHaveLength(0);
+    expect(SYLLABUS_META.totalTargetQuestions).toBe(7600);
 
     const titles = new Set(SYLLABUS_CHAPTERS.map((c) => c.title));
     expect(titles.has('Locomotion and Movement')).toBe(true);
@@ -82,8 +84,8 @@ describe('Syllabus audit & completion honesty gates', () => {
   });
 
   it('requires the target count and completion checks, independently of review status', () => {
-    expect(BANK_MANIFEST.totalChapters).toBe(32);
-    expect(BANK_MANIFEST.totalRequired).toBe(12800);
+    expect(BANK_MANIFEST.totalChapters).toBe(19);
+    expect(BANK_MANIFEST.totalRequired).toBe(7600);
     expect(BANK_MANIFEST.totalValid).toBe(BANK_MANIFEST.chapters.reduce((n, c) => n + c.validCount, 0));
     for (const ch of BANK_MANIFEST.chapters) {
       const meta = getChapterCompletionMeta(ch);
@@ -293,10 +295,14 @@ describe('Answer-index correctness, option shuffling & lazy chapter packs', () =
     for (const q of c1) answerCounts[q.answer]++;
     expect(answerCounts).toEqual([100, 100, 100, 100]);
 
+    expect(resolveChapterIdsForSelection({ stage: 'Class 12' })).toEqual([]);
+    expect(resolveChapterIdsForSelection({ chapterId: 'c12-01' })).toEqual([]);
+    expect(CHAPTER_IMPORTERS['c12-01']).toBeUndefined();
+    await expect(loadChapterPack('c12-01')).rejects.toThrow('Unknown syllabus chapter ID');
     const allIds = resolveChapterIdsForSelection({ stage: 'All stages', chapterId: 'all' });
     const allQuestions = await loadChapterPacks(allIds);
     expect(allQuestions).toHaveLength(BANK_MANIFEST.totalValid);
-    expect(getCachedChapterCount()).toBe(32);
+    expect(getCachedChapterCount()).toBe(19);
 
     const idSet = new Set();
     for (const q of allQuestions) {
@@ -452,6 +458,37 @@ describe('IndexedDB progress persistence, CRUD, bookmarks, wrong-answer retry & 
     expect(restored.notes[0].title).toBe('ICBN vs ICZN');
   });
 
+  it('preserves older Class 12 data through backup while excluding it from active practice and statistics', async () => {
+    const legacyQuestion = {
+      id: 'custom-archive-1', custom: true, chapterId: 'c12-01', chapter: 'Sexual Reproduction in Flowering Plants',
+      stage: 'Class 12', sectionId: 'c12-01-s2', question: 'What is an example archived question?',
+      options: ['First', 'Second', 'Third', 'Fourth'], answer: 0, explanation: 'An archived explanation remains saved.',
+    };
+    const backup = { app: 'MemoNeet', schemaVersion: 1, data: {
+      customQuestions: [legacyQuestion], notes: [{ id: 'note-archive', text: 'Old note', chapterId: 'c12-01' }],
+      bookmarks: ['c12-01-q001', 'c11-01-q001', 'custom-archive-1'],
+      answered: {
+        'c12-01-q001': { choice: 1, correct: false },
+        'c11-01-q001': { choice: 0, correct: true },
+        'custom-archive-1': { choice: 0, correct: true },
+      }, activityDays: [], preferences: { shuffleOptions: true },
+    } };
+    const state = await importBackupPayload(backup, { mode: 'replace' });
+    expect(state.customQuestions[0].chapterId).toBe('c12-01');
+    expect(state.customQuestions[0].sectionId).toBe('c12-01-s2');
+    expect(state.customQuestions[0].stage).toBe('Class 12');
+    expect(state.notes[0].chapterId).toBe('c12-01');
+    expect(activePersonalQuestions(state.customQuestions)).toHaveLength(0);
+    expect([...activeStudyIds(state.bookmarks, state.customQuestions)]).toEqual(['c11-01-q001']);
+    const activeIds = activeStudyIds(Object.keys(state.answered), state.customQuestions);
+    expect(computeProgressSummary(state.answered, activeIds)).toEqual({ attempted: 1, correct: 1, wrong: 0, accuracy: 100 });
+    const exported = buildBackupPayload(state);
+    expect(exported.data.bookmarks).toContain('c12-01-q001');
+    expect(exported.data.answered['c12-01-q001']).toBeDefined();
+    expect(exported.data.customQuestions[0].chapterId).toBe('c12-01');
+    expect(exported.data.notes[0].chapterId).toBe('c12-01');
+  });
+
   it('migrates legacy localStorage memoneet-v1 user data once into IndexedDB', async () => {
     const ts = Date.UTC(2026, 10, 16, 8, 0, 0);
     localStorage.setItem(
@@ -494,7 +531,9 @@ describe('Offline PWA bundle & Capacitor Android packaging verification', () => 
     expect(swText).toMatch(/CACHE_NAME = "memoneet-offline-[0-9a-f]{12}"/);
     // All generated JS/CSS assets including lazy chapter pack chunks must be precached for offline use
     const assetFiles = fs.readdirSync(path.join(distDir, 'assets'));
-    expect(assetFiles.length).toBeGreaterThanOrEqual(32);
+    expect(assetFiles.length).toBeGreaterThanOrEqual(19);
+    expect(assetFiles.filter(file => /^c12-/.test(file))).toEqual([]);
+    expect(assetFiles.filter(file => /^c11-/.test(file))).toHaveLength(19);
     for (const file of assetFiles) {
       expect(swText).toContain(`/assets/${file}`);
     }

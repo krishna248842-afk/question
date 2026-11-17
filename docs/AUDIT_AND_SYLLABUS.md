@@ -13,15 +13,15 @@ Before writing any new code or content, the prior MemoNeet question bank (`src/d
 | Genuinely distinct valid items in active syllabus | **110** | 77 in *The Living World* + 33 across 29 other retained chapters + 0 in 2 omitted required chapters |
 | Chapters genuinely at 400/400 in legacy repo | **0 / 32** | Every legacy UI `"400+"` badge was inaccurate and removed |
 
-Legacy templated prompts and detected rephrased duplicates were discarded. The replacement records (`src/data/chapters/c11-01.js`..`c12-13.js`) are subject to automated checks, which cannot prove originality, factual correctness, distractor plausibility, or conceptual distinctness. The owner has requested no further human-review gate; new material must not be described as human-reviewed.
+Legacy templated prompts and detected rephrased duplicates were discarded. The active replacement records (`src/data/chapters/c11-01.js`..`c11-19.js`) are subject to automated checks, which cannot prove originality, factual correctness, distractor plausibility, or conceptual distinctness. The owner has requested no further human-review gate; new material must not be described as human-reviewed.
 
 ## 2. Definitive Syllabus Standard & Migration Notes
 
-- **Textbook standard:** Rationalised NCERT Biology (Class 11 & Class 12, 2025–26 Edition)
+- **Textbook standard:** Rationalised NCERT Biology (Class 11, 2025–26 Edition)
 - **Exam alignment:** NMC NEET (UG) Biology Syllabus (2024–2026)
-- **Total required chapters:** **32** (19 Class 11 + 13 Class 12)
-- **Target per chapter:** **400** validated unique original single-best-answer MCQs (**12,800** total)
-- **Canonical machine-readable specification:** `src/data/syllabus.js` (includes per-chapter stable IDs `c11-01`–`c11-19` and `c12-01`–`c12-13`, 5–6 section checklists per chapter, and exact section quotas summing to 400/chapter)
+- **Total active chapters:** **19** Class 11 chapters. Class 12 packs are archived outside the active curriculum.
+- **Target per chapter:** **400** validated unique original single-best-answer MCQs (**7,600** total)
+- **Canonical machine-readable specification:** `src/data/syllabus.js` (includes per-chapter stable IDs `c11-01`–`c11-19`, 5–6 section checklists per chapter, and exact section quotas summing to 400/chapter)
 
 ### Added Required Chapters (2 — previously omitted)
 1. **`c11-17` — Locomotion and Movement** (Class 11, Rationalised Ch. 17, Unit V Human Physiology): Actively included in both rationalised NCERT Class 11 Biology and the NMC NEET (UG) syllabus (amoeboid/ciliary/muscular movement, sarcomere & sliding filament mechanism, axial/appendicular skeleton, joints, musculoskeletal disorders).
