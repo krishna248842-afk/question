@@ -123,18 +123,17 @@ describe('Syllabus audit & completion honesty gates', () => {
   });
 });
 
-describe('Unpublished draft isolation', () => {
-  it('checks the plant and animal drafts together without changing the published manifest', async () => {
-    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
-    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-03.js');
-    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
-    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
-    const output = execFileSync(process.execPath, ['scripts/validate-plant-drafts.mjs', '--with-animal'], {
-      cwd: ROOT, encoding: 'utf8',
-    });
-    expect(output).toContain('Counts below are hypothetical');
-    expect(output).toContain('0 detected schema/distribution/duplicate errors');
-    const animalBatches = await Promise.all([
+describe('Publication of reviewed batches', () => {
+  it('preserves the original starter records and publishes each approved animal item once', async () => {
+    const { starterQuestions: plants } = await import('../src/data/chapters/c11-03/starter.js');
+    const { starterQuestions: animals } = await import('../src/data/chapters/c11-04/starter.js');
+    for (const [id, starter] of [['c11-03', plants], ['c11-04', animals]]) {
+      const published = await loadChapterPack(id);
+      expect(published.slice(0, starter.length)).toEqual(starter);
+      expect(new Set(published.map(q => q.id)).size).toBe(published.length);
+      expect(published.length).toBe(MANIFEST_BY_CHAPTER_ID.get(id).validCount);
+    }
+    const batches = await Promise.all([
       import('../src/data/chapters/c11-04/pack1-classification-draft.js').then(m => m.animalClassificationDraft),
       import('../src/data/chapters/c11-04/pack2-lower-nonchordates-draft.js').then(m => m.lowerNonchordateDraft),
       import('../src/data/chapters/c11-04/pack3-worms-draft.js').then(m => m.wormDraft),
@@ -144,18 +143,31 @@ describe('Unpublished draft isolation', () => {
       import('../src/data/chapters/c11-04/pack7-fishes-amphibia-draft.js').then(m => m.fishesAmphibiaDraft),
       import('../src/data/chapters/c11-04/pack8-amniotes-draft.js').then(m => m.amnioteDraft),
     ]);
-    const draftIds = animalBatches.flat().map(q => q.id);
-    expect(new Set(draftIds).size).toBe(draftIds.length);
-    const animalCount = MANIFEST_BY_CHAPTER_ID.get('c11-04').validCount + draftIds.length;
-    expect(output).toContain(`Animal Kingdom (Class 11): ${animalCount}/400 IN PROGRESS`);
-    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
-    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
-    expect((await loadChapterPack('c11-03')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-03').validCount);
-    expect((await loadChapterPack('c11-04')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-04').validCount);
+    const published = await loadChapterPack('c11-04');
+    expect(published.slice(animals.length)).toEqual(batches.flat());
   });
 });
 
 describe('Documented human review', () => {
+  it('invalidates chapter sign-off after a reviewed record changes', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-change-'));
+    try {
+      fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'src/data'), path.join(dir, 'src/data'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'scripts'), path.join(dir, 'scripts'), { recursive: true });
+      fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
+      fs.appendFileSync(path.join(dir, 'src/data/chapters/c11-01.js'), '\nquestions[0].explanation += " Changed after sign-off.";\n');
+      let result;
+      try {
+        execFileSync(process.execPath, ['scripts/validate-bank.mjs', '--chapter', 'c11-01'], { cwd: dir, encoding: 'utf8', stdio: 'pipe' });
+      } catch (err) { result = err; }
+      expect(result?.status).toBe(1);
+      expect(String(result.stderr)).toContain('human review checklist sign-off is incomplete');
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it('does not accept an unsigned checklist as human review', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-'));
     try {

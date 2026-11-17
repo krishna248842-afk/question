@@ -861,7 +861,7 @@ export default function App() {
                     IN-PROGRESS CHAPTER HIGHLIGHT
                   </div>
                   <h2>
-                    Practice The Living World while its questions await human review.
+                    Practice The Living World, reviewed by the project owner.
                   </h2>
                   <p>
                     Practice across all 6 chapter sections with shuffled options and misconception-aware
@@ -905,7 +905,7 @@ export default function App() {
               <div className="stats-grid">
                 <StatCard
                   icon={BookOpen}
-                  label="Verified bank (in progress)"
+                  label="Question bank (in progress)"
                   value={`${BANK_MANIFEST.totalValid.toLocaleString()} / ${BANK_MANIFEST.totalRequired.toLocaleString()}`}
                   hint={`${BANK_MANIFEST.completeChapters} of ${BANK_MANIFEST.totalChapters} chapters at 400/400`}
                   tone="sage"

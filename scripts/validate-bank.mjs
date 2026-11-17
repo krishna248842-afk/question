@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
@@ -521,7 +522,9 @@ async function main() {
     const reviewComplete = Boolean(
       review && review.checklistComplete === true && review.reviewedCount === CHAPTER_TARGET &&
       typeof review.reviewerName === 'string' && review.reviewerName.trim().length > 0 &&
-      typeof review.reviewedDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(review.reviewedDate)
+      typeof review.reviewedDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(review.reviewedDate) &&
+      typeof review.contentSha256 === 'string' &&
+      review.contentSha256 === createHash('sha256').update(JSON.stringify(items)).digest('hex')
     );
 
     if (chapterValidCount === CHAPTER_TARGET && items.length === CHAPTER_TARGET && !reviewComplete) {

@@ -3,20 +3,20 @@
 export const BANK_MANIFEST = {
   "generatedAt": "2026-11-17",
   "bankComplete": false,
-  "totalValid": 950,
+  "totalValid": 1445,
   "totalRequired": 12800,
-  "completeChapters": 0,
-  "inProgressChapters": 32,
+  "completeChapters": 2,
+  "inProgressChapters": 30,
   "totalChapters": 32,
   "stageTotals": {
-    "Class 11": 586,
+    "Class 11": 917,
     "Class 12": 36,
-    "NEET practice": 328
+    "NEET practice": 492
   },
   "diffTotals": {
-    "easy": 376,
-    "medium": 406,
-    "hard": 168
+    "easy": 544,
+    "medium": 653,
+    "hard": 248
   },
   "chapters": [
     {
@@ -26,8 +26,8 @@ export const BANK_MANIFEST = {
       "title": "The Living World",
       "validCount": 400,
       "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
+      "status": "complete",
+      "reviewComplete": true,
       "stageCounts": {
         "Class 11": 267,
         "Class 12": 0,
@@ -62,8 +62,8 @@ export const BANK_MANIFEST = {
       "title": "Biological Classification",
       "validCount": 400,
       "target": 400,
-      "status": "in-progress",
-      "reviewComplete": false,
+      "status": "complete",
+      "reviewComplete": true,
       "stageCounts": {
         "Class 11": 268,
         "Class 12": 0,
@@ -96,34 +96,34 @@ export const BANK_MANIFEST = {
       "order": 3,
       "classStage": "Class 11",
       "title": "Plant Kingdom",
-      "validCount": 5,
+      "validCount": 300,
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
       "stageCounts": {
-        "Class 11": 3,
+        "Class 11": 192,
         "Class 12": 0,
-        "NEET practice": 2
+        "NEET practice": 108
       },
       "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
+        "easy": 112,
+        "medium": 138,
+        "hard": 50
       },
       "typeCounts": {
-        "recall": 0,
-        "concept": 2,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
+        "recall": 88,
+        "concept": 98,
+        "application": 52,
+        "statement-analysis": 21,
+        "case-based": 17,
+        "data-based": 24
       },
       "sectionCounts": {
-        "c11-03-s1": 1,
-        "c11-03-s2": 1,
-        "c11-03-s3": 1,
-        "c11-03-s4": 1,
-        "c11-03-s5": 1
+        "c11-03-s1": 45,
+        "c11-03-s2": 100,
+        "c11-03-s3": 53,
+        "c11-03-s4": 51,
+        "c11-03-s5": 51
       }
     },
     {
@@ -131,34 +131,34 @@ export const BANK_MANIFEST = {
       "order": 4,
       "classStage": "Class 11",
       "title": "Animal Kingdom",
-      "validCount": 5,
+      "validCount": 205,
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
       "stageCounts": {
-        "Class 11": 3,
+        "Class 11": 145,
         "Class 12": 0,
-        "NEET practice": 2
+        "NEET practice": 60
       },
       "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
+        "easy": 60,
+        "medium": 113,
+        "hard": 32
       },
       "typeCounts": {
-        "recall": 1,
-        "concept": 2,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 0
+        "recall": 46,
+        "concept": 91,
+        "application": 35,
+        "statement-analysis": 11,
+        "case-based": 6,
+        "data-based": 16
       },
       "sectionCounts": {
-        "c11-04-s1": 1,
-        "c11-04-s2": 1,
-        "c11-04-s3": 1,
-        "c11-04-s4": 1,
-        "c11-04-s5": 1
+        "c11-04-s1": 26,
+        "c11-04-s2": 51,
+        "c11-04-s3": 51,
+        "c11-04-s4": 41,
+        "c11-04-s5": 36
       }
     },
     {

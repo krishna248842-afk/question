@@ -1,5 +1,5 @@
-# Animal Kingdom draft
+# Animal Kingdom batches
 
-Eight unpublished batches contain 25 draft items each: `pack1-classification-draft.js` (Q006–Q030), `pack2-lower-nonchordates-draft.js` (Q031–Q055), `pack3-worms-draft.js` (Q056–Q080), `pack4-annelids-arthropods-draft.js` (Q081–Q105), `pack5-molluscs-echinoderms-draft.js` (Q106–Q130), `pack6-chordates-draft.js` (Q131–Q155), `pack7-fishes-amphibia-draft.js` (Q156–Q180), and `pack8-amniotes-draft.js` (Q181–Q205). The published starter Q001–Q005 remain the only five items counted for this chapter. These drafts are not bundled into the app and have not been independently human-reviewed. The combined temporary check includes 205 chapter records but this is not the published or verified count.
+The project owner approved the existing records on 2026-11-17. The starter Q001–Q005 and eight reviewed 25-question batches (Q006–Q205) are now included in the app. The published chapter contains 205 records and remains **in progress**; Q206–Q400 still need authoring and review. The batch filenames retain their original `draft` suffix for traceability.
 
-Run `node scripts/validate-animal-drafts.mjs` for a temporary full-bank check, or `node scripts/validate-plant-drafts.mjs --with-animal` to include it alongside the Plant Kingdom drafts. These automated checks cannot establish scientific accuracy, copyright safety, meaningful distinctness, or distractor quality. Review the existing starters too: their unusually broad multi-fact options and generalisations need particular attention.
+The review scope is recorded in `src/data/reviewRegistry.js`; automated checks cannot establish scientific accuracy or conceptual distinctness.
