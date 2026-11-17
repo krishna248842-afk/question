@@ -150,6 +150,49 @@ describe('Publication of reviewed batches', () => {
   });
 });
 
+describe('Unpublished Plant question batch', () => {
+  it('validates the draft against the bank without changing published content', async () => {
+    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
+    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-03.js');
+    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
+    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
+    const { comparativeBotanyDraft } = await import('../src/data/chapters/c11-03/pack9-comparative-botany-draft.js');
+    const published = await loadChapterPack('c11-03');
+    const publishedIds = new Set(published.map(q => q.id));
+    expect(comparativeBotanyDraft).toHaveLength(25);
+    expect(new Set(comparativeBotanyDraft.map(q => q.id)).size).toBe(25);
+    expect(comparativeBotanyDraft.every(q => !publishedIds.has(q.id))).toBe(true);
+    const output = execFileSync(process.execPath,
+      ['scripts/validate-draft.mjs', '--chapter', 'c11-03', 'pack9-comparative-botany-draft:comparativeBotanyDraft',
+        '--chapter', 'c11-08', 'pack1-cell-diversity-draft:cellDiversityDraft',
+        'pack2-prokaryote-draft:prokaryoteDraft', 'pack3-membranes-draft:membranesDraft',
+        'pack4-endomembrane-draft:endomembraneDraft'],
+      { cwd: ROOT, encoding: 'utf8' });
+    expect(output).toContain('displayed counts are not published counts');
+    expect(output).toContain(`Plant Kingdom (Class 11): ${published.length + comparativeBotanyDraft.length}/400 IN PROGRESS`);
+    expect(output).toContain('Cell: The Unit of Life (Class 11): 105/400 IN PROGRESS');
+    expect(output).toContain('0 detected schema/distribution/duplicate errors');
+    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
+    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
+    expect(published.length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-03').validCount);
+  });
+
+  it('rejects repeated or empty chapter groups before writing a temporary copy', () => {
+    for (const args of [
+      ['--chapter', 'c11-03'],
+      ['--chapter', 'c11-03', 'pack9-comparative-botany-draft:comparativeBotanyDraft',
+        '--chapter', 'c11-03', 'pack9-comparative-botany-draft:comparativeBotanyDraft'],
+      ['--chapter', 'c11-03', '../outside:batch'],
+    ]) {
+      let failure;
+      try {
+        execFileSync(process.execPath, ['scripts/validate-draft.mjs', ...args], { cwd: ROOT, stdio: 'pipe' });
+      } catch (err) { failure = err; }
+      expect(failure?.status).toBe(2);
+    }
+  });
+});
+
 describe('Unpublished Cell question batches', () => {
   it('validates drafts against the bank without publishing them or changing the manifest', async () => {
     const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
