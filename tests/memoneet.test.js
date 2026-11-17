@@ -134,6 +134,17 @@ describe('Unpublished draft isolation', () => {
     });
     expect(output).toContain('Counts below are hypothetical');
     expect(output).toContain('0 detected schema/distribution/duplicate errors');
+    const animalBatches = await Promise.all([
+      import('../src/data/chapters/c11-04/pack1-classification-draft.js').then(m => m.animalClassificationDraft),
+      import('../src/data/chapters/c11-04/pack2-lower-nonchordates-draft.js').then(m => m.lowerNonchordateDraft),
+      import('../src/data/chapters/c11-04/pack3-worms-draft.js').then(m => m.wormDraft),
+      import('../src/data/chapters/c11-04/pack4-annelids-arthropods-draft.js').then(m => m.annelidArthropodDraft),
+      import('../src/data/chapters/c11-04/pack5-molluscs-echinoderms-draft.js').then(m => m.molluscEchinodermDraft),
+    ]);
+    const draftIds = animalBatches.flat().map(q => q.id);
+    expect(new Set(draftIds).size).toBe(draftIds.length);
+    const animalCount = MANIFEST_BY_CHAPTER_ID.get('c11-04').validCount + draftIds.length;
+    expect(output).toContain(`Animal Kingdom (Class 11): ${animalCount}/400 IN PROGRESS`);
     expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
     expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
     expect((await loadChapterPack('c11-03')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-03').validCount);
