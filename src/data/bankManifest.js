@@ -28,6 +28,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "complete",
       "reviewComplete": true,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 267,
         "Class 12": 0,
@@ -64,6 +65,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "complete",
       "reviewComplete": true,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 268,
         "Class 12": 0,
@@ -100,6 +102,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 192,
         "Class 12": 0,
@@ -135,6 +138,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 145,
         "Class 12": 0,
@@ -170,6 +174,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -205,6 +210,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -240,6 +246,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -275,6 +282,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": false,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -310,6 +318,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -345,6 +354,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -380,6 +390,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -415,6 +426,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -450,6 +462,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -485,6 +498,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -520,6 +534,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -555,6 +570,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -590,6 +606,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -625,6 +642,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -660,6 +678,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 3,
         "Class 12": 0,
@@ -695,6 +714,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -730,6 +750,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -765,6 +786,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -800,6 +822,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 2,
@@ -835,6 +858,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 2,
@@ -870,6 +894,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -905,6 +930,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -940,6 +966,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -975,6 +1002,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -1010,6 +1038,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -1045,6 +1074,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 2,
@@ -1080,6 +1110,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,
@@ -1115,6 +1146,7 @@ export const BANK_MANIFEST = {
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
+      "reviewSnapshotCurrent": true,
       "stageCounts": {
         "Class 11": 0,
         "Class 12": 3,

@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
@@ -14,6 +15,7 @@ import {
   VALID_STAGES,
 } from '../src/data/syllabus.js';
 import { BANK_MANIFEST, MANIFEST_BY_CHAPTER_ID } from '../src/data/bankManifest.js';
+import { OWNER_REVIEW } from '../src/data/reviewRegistry.js';
 import {
   CHAPTER_IMPORTERS,
   clearChapterPackCache,
@@ -145,6 +147,45 @@ describe('Publication of reviewed batches', () => {
     ]);
     const published = await loadChapterPack('c11-04');
     expect(published.slice(animals.length)).toEqual(batches.flat());
+  });
+});
+
+describe('Unpublished Cell question batches', () => {
+  it('validates drafts against the bank without publishing them or changing the manifest', async () => {
+    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
+    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-08.js');
+    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
+    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
+    const batches = [
+      'pack1-cell-diversity-draft:cellDiversityDraft',
+      'pack2-prokaryote-draft:prokaryoteDraft',
+      'pack3-membranes-draft:membranesDraft',
+      'pack4-endomembrane-draft:endomembraneDraft',
+    ];
+    const output = execFileSync(process.execPath, ['scripts/validate-draft.mjs', 'c11-08', ...batches], { cwd: ROOT, encoding: 'utf8' });
+    expect(output).toContain('displayed counts are not published counts');
+    const draftBatches = await Promise.all([
+      import('../src/data/chapters/c11-08/pack1-cell-diversity-draft.js').then(m => m.cellDiversityDraft),
+      import('../src/data/chapters/c11-08/pack2-prokaryote-draft.js').then(m => m.prokaryoteDraft),
+      import('../src/data/chapters/c11-08/pack3-membranes-draft.js').then(m => m.membranesDraft),
+      import('../src/data/chapters/c11-08/pack4-endomembrane-draft.js').then(m => m.endomembraneDraft),
+    ]);
+    const hypotheticalCount = MANIFEST_BY_CHAPTER_ID.get('c11-08').validCount + draftBatches.flat().length;
+    expect(output).toContain(`Cell: The Unit of Life (Class 11): ${hypotheticalCount}/400 IN PROGRESS`);
+    expect(output).toContain('0 detected schema/distribution/duplicate errors');
+    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
+    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
+    expect((await loadChapterPack('c11-08')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-08').validCount);
+  });
+
+  it('does not extend the old owner sign-off to a later correction', async () => {
+    const questions = await loadChapterPack('c11-08');
+    const corrected = questions.find(q => q.id === 'c11-08-q002');
+    expect(corrected.explanation).toContain('artifacts of chemical fixation');
+    const digest = createHash('sha256').update(JSON.stringify(questions)).digest('hex');
+    expect(digest).not.toBe(OWNER_REVIEW.chapters['c11-08'].contentSha256);
+    expect(MANIFEST_BY_CHAPTER_ID.get('c11-08').reviewSnapshotCurrent).toBe(false);
+    expect(MANIFEST_BY_CHAPTER_ID.get('c11-01').reviewSnapshotCurrent).toBe(true);
   });
 });
 

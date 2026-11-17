@@ -13,7 +13,8 @@ import {
   VALID_QUESTION_TYPES,
   VALID_STAGES,
 } from '../src/data/syllabus.js';
-import { PACK_REVIEWS } from '../src/data/reviewRegistry.js';
+import * as REVIEW_REGISTRY from '../src/data/reviewRegistry.js';
+const { PACK_REVIEWS, OWNER_REVIEW } = REVIEW_REGISTRY;
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const CHAPTERS_DIR = path.join(ROOT, 'src', 'data', 'chapters');
@@ -519,12 +520,18 @@ async function main() {
 
     // 5. Human review checklist check for completed 400-item chapters
     const review = PACK_REVIEWS[ch.chapterId];
+    const contentSha256 = createHash('sha256').update(JSON.stringify(items)).digest('hex');
+    const reviewedSnapshot = OWNER_REVIEW?.chapters?.[ch.chapterId];
+    const reviewSnapshotCurrent = Boolean(
+      OWNER_REVIEW?.checklistComplete && reviewedSnapshot &&
+      reviewedSnapshot.reviewedCount === items.length && reviewedSnapshot.contentSha256 === contentSha256
+    );
     const reviewComplete = Boolean(
       review && review.checklistComplete === true && review.reviewedCount === CHAPTER_TARGET &&
       typeof review.reviewerName === 'string' && review.reviewerName.trim().length > 0 &&
       typeof review.reviewedDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(review.reviewedDate) &&
       typeof review.contentSha256 === 'string' &&
-      review.contentSha256 === createHash('sha256').update(JSON.stringify(items)).digest('hex')
+      review.contentSha256 === contentSha256
     );
 
     if (chapterValidCount === CHAPTER_TARGET && items.length === CHAPTER_TARGET && !reviewComplete) {
@@ -559,6 +566,7 @@ async function main() {
       target: CHAPTER_TARGET,
       status: isComplete ? 'COMPLETE' : 'IN PROGRESS',
       reviewComplete,
+      reviewSnapshotCurrent,
       nearDupFlags,
       diffCounts,
       typeCounts,

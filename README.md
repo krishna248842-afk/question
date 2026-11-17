@@ -2,7 +2,7 @@
 
 MemoNeet is a private, offline-first Progressive Web App (PWA) and installable Capacitor Android app (`com.memoneet.study`) for NCERT-aligned Class 11 Biology, Class 12 Biology, and original NEET-pattern Biology practice—with no login, no cloud account, and full on-device IndexedDB persistence plus JSON backup export/import.
 
-> **Question bank: IN PROGRESS.** The published bank contains 1,445 of 12,800 required records: The Living World and Biological Classification each have 400/400, Plant Kingdom has 300/400, Animal Kingdom has 205/400, and the remaining 28 chapters have 5/400 each. The project owner attested to reviewing the existing records on 2026-11-17; the two 400-question chapters pass the review and automated completion gates. All other chapters and the overall bank remain in progress. Automated checks cannot establish factual accuracy, originality or conceptual distinctness. See `docs/HUMAN_REVIEW_CHECKLIST.md` and the validator for details.
+> **Question bank: IN PROGRESS.** The published bank contains 1,445 of 12,800 required records: The Living World and Biological Classification each have 400/400, Plant Kingdom has 300/400, Animal Kingdom has 205/400, and the remaining 28 chapters have 5/400 each. The project owner attested to reviewing the existing records on 2026-11-17; the two 400-question chapters pass the review and automated completion gates. The Cell chapter's Q002 was subsequently corrected and needs renewed review; 100 new Cell questions remain unpublished drafts. All other chapters and the overall bank remain in progress. Automated checks cannot establish factual accuracy, originality or conceptual distinctness. See `docs/HUMAN_REVIEW_CHECKLIST.md` and the validator for details.
 
 ## Key Features
 

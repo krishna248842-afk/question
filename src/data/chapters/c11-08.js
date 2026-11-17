@@ -9,10 +9,10 @@ export const questions = createChapterPack('c11-08', [
     'NCERT Class 11 Ch.8 — Section 8.2 Cell Theory'],
 
   [2, 's2', 'prokaryotic-envelope-mesosome-polysome', 'C', 'Bacterial cell envelope, mesosome roles, and polysomes', 'concept', 'medium',
-    'In a typical prokaryotic cell, which functions belong to mesosomes (plasma-membrane infoldings) and polysomes (polyribosomes) respectively?',
-    ['Mesosomes assist cell-wall formation, DNA replication/distribution, respiration, and secretion; several 70S (50S + 30S) ribosomes attach to a single mRNA to form a polysome translating it into proteins', 'Mesosomes harbour chlorophyll b and linear histone-wrapped chromosomes; polysomes consist of 80S (60S + 40S) subunits digesting lipids', 'Mesosomes serve as gas vacuoles enclosed by unit membranes; polysomes form motile pili that propel bacteria through broth', 'Mesosomes confer antibiotic resistance as extrachromosomal circular DNA; polysomes store phosphate granules without RNA'],
-    'Prokaryotes possess a three-layered envelope (glycocalyx—slime layer or capsule, cell wall, plasma membrane), membrane-extension mesosomes aiding wall synthesis, DNA replication, respiration, secretion, and surface area, non-membrane-bound inclusion bodies, plasmids, and 70S (50S + 30S) ribosomes assembling on mRNA as polysomes.',
-    'NCERT Class 11 Ch.8 — Section 8.4 Prokaryotic Cells'],
+    'Older accounts attributed functions to bacterial membrane infoldings called mesosomes, although many are now considered fixation artifacts. Which option accurately states the historical description and the meaning of a polysome?',
+    ['Mesosomes were described as assisting wall formation, DNA distribution and respiration; a polysome has several ribosomes translating one mRNA', 'Mesosomes were described as eukaryotic nuclei; a polysome is a single chromosome wrapped in histones', 'Mesosomes were described as plant chloroplasts; a polysome is a membrane-bound store of starch', 'Mesosomes were described as bacterial flagella; a polysome is a cellulose fibre used for locomotion'],
+    'The older NCERT account attributed several functions to mesosomes, but many such structures are now interpreted as artifacts of chemical fixation, so those proposed functions should not be treated as established. A polysome consists of multiple ribosomes translating the same mRNA.',
+    'NCERT Class 11 Biology, Cell: The Unit of Life — historical mesosome account and polysomes; supplemental modern correction on fixation artifacts'],
 
   [3, 's3', 'fluid-mosaic-and-endomembrane-system', 'N', 'Singer-Nicolson membrane and Golgi cis-to-trans trafficking', 'application', 'medium',
     'Trace a secretory glycoprotein inside a eukaryotic cell governed by Singer and Nicolson’s (1972) fluid mosaic membrane and the coordinated endomembrane system (ER, Golgi apparatus, lysosomes, vacuoles).',

@@ -1821,6 +1821,10 @@ export default function App() {
                   </span>
                 </div>
                 <h1>{activeQuestion.question}</h1>
+                {!activeQuestion.custom &&
+                  MANIFEST_BY_CHAPTER_ID.get(activeQuestion.chapterId)?.reviewSnapshotCurrent === false && (
+                    <p role="note">This chapter contains content changed since the project owner's review and requires renewed human review.</p>
+                  )}
 
                 <div className="answer-options" role="group" aria-label="Answer choices">
                   {presented.options.map((optText, idx) => {

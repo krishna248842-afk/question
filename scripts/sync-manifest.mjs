@@ -39,6 +39,7 @@ const chapters = report.chapters.map((c) => {
     target: c.target,
     status: c.status === 'COMPLETE' ? 'complete' : 'in-progress',
     reviewComplete: c.reviewComplete,
+    reviewSnapshotCurrent: c.reviewSnapshotCurrent,
     stageCounts: c.stageCounts,
     diffCounts: c.diffCounts,
     typeCounts: c.typeCounts,
