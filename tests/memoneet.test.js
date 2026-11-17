@@ -123,6 +123,24 @@ describe('Syllabus audit & completion honesty gates', () => {
   });
 });
 
+describe('Unpublished draft isolation', () => {
+  it('checks the plant and animal drafts together without changing the published manifest', async () => {
+    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
+    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-03.js');
+    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
+    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
+    const output = execFileSync(process.execPath, ['scripts/validate-plant-drafts.mjs', '--with-animal'], {
+      cwd: ROOT, encoding: 'utf8',
+    });
+    expect(output).toContain('Counts below are hypothetical');
+    expect(output).toContain('0 detected schema/distribution/duplicate errors');
+    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
+    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
+    expect((await loadChapterPack('c11-03')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-03').validCount);
+    expect((await loadChapterPack('c11-04')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-04').validCount);
+  });
+});
+
 describe('Documented human review', () => {
   it('does not accept an unsigned checklist as human review', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-'));
