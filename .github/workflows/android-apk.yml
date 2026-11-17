@@ -1,0 +1,81 @@
+name: Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - arena/d2ec1aaf-question
+  workflow_dispatch:
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up Temurin Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Android SDK 36
+        uses: android-actions/setup-android@v4
+        with:
+          packages: "tools platform-tools platforms;android-36 build-tools;36.0.0"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate authored question quality & sync manifest
+        run: |
+          npm run validate:authored
+          node scripts/sync-manifest.mjs
+
+      - name: Check strict 400-per-chapter completion gate
+        id: bank_gate
+        run: |
+          if npm run validate:bank; then
+            echo "complete=true" >> "$GITHUB_OUTPUT"
+            echo "artifact_name=memoneet-complete-debug-apk" >> "$GITHUB_OUTPUT"
+            echo "apk_filename=memoneet-complete-debug.apk" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Question bank completion gate is IN PROGRESS (fewer than 32/32 chapters at 400/400). Packaging clearly labelled IN-PROGRESS debug APK."
+            echo "complete=false" >> "$GITHUB_OUTPUT"
+            echo "artifact_name=memoneet-in-progress-debug-apk" >> "$GITHUB_OUTPUT"
+            echo "apk_filename=memoneet-in-progress-debug.apk" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build offline PWA bundle & versioned service worker
+        run: npm run build
+
+      - name: Sync Capacitor Android project
+        run: npx cap sync android
+
+      - name: Run automated test suite
+        run: npm test
+
+      - name: Assemble Android debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Rename APK to reflect honest completion status
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk "android/app/build/outputs/apk/debug/${{ steps.bank_gate.outputs.apk_filename }}"
+
+      - name: Upload Android APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.bank_gate.outputs.artifact_name }}
+          path: android/app/build/outputs/apk/debug/${{ steps.bank_gate.outputs.apk_filename }}
+          if-no-files-found: error
+          retention-days: 30

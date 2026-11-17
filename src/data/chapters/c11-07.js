@@ -1,0 +1,34 @@
+// Chapter c11-07: Structural Organisation in Animals — Verified Starter Pack (Q001–Q005 of 400, IN PROGRESS)
+import { createChapterPack } from '../packHelper.js';
+
+export const questions = createChapterPack('c11-07', [
+  [1, 's1', 'epithelia-junctions-and-connective-tissues', 'C', 'Epithelial sites, cell junctions, and tendons vs ligaments', 'concept', 'easy',
+    'Which pairing aligns epithelial location, intercellular junction role, and dense regular connective tissue accurately?',
+    ['Ciliated epithelium lines bronchioles and fallopian tubes; tight junctions stop leakage across tissues while gap junctions allow ion/small-molecule transfer; tendons attach skeletal muscle to bone whereas ligaments attach bone to bone', 'Simple squamous epithelium lines fallopian tubes; adhering junctions pump ions between cytoplasms; ligaments attach muscle to bone', 'Brush-bordered cuboidal epithelium lines lung alveoli; gap junctions cement dead keratin plates; tendons connect two adjacent bones', 'Compound epithelium performs rapid alveolar gas diffusion; tight junctions synthesise collagen; areolar tissue lacks fibroblasts'],
+    'Ciliated columnar/cuboidal epithelium moves mucus in bronchioles and ova in oviducts; tight junctions block paracellular leakage, adhering junctions cement neighbours, gap junctions link cytoplasms for rapid ion/molecule exchange; dense regular tendons join skeletal muscle to bone and ligaments join bone to bone.',
+    'NCERT Class 11 Ch.7 — Animal tissues: epithelia, cell junctions, and connective tissues'],
+
+  [2, 's2', 'smooth-skeletal-cardiac-and-neuroglia', 'C', 'Cardiac intercalated discs and neuroglial proportion', 'concept', 'medium',
+    'How does cardiac muscle function as a coordinated contractile unit, and what role do non-excitable neuroglial cells play in neural tissue?',
+    ['Communication junctions (intercalated discs) at cell fusion points spread contraction waves across coupled cardiac cells; neuroglia make up more than half the volume of neural tissue to protect and support neurons', 'Cardiac fibres are unbranched voluntary multinucleate syncytia lacking striations; neuroglia generate action potentials faster than neurons', 'Smooth muscle fibres are cylindrical striated voluntary cells lining the biceps; neuroglia form under 5% of brain tissue', 'Intercalated discs block ion passage between adjacent cardiomyocytes so each cell contracts independently'],
+    'Involuntary striated cardiac muscle contains intercalated discs (communication junctions) enabling adjacent cells to contract as a functional unit; in neural tissue, excitable neurons transmit impulses while supportive, protective neuroglia form over half the tissue volume.',
+    'NCERT Class 11 Ch.7 — Muscular and neural tissue organisation'],
+
+  [3, 's3', 'frog-rana-tigrina-respiration-circulation', 'N', 'Frog respiration modes and portal venous systems', 'application', 'medium',
+    'In the Indian bullfrog (Rana tigrina), how is gas exchange maintained during hibernation/aestivation, and which structural details characterise its closed circulatory system?',
+    ['Gaseous exchange occurs strictly through moist vascularised skin (cutaneous respiration); it has a 3-chambered heart (2 atria, 1 ventricle) with sinus venosus, conus arteriosus, nucleated oval RBCs, and both hepatic and renal portal systems', 'Pulmonary breathing intensifies during deep aestivation; its 4-chambered heart circulates enucleated biconcave RBCs without portal veins', 'Branchial gill slits remain open in adult terrestrial frogs; open haemolymph lacks haemoglobin entirely', 'Buccal respiration operates only underwater while hepatic portal veins carry blood straight from kidneys to brain'],
+    'Poikilothermic Rana tigrina uses cutaneous respiration in water and throughout hibernation (winter sleep) and aestivation (summer sleep), plus pulmonary and buccopharyngeal respiration on land; its circulatory system features a 3-chambered heart, sinus venosus, conus arteriosus, nucleated haemoglobin-rich RBCs, and both hepatic and renal portal systems.',
+    'NCERT Class 11 Ch.7 — Section 7.2.2: Frog respiratory and vascular systems'],
+
+  [4, 's4', 'frog-urogenital-cranial-nerves-dimorphism', 'N', 'Sexual dimorphism, cranial nerves, and cloaca in Rana tigrina', 'data-based', 'hard',
+    'Which diagnostic distinction separates an adult male Rana tigrina from an adult female across external traits and urogenital connections?',
+    ['Males bear paired vocal sacs and a copulatory pad on the first forelimb digit, and their ureters serve as urinogenital ducts carrying both urine and sperm (from 10–12 vasa efferentia via Bidder’s canal) into the cloaca; both sexes possess 10 pairs of cranial nerves', 'Females possess vocal sacs and copulatory pads on the hindlimb fifth digit; oviducts fuse directly with kidneys before opening outside the cloaca', 'Males are ammonotelic on land with 12 pairs of cranial nerves and internal fertilisation lacking a tadpole larva', 'Females release 2,500–3,000 fertilised shelled eggs onto dry leaves without external water'],
+    'Male frogs show vocal sacs and copulatory pads on the first forelimb digit; 10–12 vasa efferentia pass from testes into kidneys, open into Bidder’s canal, and exit via combined urinogenital ureters into the cloaca (whereas female oviducts open separately into the cloaca). Adult frogs are ureotelic with 10 pairs of cranial nerves and external fertilisation yielding aquatic tadpoles.',
+    'NCERT Class 11 Ch.7 — Section 7.2: Frog dimorphism, excretory, neural, and reproductive systems'],
+
+  [5, 's5', 'cockroach-nmc-digestive-excretory-hallmarks', 'C', 'Insect organisation: Periplaneta gut and Malpighian tubules', 'recall', 'medium',
+    'In insect structural organisation (Periplaneta americana), identify the precise anatomical junction for the 6–8 hepatic (gastric) caeca versus the 100–150 yellow filamentous Malpighian tubules.',
+    ['Hepatic caeca arise at the foregut–midgut junction to secrete digestive juice, while Malpighian tubules arise at the midgut–hindgut junction to excrete uric acid (uricotelism)', 'Hepatic caeca arise at the rectum for water reabsorption, while Malpighian tubules surround the pharynx for chitin grinding', 'Both structures open directly into dorsal spiracles to transport dissolved oxygen in red haemoglobin', 'Gizzard (proventriculus) lies inside the hindgut whereas mushroom glands lie inside the female crop'],
+    'In Periplaneta americana, food stored in the crop is ground by 6 chitinous teeth in the gizzard; 6–8 blind hepatic caeca ring the foregut–midgut junction to secrete digestive enzymes, while 100–150 Malpighian tubules ring the midgut–hindgut junction for uricotelic excretion, alongside mosaic vision via ~2,000 ommatidia per compound eye.',
+    'NCERT Class 11 Ch.7 (NMC Syllabus Context) — Insect morphology and internal anatomy'],
+]);
