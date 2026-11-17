@@ -1,5 +1,10 @@
-// Chapter c11-05: Morphology of Flowering Plants — Verified Starter Pack (Q001–Q005 of 400, IN PROGRESS)
+// Morphology of Flowering Plants — automatically checked, IN PROGRESS.
+// Preserve starter question IDs, ordering and answer positions.
 import { createChapterPack } from '../packHelper.js';
+import { rootStemLeafPack } from './c11-05/pack1-root-stem-leaf.js';
+import { inflorescenceFlowerPack } from './c11-05/pack2-inflorescence-flower.js';
+import { fruitSeedPack } from './c11-05/pack3-fruit-seed.js';
+import { floralFamiliesPack } from './c11-05/pack4-floral-families.js';
 
 export const questions = createChapterPack('c11-05', [
   [1, 's1', 'pneumatophores-and-root-regions', 'C', 'Root zones and respiratory pneumatophores in Rhizophora', 'concept', 'easy',
@@ -32,3 +37,5 @@ export const questions = createChapterPack('c11-05', [
     'Floral formula ⊕ ⚥ K(5) C͡(5)A5 G̲(2) with persistent calyx, epipetalous stamens, and bicarpellary syncarpous superior ovary with swollen oblique placenta diagnoses Solanaceae cleanly from Fabaceae, Brassicaceae, Malvaceae (monadelphous stamens, epicalyx), and Poaceae.',
     'NCERT Class 11 Ch.5 — Section 5.9.1 Solanaceae and NMC NEET angiosperm family comparison'],
 ]);
+
+questions.push(...rootStemLeafPack, ...inflorescenceFlowerPack, ...fruitSeedPack, ...floralFamiliesPack);

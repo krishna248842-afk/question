@@ -3,19 +3,19 @@
 export const BANK_MANIFEST = {
   "generatedAt": "2026-11-17",
   "bankComplete": false,
-  "totalValid": 1605,
+  "totalValid": 1705,
   "totalRequired": 7600,
   "completeChapters": 2,
   "inProgressChapters": 17,
   "totalChapters": 19,
   "stageTotals": {
-    "Class 11": 1067,
-    "NEET practice": 538
+    "Class 11": 1142,
+    "NEET practice": 563
   },
   "diffTotals": {
-    "easy": 562,
-    "medium": 750,
-    "hard": 293
+    "easy": 589,
+    "medium": 798,
+    "hard": 318
   },
   "chapters": [
     {
@@ -165,34 +165,34 @@ export const BANK_MANIFEST = {
       "order": 5,
       "classStage": "Class 11",
       "title": "Morphology of Flowering Plants",
-      "validCount": 5,
+      "validCount": 105,
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
+      "reviewSnapshotCurrent": false,
       "stageCounts": {
-        "Class 11": 3,
-        "NEET practice": 2
+        "Class 11": 78,
+        "NEET practice": 27
       },
       "diffCounts": {
-        "easy": 2,
-        "medium": 2,
-        "hard": 1
+        "easy": 29,
+        "medium": 50,
+        "hard": 26
       },
       "typeCounts": {
-        "recall": 1,
-        "concept": 1,
-        "application": 1,
-        "statement-analysis": 1,
-        "case-based": 0,
-        "data-based": 1
+        "recall": 27,
+        "concept": 41,
+        "application": 26,
+        "statement-analysis": 6,
+        "case-based": 3,
+        "data-based": 2
       },
       "sectionCounts": {
-        "c11-05-s1": 1,
-        "c11-05-s2": 1,
-        "c11-05-s3": 1,
-        "c11-05-s4": 1,
-        "c11-05-s5": 1
+        "c11-05-s1": 19,
+        "c11-05-s2": 8,
+        "c11-05-s3": 36,
+        "c11-05-s4": 26,
+        "c11-05-s5": 16
       }
     },
     {

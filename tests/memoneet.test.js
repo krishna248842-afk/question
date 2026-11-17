@@ -155,6 +155,12 @@ describe('Newly published, not owner-reviewed batches', () => {
   it('includes each new item once and records that the earlier review no longer covers the chapter', async () => {
     const plantBatch = (await import('../src/data/chapters/c11-03/pack9-comparative-botany-draft.js')).comparativeBotanyDraft;
     const animalBatch = (await import('../src/data/chapters/c11-04/pack9-body-plans.js')).bodyPlansPack;
+    const morphologyBatches = await Promise.all([
+      import('../src/data/chapters/c11-05/pack1-root-stem-leaf.js').then(m => m.rootStemLeafPack),
+      import('../src/data/chapters/c11-05/pack2-inflorescence-flower.js').then(m => m.inflorescenceFlowerPack),
+      import('../src/data/chapters/c11-05/pack3-fruit-seed.js').then(m => m.fruitSeedPack),
+      import('../src/data/chapters/c11-05/pack4-floral-families.js').then(m => m.floralFamiliesPack),
+    ]);
     const cellBatches = await Promise.all([
       import('../src/data/chapters/c11-08/pack1-cell-diversity-draft.js').then(m => m.cellDiversityDraft),
       import('../src/data/chapters/c11-08/pack2-prokaryote-draft.js').then(m => m.prokaryoteDraft),
@@ -166,8 +172,9 @@ describe('Newly published, not owner-reviewed batches', () => {
     ]);
     expect(plantBatch).toHaveLength(25);
     expect(animalBatch).toHaveLength(25);
+    expect(morphologyBatches.flat()).toHaveLength(100);
     expect(cellBatches.flat()).toHaveLength(175);
-    for (const [id, added] of [['c11-03', plantBatch], ['c11-04', animalBatch], ['c11-08', cellBatches.flat()]]) {
+    for (const [id, added] of [['c11-03', plantBatch], ['c11-04', animalBatch], ['c11-05', morphologyBatches.flat()], ['c11-08', cellBatches.flat()]]) {
       const published = await loadChapterPack(id);
       const ids = published.map(q => q.id);
       expect(new Set(ids).size).toBe(ids.length);
