@@ -79,42 +79,47 @@ describe('Syllabus audit & completion honesty gates', () => {
     }
   });
 
-  it('marks every chapter without human sign-off in progress', () => {
-    expect(BANK_MANIFEST.bankComplete).toBe(false);
-    expect(BANK_MANIFEST.completeChapters).toBe(0);
+  it('requires the target count and human sign-off for a complete chapter', () => {
     expect(BANK_MANIFEST.totalChapters).toBe(32);
     expect(BANK_MANIFEST.totalRequired).toBe(12800);
     expect(BANK_MANIFEST.totalValid).toBe(BANK_MANIFEST.chapters.reduce((n, c) => n + c.validCount, 0));
     for (const ch of BANK_MANIFEST.chapters) {
       const meta = getChapterCompletionMeta(ch);
-      expect(meta.isComplete).toBe(false);
-      expect(meta.badgeText).toMatch(/^In progress · /);
-      if (ch.validCount === CHAPTER_TARGET) expect(meta.badgeText).toContain('review pending');
+      if (meta.isComplete) {
+        expect(ch.validCount).toBe(CHAPTER_TARGET);
+        expect(ch.reviewComplete).toBe(true);
+      } else {
+        expect(meta.badgeText).toMatch(/^In progress · /);
+        if (ch.validCount === CHAPTER_TARGET) expect(meta.badgeText).toContain('review pending');
+      }
     }
+    expect(BANK_MANIFEST.completeChapters).toBe(BANK_MANIFEST.chapters.filter((ch) => getChapterCompletionMeta(ch).isComplete).length);
     expect(getChapterCompletionMeta({ validCount: 400, status: 'complete', reviewComplete: true }).isComplete).toBe(true);
     expect(getChapterCompletionMeta({ validCount: 399, status: 'complete', reviewComplete: true }).isComplete).toBe(false);
   });
 
-  it('passes validate:authored (0 quality errors) and fails strict validate:bank while chapters < 400', () => {
-    const authoredOut = execFileSync(
+  it('checks the manifest against the validator and enforces the strict completion gate', () => {
+    const report = JSON.parse(execFileSync(
       process.execPath,
-      ['scripts/validate-bank.mjs', '--allow-incomplete'],
+      ['scripts/validate-bank.mjs', '--allow-incomplete', '--json'],
       { cwd: ROOT, encoding: 'utf8' }
-    );
-    expect(authoredOut).toContain(`0 detected schema/distribution/duplicate errors across ${BANK_MANIFEST.totalValid} records`);
-
-    let strictFailed = false;
-    try {
-      execFileSync(process.execPath, ['scripts/validate-bank.mjs'], {
-        cwd: ROOT,
-        encoding: 'utf8',
-        stdio: 'pipe',
-      });
-    } catch (err) {
-      strictFailed = err.status === 1;
-      expect(String(err.stderr)).toContain('32 completion-gate error(s)');
+    ));
+    expect(report.qualityErrorCount).toBe(0);
+    expect(report.totalValid).toBe(BANK_MANIFEST.totalValid);
+    expect(report.completeChapters).toBe(BANK_MANIFEST.completeChapters);
+    expect(report.bankComplete).toBe(BANK_MANIFEST.bankComplete);
+    for (const summary of report.chapters) {
+      const ch = MANIFEST_BY_CHAPTER_ID.get(summary.chapterId);
+      expect(ch.validCount).toBe(summary.validCount);
+      expect(ch.reviewComplete).toBe(summary.reviewComplete);
+      expect(ch.status).toBe(summary.status === 'COMPLETE' ? 'complete' : 'in-progress');
     }
-    expect(strictFailed).toBe(true);
+
+    let strictStatus = 0;
+    try {
+      execFileSync(process.execPath, ['scripts/validate-bank.mjs'], { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' });
+    } catch (err) { strictStatus = err.status; }
+    expect(strictStatus).toBe(report.bankComplete ? 0 : 1);
   });
 });
 
