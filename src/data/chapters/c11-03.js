@@ -3,10 +3,10 @@ import { createChapterPack } from '../packHelper.js';
 
 export const questions = createChapterPack('c11-03', [
   [1, 's1', 'bentham-hooker-natural-system', 'C', 'Natural system of angiosperm classification', 'concept', 'easy',
-    'Unlike artificial systems relying on a few superficial vegetative or androecial traits, the natural classification proposed by George Bentham and Joseph Dalton Hooker evaluated',
-    ['natural affinities integrating external morphology with ultrastructure, anatomy, embryology, and phytochemistry', 'strictly the total count of stamens per flower without inspecting internal histology', 'exclusively mitochondrial DNA barcodes extracted from herbarium seeds', 'local culinary and medicinal uses grouped without taxonomic ranks'],
-    'Bentham and Hooker’s natural system for flowering plants grouped taxa using comprehensive natural affinities—combining external features with internal features such as anatomy, embryology, and phytochemistry.',
-    'NCERT Class 11 Ch.3 — Section 3.0: Natural classification by Bentham and Hooker'],
+    'What distinguishes a natural classification from a system based on only a few superficial plant characters?',
+    ['It aims to group plants using a broad range of natural affinities', 'It groups plants using only the number of stamens', 'It sorts plants exclusively by their local names', 'It excludes all comparisons of plant form'],
+    'A natural system seeks affinities across multiple characters rather than relying on a few arbitrary traits. Bentham and Hooker proposed an influential natural system for flowering plants.',
+    'NCERT Class 11 Biology, Plant Kingdom: natural classification systems'],
 
   [2, 's2', 'algae-classes-pigments-stored-food', 'N', 'Pigments and reserve foods across three algal classes', 'data-based', 'medium',
     'Match the three algal classes accurately with their dominant pigments and characteristic reserve food material (NCERT Table 3.1).',

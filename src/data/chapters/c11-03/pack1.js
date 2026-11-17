@@ -3,10 +3,10 @@ import { createChapterPack } from '../../packHelper.js';
 
 export const pack1 = createChapterPack('c11-03', [
   [1, 's1', 'bentham-hooker-natural-system', 'C', 'Natural system of angiosperm classification', 'concept', 'easy',
-    'Unlike artificial systems relying on a few superficial vegetative or androecial traits, the natural classification proposed by George Bentham and Joseph Dalton Hooker evaluated',
-    ['natural affinities integrating external morphology with ultrastructure, anatomy, embryology, and phytochemistry', 'strictly the total count of stamens per flower without inspecting any internal plant histology', 'exclusively mitochondrial DNA barcodes extracted from fossilised Palaeozoic compression beds', 'local culinary and medicinal plant utilities grouped alphabetically without hierarchical ranks'],
-    'Bentham and Hooker’s natural system for flowering plants grouped taxa using comprehensive natural affinities—combining external features with internal features such as ultrastructure, anatomy, embryology, and phytochemistry.',
-    'NCERT Class 11 Ch.3 — Section 3.0: Natural classification by Bentham and Hooker'],
+    'What distinguishes a natural classification from a system based on only a few superficial plant characters?',
+    ['It aims to group plants using a broad range of natural affinities', 'It groups plants using only the number of stamens', 'It sorts plants exclusively by their local names', 'It excludes all comparisons of plant form'],
+    'A natural system seeks affinities across multiple characters rather than relying on a few arbitrary traits. Bentham and Hooker proposed an influential natural system for flowering plants.',
+    'NCERT Class 11 Biology, Plant Kingdom: natural classification systems'],
 
   [2, 's2', 'algae-classes-pigments-stored-food', 'N', 'Pigments and reserve foods across three algal classes', 'data-based', 'medium',
     'Match the three algal classes accurately with their dominant pigments and characteristic reserve food material (NCERT Table 3.1).',
@@ -87,10 +87,10 @@ export const pack1 = createChapterPack('c11-03', [
     'NCERT Class 11 Ch.3 — Section 3.0: George Bentham and Joseph Dalton Hooker'],
 
   [15, 's1', 'artificial-vs-natural-classification-contrast', 'C', 'Direct contrast between artificial and natural classification systems', 'concept', 'medium',
-    'Contrast Linnaeus’s artificial system cleanly against Bentham and Hooker’s natural system.',
-    ['Linnaeus relied on a few superficial vegetative or androecial traits giving vegetative and sexual traits equal weight; Bentham and Hooker integrated broad external features with ultrastructure, anatomy, embryology, and phytochemistry', 'Linnaeus relied on DNA sequencing and fossil ancestry; Bentham and Hooker relied solely on stamen number and leaf shape', 'Both systems rejected internal anatomy and grouped plants exclusively by whether they grew as trees, shrubs, or herbs', 'Bentham and Hooker gave greater weight to soil-induced leaf size than to conserved floral, anatomical, and embryological affinities'],
-    'Natural systems resolved the narrow arbitrary character choice of artificial systems by synthesising comprehensive morphological, ultrastructural, anatomical, embryological, and phytochemical affinities.',
-    'NCERT Class 11 Ch.3 — Section 3.0: Comparing artificial and natural systems'],
+    'How does an artificial plant classification differ in principle from a natural system?',
+    ['An artificial system may rely on a few selected traits; a natural system considers broader affinities', 'An artificial system requires DNA sequences; a natural system excludes all morphology', 'Both systems use only the habitat in which a plant grows', 'A natural system groups plants only by their common names'],
+    'Artificial systems can use a narrow selection of traits; natural systems seek broader relationships. This distinction does not imply that early historical systems used modern molecular or ultrastructural techniques.',
+    'NCERT Class 11 Biology, Plant Kingdom: artificial and natural systems'],
 
   [16, 's1', 'phylogenetic-classification-core-assumption', 'C', 'Central evolutionary assumption of phylogenetic classification systems', 'recall', 'easy',
     'Presently accepted phylogenetic classification systems rest on evolutionary relationships between organisms and expressly assume that',
@@ -255,10 +255,10 @@ export const pack1 = createChapterPack('c11-03', [
     'NCERT Class 11 Ch.3 — Section 3.0: Gross superficial traits — habit, colour, number and shape of leaves'],
 
   [43, 's1', 'why-natural-system-still-valued-in-herbaria', 'N', 'Practical strength of Bentham and Hooker’s natural classification', 'concept', 'medium',
-    'Why did Bentham and Hooker’s natural system bring genuinely related flowering-plant families together far more accurately than Linnaeus’s artificial system, even before DNA phylogenetics existed?',
-    ['Because shared evolutionary descent naturally produces correlated similarities across external morphology, anatomy, ultrastructure, embryology, and phytochemistry simultaneously', 'Because Bentham and Hooker ignored flowers completely and sorted every specimen strictly by soil moisture preference', 'Because Bentham and Hooker deliberately limited their classification to a single vegetative leaf measurement per family', 'Because Bentham and Hooker merged bacteria, fungi, and red algae back into the same family as roses'],
-    'Evaluating correlated suites of external and internal (ultrastructural, anatomical, embryological, phytochemical) features captures genuine natural affinities rather than convergent single-trait coincidences.',
-    'NCERT Class 11 Ch.3 — Section 3.0: Scientific strength of Bentham and Hooker’s natural system'],
+    'A taxonomist examines several independent characters instead of classifying plants by a single leaf measurement. What is one advantage of the broader comparison?',
+    ['It can reduce reliance on a single misleading similarity', 'It guarantees that every similarity reflects common ancestry', 'It makes all anatomical observations unnecessary', 'It proves that unrelated plants can never resemble each other'],
+    'Comparing several characters can reduce dependence on one misleading trait, although convergence and other evidence still need careful evaluation.',
+    'Supplemental reasoning about character comparison; NCERT Class 11 Biology, Plant Kingdom: natural classification'],
 
   [44, 's1', 'distinguishing-phylogenetic-from-phenetic-numerical', 'N', 'Conceptual difference between phylogenetic and numerical taxonomy', 'concept', 'hard',
     'Contrast the core guiding principle of a phylogenetic classification against that of classical numerical taxonomy.',

@@ -140,6 +140,9 @@ describe('Unpublished draft isolation', () => {
       import('../src/data/chapters/c11-04/pack3-worms-draft.js').then(m => m.wormDraft),
       import('../src/data/chapters/c11-04/pack4-annelids-arthropods-draft.js').then(m => m.annelidArthropodDraft),
       import('../src/data/chapters/c11-04/pack5-molluscs-echinoderms-draft.js').then(m => m.molluscEchinodermDraft),
+      import('../src/data/chapters/c11-04/pack6-chordates-draft.js').then(m => m.chordateDraft),
+      import('../src/data/chapters/c11-04/pack7-fishes-amphibia-draft.js').then(m => m.fishesAmphibiaDraft),
+      import('../src/data/chapters/c11-04/pack8-amniotes-draft.js').then(m => m.amnioteDraft),
     ]);
     const draftIds = animalBatches.flat().map(q => q.id);
     expect(new Set(draftIds).size).toBe(draftIds.length);
@@ -199,6 +202,14 @@ describe('Cross-chapter duplicate detection', () => {
 });
 
 describe('Answer-index correctness, option shuffling & lazy chapter packs', () => {
+  it('keeps the corrected wording of growth and classification distinctions unambiguous', async () => {
+    const growth = (await loadChapterPack('c11-01')).find(q => q.id === 'c11-01-q006');
+    expect(growth.question).not.toMatch(/mutually exclusive/i);
+    expect(growth.explanation).toContain('can grow and reproduce during the same period');
+    const classification = (await loadChapterPack('c11-03')).find(q => q.id === 'c11-03-q001');
+    expect(classification.options[classification.answer]).toContain('natural affinities');
+    expect(classification.explanation).not.toMatch(/Bentham.*ultrastructure/i);
+  });
   it('validates 0-based answer index, 4 distinct options, and metadata across all authored items', async () => {
     clearChapterPackCache();
     expect(getCachedChapterCount()).toBe(0);

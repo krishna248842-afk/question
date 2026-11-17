@@ -32,11 +32,11 @@ export const pack1 = [
     'Unicellular organisms also grow by cell division; in an in vitro culture, growth is conveniently observed by counting cell numbers under the microscope.',
     'NCERT Class 11 Ch.1 — Observing unicellular growth in in vitro cultures'],
 
-  [6, 's1', 'higher-organisms-mutually-exclusive', 'N', 'Growth vs reproduction exclusivity', 'concept', 'medium',
-    'In majority of higher plants and animals, growth and reproduction are treated as mutually exclusive events because',
+  [6, 's1', 'higher-organisms-mutually-exclusive', 'N', 'Growth and reproduction as distinct processes', 'concept', 'medium',
+    'Why are somatic growth and reproduction considered distinct processes in most multicellular plants and animals?',
     ['somatic cell proliferation enlarges one individual without directly creating a new offspring', 'vegetative organs must degenerate completely before any meiosis can begin', 'mature individuals lose all metabolic enzymes once gametes differentiate', 'fertilisation prevents subsequent mitotic divisions in the resulting zygote'],
-    'In multicellular organisms, an increase in somatic mass enlarges the existing body, whereas reproduction generates distinct progeny as a separate biological process.',
-    'NCERT Class 11 Ch.1 — Mutually exclusive growth and reproduction in higher forms'],
+    'Somatic growth increases the size or cell number of an existing individual; reproduction produces offspring. An organism can grow and reproduce during the same period.',
+    'NCERT Class 11 Ch.1 — Distinguishing growth from reproduction'],
 
   [7, 's1', 'unicellular-growth-reproduction-synonym', 'N', 'Growth-reproduction equivalence in unicells', 'concept', 'medium',
     'When an Amoeba divides into two daughter cells, why do biologists regard its growth and reproduction as synonymous?',

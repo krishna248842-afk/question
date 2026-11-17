@@ -47,14 +47,14 @@ export const pack4 = createChapterPack('c11-03', [
   [158, 's3', 'moss-dense-mats-preventing-soil-erosion', 'C', 'How dense moss mats prevent soil erosion during rainfall', 'application', 'easy',
     'Although bryophytes have relatively limited direct economic importance overall, how do dense moss mats protect sloping forest soils ecologically?',
     ['They form dense cushions on soil that reduce the mechanical impact of falling rain and thereby prevent soil erosion', 'They drive deep lignified tap roots ten metres into bedrock to anchor mountain cliffs permanently', 'They secrete waterproof siliceous crusts across hillsides that divert all rainwater into rivers', 'They convert acidic bog water into solid calcium carbonate pavements immune to monsoon runoff'],
-    'Since mosses form dense mats on the soil, they absorb and cushion the impact of falling raindrops and prevent soil erosion, in addition to providing food for herbaceous mammals, birds, and other animals and pioneering rock succession.',
+    'Since mosses form dense mats on the soil, they absorb and cushion the impact of falling raindrops and prevent soil erosion, in addition to providing food for herbivorous mammals, birds, and other animals and pioneering rock succession.',
     'NCERT Class 11 Ch.3 — Section 3.2: Dense moss mats reducing rain impact and preventing soil erosion'],
 
   [159, 's3', 'bryophyte-food-value-for-wildlife', 'C', 'Trophic role of mosses for terrestrial animals', 'recall', 'easy',
     'Despite having little direct commercial importance as human crops, some mosses contribute directly to terrestrial food webs by providing food for',
-    ['herbaceous mammals, birds, and other animals', 'exclusively deep-sea benthic fishes and whales', 'obligate blood-feeding mosquitoes and tsetse flies', 'strictly anaerobic ruminant methanogens without hosts'],
-    'Section 3.2 notes that bryophytes in general are of little economic importance, but some mosses provide food for herbaceous mammals, birds, and other animals, while Sphagnum yields peat.',
-    'NCERT Class 11 Ch.3 — Section 3.2: Mosses providing food for herbaceous mammals, birds, and other animals'],
+    ['herbivorous mammals, birds, and other animals', 'exclusively deep-sea benthic fishes and whales', 'obligate blood-feeding mosquitoes and tsetse flies', 'strictly anaerobic ruminant methanogens without hosts'],
+    'Section 3.2 notes that bryophytes in general are of little economic importance, but some mosses provide food for herbivorous mammals, birds, and other animals, while Sphagnum yields peat.',
+    'NCERT Class 11 Ch.3 — Section 3.2: Mosses providing food for herbivorous mammals, birds, and other animals'],
 
   [160, 's3', 'liverworts-characteristic-microhabitats', 'C', 'Preferred microhabitats of liverworts', 'recall', 'easy',
     'Liverworts grow typically in moist, shady habitats specifically exemplified by',
