@@ -9,6 +9,7 @@ import { pteridophyteDraft } from './c11-03/pack5-pteridophyte-draft.js';
 import { pteridophyteDraft2 } from './c11-03/pack6-pteridophyte-draft.js';
 import { gymnospermDraft } from './c11-03/pack7-gymnosperm-draft.js';
 import { angiospermCycleDraft } from './c11-03/pack8-angiosperm-cycle-draft.js';
+import { comparativeBotanyDraft } from './c11-03/pack9-comparative-botany-draft.js';
 
 const starterIds = new Set(starterQuestions.map((q) => q.id));
 export const questions = [
@@ -16,5 +17,5 @@ export const questions = [
   ...pack1.filter((q) => !starterIds.has(q.id)),
   ...pack2, ...pack3, ...pack4,
   ...pteridophyteDraft, ...pteridophyteDraft2,
-  ...gymnospermDraft, ...angiospermCycleDraft,
+  ...gymnospermDraft, ...angiospermCycleDraft, ...comparativeBotanyDraft,
 ];

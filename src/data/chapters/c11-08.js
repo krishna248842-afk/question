@@ -1,5 +1,11 @@
-// Chapter c11-08: Cell: The Unit of Life — Verified Starter Pack (Q001–Q005 of 400, IN PROGRESS)
+// Cell: The Unit of Life — automatically checked, IN PROGRESS.
+// Preserve the original starter ordering and stored answer positions.
 import { createChapterPack } from '../packHelper.js';
+import { cellDiversityDraft } from './c11-08/pack1-cell-diversity-draft.js';
+import { prokaryoteDraft } from './c11-08/pack2-prokaryote-draft.js';
+import { membranesDraft } from './c11-08/pack3-membranes-draft.js';
+import { endomembraneDraft } from './c11-08/pack4-endomembrane-draft.js';
+import { energyOrganelles } from './c11-08/pack5-energy-organelles.js';
 
 export const questions = createChapterPack('c11-08', [
   [1, 's1', 'schleiden-schwann-virchow-cell-theory', 'C', 'Schleiden, Schwann, and Virchow’s refinement of cell theory', 'recall', 'easy',
@@ -32,3 +38,5 @@ export const questions = createChapterPack('c11-08', [
     'Based on primary constriction (centromere flanked by disc-shaped kinetochores), metacentric has a middle centromere (two equal arms), sub-metacentric has a slightly off-centre centromere (one shorter p arm, one longer q arm), acrocentric is close to one end (one extremely short, one very long arm), and telocentric has a terminal centromere; some chromosomes also bear non-staining secondary constrictions forming satellites.',
     'NCERT Class 11 Ch.8 — Section 8.5.10 Nucleus: nucleolus and chromosome types'],
 ]);
+
+questions.push(...cellDiversityDraft, ...prokaryoteDraft, ...membranesDraft, ...endomembraneDraft, ...energyOrganelles);

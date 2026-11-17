@@ -1,5 +1,5 @@
-// Cell: The Unit of Life — unpublished draft Q006–Q030.
-// Review and publication are pending; correct option is first in each tuple.
+// Cell: The Unit of Life — published, automatically checked batch Q006–Q030.
+// Published per project-owner direction without additional human review; correct option is first in each tuple.
 import { createChapterPack } from '../../packHelper.js';
 
 export const cellDiversityDraft = createChapterPack('c11-08', [

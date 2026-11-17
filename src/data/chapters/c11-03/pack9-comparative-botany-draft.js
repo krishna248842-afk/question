@@ -1,5 +1,5 @@
-// Plant Kingdom, unpublished comparative concepts, Q201–Q222 and Q273–Q275.
-// Not part of the released chapter; editorial and human review are required.
+// Plant Kingdom, published comparative concepts, Q201–Q222 and Q273–Q275.
+// Published per project-owner direction without additional human review; correct option is first in each tuple.
 import { createChapterPack } from '../../packHelper.js';
 
 export const comparativeBotanyDraft = createChapterPack('c11-03', [
@@ -18,11 +18,11 @@ export const comparativeBotanyDraft = createChapterPack('c11-03', [
     ['It can splash gemmae onto nearby suitable surfaces', 'It fertilises every egg inside an archegonium', 'It turns gemmae directly into pollen grains', 'It changes the cup into a fruit'],
     'Rain splash can dislodge and disperse gemmae. A dispersed gemma may grow into a new gametophyte under suitable conditions without fertilisation.',
     'Supplemental: Asutosh College, archegoniates notes, https://asutoshcollege.in/new-web/Study_Material/SEM_II_27042020.pdf; NCERT Plant Kingdom — gemmae'],
-  [204, 's3', 'bryophyte-sperm-short-distance', 'N', 'Dispersal and fertilisation constraints', 'case-based', 'hard',
-    'In a moss colony, spores reach a new patch of soil but local plants receive no surface water film. Which event may still be limited after plants grow?',
-    ['Movement of male gametes to an archegonium', 'Transport of pollen to a stigma', 'Release of seeds from a fruit', 'Growth of a pollen tube through an ovule'],
-    'Spore dispersal can colonise a site, but motile bryophyte male gametes require water to reach the female sex organ for fertilisation.',
-    'Supplemental ecological inference; NCERT Class 11 Biology, Plant Kingdom — bryophyte reproduction'],
+  [204, 's3', 'moss-calyptra-origin', 'N', 'A protective cap on moss sporophytes', 'application', 'hard',
+    'A young Funaria sporophyte is covered by a cap derived from maternal gametophyte tissue. What is this cap called?',
+    ['Calyptra', 'Operculum', 'Peristome', 'Capsule wall'],
+    'The calyptra is a cap of gametophyte tissue protecting the developing sporophyte. The operculum is the capsule lid, part of the sporophyte.',
+    'Supplemental: Society for Integrative and Comparative Biology, Funaria calyptra research abstract, https://sicb.org/abstracts/examining-the-gametophytic-calyptra-and-its-role-in-moss-sporophyte-development-using-the-cord-moss-funaria-hygrometrica/; NCERT Plant Kingdom — moss sporophyte'],
   [205, 's3', 'moss-peristome-humidity', 'N', 'Humidity and moss spore release', 'case-based', 'hard',
     'In Funaria, the outer peristome teeth of an open capsule respond to changes in humidity. How can this affect spore dispersal?',
     ['Their moisture-driven movements help regulate the release of spores', 'They move sperm to the archegonium through a pollen tube', 'They turn the capsule into a protective seed coat', 'They make the protonema divide by meiosis'],
@@ -38,11 +38,11 @@ export const comparativeBotanyDraft = createChapterPack('c11-03', [
     ['Helping release and disperse spores as the capsule dries', 'Producing the egg within the archegonium', 'Conducting sugars from the leaves to the root', 'Forming the pollen tube after pollination'],
     'Elaters are sterile elongated cells whose moisture-sensitive movements help loosen and disperse spores from the liverwort capsule.',
     'Supplemental: Asutosh College, archegoniates notes, https://asutoshcollege.in/new-web/Study_Material/SEM_II_27042020.pdf; NCERT Plant Kingdom — liverwort sporophyte'],
-  [208, 's3', 'moss-rhizoid-true-root-comparison', 'C', 'Rhizoids versus roots', 'statement-analysis', 'medium',
-    'A student labels a moss rhizoid as a true vascular root. What observation would most directly challenge that label?',
-    ['The rhizoid lacks the vascular organisation characteristic of a true root', 'The rhizoid anchors the plant to the substrate', 'The rhizoid grows toward a damp surface', 'The rhizoid is part of the plant body'],
-    'Moss rhizoids help anchor the gametophyte, but they are not true roots with the vascular organisation of a vascular plant.',
-    'Supplemental anatomical comparison; NCERT Class 11 Biology, Plant Kingdom — bryophyte rhizoids'],
+  [208, 's3', 'sphagnum-hyaline-cells', 'C', 'Water storage in Sphagnum', 'concept', 'medium',
+    'In Sphagnum leaves, what is a major function of the large hyaline cells that are dead at maturity?',
+    ['Retaining water', 'Producing motile sperm', 'Carrying sugars in phloem', 'Forming spores by meiosis'],
+    'Large hyaline leaf cells help retain water, while neighbouring living chlorophyllose cells carry out photosynthesis.',
+    'Supplemental: University of California Museum of Paleontology, Sphagnum morphology, https://ucmp.berkeley.edu/plants/bryophyta/sphagnomm.html; NCERT Plant Kingdom — Sphagnum water retention'],
   [209, 's3', 'moss-operculum-peristome', 'C', 'Moss capsule opening', 'concept', 'medium',
     'In a Funaria capsule, the lid is shed at maturity and exposes a ring of teeth. What is that lid called?',
     ['Operculum', 'Protonema', 'Archegonium', 'Rhizoid'],
@@ -58,11 +58,11 @@ export const comparativeBotanyDraft = createChapterPack('c11-03', [
     ['Slow decomposition allows organic remains to build up over time', 'Rapid oxidation removes all organic remains', 'Waterlogging converts living moss directly into mineral rock', 'Each moss spore develops into a seed coat'],
     'Waterlogged conditions can restrict oxygen availability and slow decomposition, allowing organic matter including Sphagnum remains to accumulate as peat.',
     'Supplemental bog ecology; NCERT Class 11 Biology, Plant Kingdom — Sphagnum and peat'],
-  [212, 's3', 'bryophyte-colony-erosion-mechanism', 'N', 'Ground cover and erosion', 'application', 'medium',
-    'How can a continuous carpet of moss on a slope reduce loss of surface soil during rainfall?',
-    ['It covers and helps bind the surface, reducing the impact and movement of water', 'It converts all rainwater into seed coats', 'It removes gravity from the slope', 'It makes every soil particle part of a root xylem vessel'],
-    'Moss mats cover soil and can reduce the erosive effects of water, helping conserve the substrate.',
-    'NCERT Class 11 Biology, Plant Kingdom — ecological roles of bryophytes'],
+  [212, 's3', 'sphagnum-peat-carbon', 'C', 'Carbon storage in peatlands', 'application', 'medium',
+    'A Sphagnum-dominated peatland accumulates organic material over long periods. What ecological consequence can this accumulation have?',
+    ['It stores carbon in peat', 'It converts all carbon to atmospheric nitrogen', 'It prevents photosynthesis in every nearby plant', 'It transforms peat into vascular xylem'],
+    'Peat contains accumulated organic matter and can store carbon over long periods. Its storage depends on the balance between accumulation and decomposition.',
+    'Supplemental: Carbon Storage and Fluxes from Sphagnum Peatlands, https://link.springer.com/article/10.1007/s40710-024-00736-0; NCERT Plant Kingdom — peat'],
   [213, 's4', 'fern-indusium-protection', 'C', 'Covering a fern sorus', 'concept', 'medium',
     'In some ferns, a thin flap of tissue covers a developing cluster of sporangia. What is the flap called?',
     ['An indusium', 'A cotyledon', 'A protonema', 'An antheridium'],

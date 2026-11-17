@@ -13,7 +13,7 @@ Before writing any new code or content, the prior MemoNeet question bank (`src/d
 | Genuinely distinct valid items in active syllabus | **110** | 77 in *The Living World* + 33 across 29 other retained chapters + 0 in 2 omitted required chapters |
 | Chapters genuinely at 400/400 in legacy repo | **0 / 32** | Every legacy UI `"400+"` badge was inaccurate and removed |
 
-Legacy templated prompts and detected rephrased duplicates were discarded. The replacement records (`src/data/chapters/c11-01.js`..`c12-13.js`) require independent human review for originality, factual correctness, distractor plausibility, and conceptual distinctness; automated detection does not prove those properties.
+Legacy templated prompts and detected rephrased duplicates were discarded. The replacement records (`src/data/chapters/c11-01.js`..`c12-13.js`) are subject to automated checks, which cannot prove originality, factual correctness, distractor plausibility, or conceptual distinctness. The owner has requested no further human-review gate; new material must not be described as human-reviewed.
 
 ## 2. Definitive Syllabus Standard & Migration Notes
 

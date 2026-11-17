@@ -140,7 +140,8 @@ export const OWNER_REVIEW = {
 }
 };
 
-// Only a 400-record chapter can satisfy the chapter-wide sign-off gate.
+// Full-chapter attestations remain informational and are content-hash bound;
+// per the project owner's later instruction they are not a completion gate.
 export const PACK_REVIEWS = Object.fromEntries(
   Object.entries(OWNER_REVIEW.chapters)
     .filter(([, review]) => review.reviewedCount === 400)

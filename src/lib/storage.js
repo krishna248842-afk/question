@@ -147,7 +147,7 @@ export function sanitizePersonalQuestion(input, existingId = null) {
     options,
     answer,
     explanation,
-    sourceNote: 'Personal study item (saved on this device · excluded from verified bank count)',
+    sourceNote: 'Personal study item (saved on this device · excluded from curriculum bank count)',
     isVerifiedOfficialPYQ: false,
     createdAt: Number(input.createdAt) || now,
     updatedAt: now,

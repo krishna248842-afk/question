@@ -81,7 +81,7 @@ describe('Syllabus audit & completion honesty gates', () => {
     }
   });
 
-  it('requires the target count and human sign-off for a complete chapter', () => {
+  it('requires the target count and completion checks, independently of review status', () => {
     expect(BANK_MANIFEST.totalChapters).toBe(32);
     expect(BANK_MANIFEST.totalRequired).toBe(12800);
     expect(BANK_MANIFEST.totalValid).toBe(BANK_MANIFEST.chapters.reduce((n, c) => n + c.validCount, 0));
@@ -89,14 +89,13 @@ describe('Syllabus audit & completion honesty gates', () => {
       const meta = getChapterCompletionMeta(ch);
       if (meta.isComplete) {
         expect(ch.validCount).toBe(CHAPTER_TARGET);
-        expect(ch.reviewComplete).toBe(true);
       } else {
         expect(meta.badgeText).toMatch(/^In progress · /);
-        if (ch.validCount === CHAPTER_TARGET) expect(meta.badgeText).toContain('review pending');
+        if (ch.validCount === CHAPTER_TARGET) expect(meta.badgeText).toContain('checks pending');
       }
     }
     expect(BANK_MANIFEST.completeChapters).toBe(BANK_MANIFEST.chapters.filter((ch) => getChapterCompletionMeta(ch).isComplete).length);
-    expect(getChapterCompletionMeta({ validCount: 400, status: 'complete', reviewComplete: true }).isComplete).toBe(true);
+    expect(getChapterCompletionMeta({ validCount: 400, status: 'complete', reviewComplete: false }).isComplete).toBe(true);
     expect(getChapterCompletionMeta({ validCount: 399, status: 'complete', reviewComplete: true }).isComplete).toBe(false);
   });
 
@@ -150,34 +149,55 @@ describe('Publication of reviewed batches', () => {
   });
 });
 
-describe('Unpublished Plant question batch', () => {
-  it('validates the draft against the bank without changing published content', async () => {
-    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
-    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-03.js');
-    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
-    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
-    const { comparativeBotanyDraft } = await import('../src/data/chapters/c11-03/pack9-comparative-botany-draft.js');
-    const published = await loadChapterPack('c11-03');
-    const publishedIds = new Set(published.map(q => q.id));
-    expect(comparativeBotanyDraft).toHaveLength(25);
-    expect(new Set(comparativeBotanyDraft.map(q => q.id)).size).toBe(25);
-    expect(comparativeBotanyDraft.every(q => !publishedIds.has(q.id))).toBe(true);
-    const output = execFileSync(process.execPath,
-      ['scripts/validate-draft.mjs', '--chapter', 'c11-03', 'pack9-comparative-botany-draft:comparativeBotanyDraft',
-        '--chapter', 'c11-08', 'pack1-cell-diversity-draft:cellDiversityDraft',
-        'pack2-prokaryote-draft:prokaryoteDraft', 'pack3-membranes-draft:membranesDraft',
-        'pack4-endomembrane-draft:endomembraneDraft'],
-      { cwd: ROOT, encoding: 'utf8' });
-    expect(output).toContain('displayed counts are not published counts');
-    expect(output).toContain(`Plant Kingdom (Class 11): ${published.length + comparativeBotanyDraft.length}/400 IN PROGRESS`);
-    expect(output).toContain('Cell: The Unit of Life (Class 11): 105/400 IN PROGRESS');
-    expect(output).toContain('0 detected schema/distribution/duplicate errors');
-    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
-    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
-    expect(published.length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-03').validCount);
+describe('Newly published, not owner-reviewed batches', () => {
+  it('includes each new item once and records that the earlier review no longer covers the chapter', async () => {
+    const plantBatch = (await import('../src/data/chapters/c11-03/pack9-comparative-botany-draft.js')).comparativeBotanyDraft;
+    const cellBatches = await Promise.all([
+      import('../src/data/chapters/c11-08/pack1-cell-diversity-draft.js').then(m => m.cellDiversityDraft),
+      import('../src/data/chapters/c11-08/pack2-prokaryote-draft.js').then(m => m.prokaryoteDraft),
+      import('../src/data/chapters/c11-08/pack3-membranes-draft.js').then(m => m.membranesDraft),
+      import('../src/data/chapters/c11-08/pack4-endomembrane-draft.js').then(m => m.endomembraneDraft),
+      import('../src/data/chapters/c11-08/pack5-energy-organelles.js').then(m => m.energyOrganelles),
+    ]);
+    expect(plantBatch).toHaveLength(25);
+    expect(cellBatches.flat()).toHaveLength(125);
+    for (const [id, added] of [['c11-03', plantBatch], ['c11-08', cellBatches.flat()]]) {
+      const published = await loadChapterPack(id);
+      const ids = published.map(q => q.id);
+      expect(new Set(ids).size).toBe(ids.length);
+      for (const item of added) expect(published.filter(q => q.id === item.id)).toEqual([item]);
+      expect(published.length).toBe(MANIFEST_BY_CHAPTER_ID.get(id).validCount);
+      expect(MANIFEST_BY_CHAPTER_ID.get(id).reviewSnapshotCurrent).toBe(false);
+      expect(createHash('sha256').update(JSON.stringify(published)).digest('hex'))
+        .not.toBe(OWNER_REVIEW.chapters[id].contentSha256);
+    }
+    expect(MANIFEST_BY_CHAPTER_ID.get('c11-01').reviewSnapshotCurrent).toBe(true);
+  });
+});
+
+describe('Draft checking', () => {
+  it('checks multiple chapter batches together without changing the source or manifest', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-draft-check-'));
+    try {
+      fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'src/data'), path.join(dir, 'src/data'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'scripts'), path.join(dir, 'scripts'), { recursive: true });
+      fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
+      for (const id of ['c11-03', 'c11-08'])
+        fs.writeFileSync(path.join(dir, `src/data/chapters/${id}/fixture.js`), 'export const draft = [];');
+      const chapter = path.join(dir, 'src/data/chapters/c11-03.js');
+      const manifest = path.join(dir, 'src/data/bankManifest.js');
+      const before = [fs.readFileSync(chapter, 'utf8'), fs.readFileSync(manifest, 'utf8')];
+      const output = execFileSync(process.execPath,
+        ['scripts/validate-draft.mjs', '--chapter', 'c11-03', 'fixture:draft', '--chapter', 'c11-08', 'fixture:draft'],
+        { cwd: dir, encoding: 'utf8' });
+      expect(output).toContain('displayed counts are not published counts');
+      expect(output).toContain('0 detected schema/distribution/duplicate errors');
+      expect([fs.readFileSync(chapter, 'utf8'), fs.readFileSync(manifest, 'utf8')]).toEqual(before);
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
   });
 
-  it('rejects repeated or empty chapter groups before writing a temporary copy', () => {
+  it('rejects repeated or empty chapter groups and unsafe paths', () => {
     for (const args of [
       ['--chapter', 'c11-03'],
       ['--chapter', 'c11-03', 'pack9-comparative-botany-draft:comparativeBotanyDraft',
@@ -185,55 +205,15 @@ describe('Unpublished Plant question batch', () => {
       ['--chapter', 'c11-03', '../outside:batch'],
     ]) {
       let failure;
-      try {
-        execFileSync(process.execPath, ['scripts/validate-draft.mjs', ...args], { cwd: ROOT, stdio: 'pipe' });
-      } catch (err) { failure = err; }
+      try { execFileSync(process.execPath, ['scripts/validate-draft.mjs', ...args], { cwd: ROOT, stdio: 'pipe' }); }
+      catch (err) { failure = err; }
       expect(failure?.status).toBe(2);
     }
   });
 });
 
-describe('Unpublished Cell question batches', () => {
-  it('validates drafts against the bank without publishing them or changing the manifest', async () => {
-    const manifestPath = path.join(ROOT, 'src/data/bankManifest.js');
-    const chapterPath = path.join(ROOT, 'src/data/chapters/c11-08.js');
-    const beforeManifest = fs.readFileSync(manifestPath, 'utf8');
-    const beforeChapter = fs.readFileSync(chapterPath, 'utf8');
-    const batches = [
-      'pack1-cell-diversity-draft:cellDiversityDraft',
-      'pack2-prokaryote-draft:prokaryoteDraft',
-      'pack3-membranes-draft:membranesDraft',
-      'pack4-endomembrane-draft:endomembraneDraft',
-    ];
-    const output = execFileSync(process.execPath, ['scripts/validate-draft.mjs', 'c11-08', ...batches], { cwd: ROOT, encoding: 'utf8' });
-    expect(output).toContain('displayed counts are not published counts');
-    const draftBatches = await Promise.all([
-      import('../src/data/chapters/c11-08/pack1-cell-diversity-draft.js').then(m => m.cellDiversityDraft),
-      import('../src/data/chapters/c11-08/pack2-prokaryote-draft.js').then(m => m.prokaryoteDraft),
-      import('../src/data/chapters/c11-08/pack3-membranes-draft.js').then(m => m.membranesDraft),
-      import('../src/data/chapters/c11-08/pack4-endomembrane-draft.js').then(m => m.endomembraneDraft),
-    ]);
-    const hypotheticalCount = MANIFEST_BY_CHAPTER_ID.get('c11-08').validCount + draftBatches.flat().length;
-    expect(output).toContain(`Cell: The Unit of Life (Class 11): ${hypotheticalCount}/400 IN PROGRESS`);
-    expect(output).toContain('0 detected schema/distribution/duplicate errors');
-    expect(fs.readFileSync(manifestPath, 'utf8')).toBe(beforeManifest);
-    expect(fs.readFileSync(chapterPath, 'utf8')).toBe(beforeChapter);
-    expect((await loadChapterPack('c11-08')).length).toBe(MANIFEST_BY_CHAPTER_ID.get('c11-08').validCount);
-  });
-
-  it('does not extend the old owner sign-off to a later correction', async () => {
-    const questions = await loadChapterPack('c11-08');
-    const corrected = questions.find(q => q.id === 'c11-08-q002');
-    expect(corrected.explanation).toContain('artifacts of chemical fixation');
-    const digest = createHash('sha256').update(JSON.stringify(questions)).digest('hex');
-    expect(digest).not.toBe(OWNER_REVIEW.chapters['c11-08'].contentSha256);
-    expect(MANIFEST_BY_CHAPTER_ID.get('c11-08').reviewSnapshotCurrent).toBe(false);
-    expect(MANIFEST_BY_CHAPTER_ID.get('c11-01').reviewSnapshotCurrent).toBe(true);
-  });
-});
-
 describe('Documented human review', () => {
-  it('invalidates chapter sign-off after a reviewed record changes', () => {
+  it('marks a changed reviewed snapshot as unreviewed without blocking automated completion', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-change-'));
     try {
       fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
@@ -241,18 +221,15 @@ describe('Documented human review', () => {
       fs.cpSync(path.join(ROOT, 'scripts'), path.join(dir, 'scripts'), { recursive: true });
       fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
       fs.appendFileSync(path.join(dir, 'src/data/chapters/c11-01.js'), '\nquestions[0].explanation += " Changed after sign-off.";\n');
-      let result;
-      try {
-        execFileSync(process.execPath, ['scripts/validate-bank.mjs', '--chapter', 'c11-01'], { cwd: dir, encoding: 'utf8', stdio: 'pipe' });
-      } catch (err) { result = err; }
-      expect(result?.status).toBe(1);
-      expect(String(result.stderr)).toContain('human review checklist sign-off is incomplete');
-    } finally {
-      fs.rmSync(dir, { recursive: true, force: true });
-    }
+      const report = JSON.parse(execFileSync(process.execPath,
+        ['scripts/validate-bank.mjs', '--chapter', 'c11-01', '--json'], { cwd: dir, encoding: 'utf8' }));
+      expect(report.chapters[0].status).toBe('COMPLETE');
+      expect(report.chapters[0].reviewComplete).toBe(false);
+      expect(report.chapters[0].reviewSnapshotCurrent).toBe(false);
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
   });
 
-  it('does not accept an unsigned checklist as human review', () => {
+  it('does not present an unsigned checklist as human review', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-'));
     try {
       fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
@@ -261,15 +238,12 @@ describe('Documented human review', () => {
       fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
       fs.writeFileSync(path.join(dir, 'src/data/reviewRegistry.js'),
         `export const PACK_REVIEWS = { 'c11-01': { checklistComplete: true, reviewedCount: 400, reviewedDate: '2026-11-17' } };`);
-      let result;
-      try {
-        execFileSync(process.execPath, ['scripts/validate-bank.mjs', '--chapter', 'c11-01'], { cwd: dir, encoding: 'utf8', stdio: 'pipe' });
-      } catch (err) { result = err; }
-      expect(result?.status).toBe(1);
-      expect(String(result.stderr)).toContain('human review checklist sign-off is incomplete');
-    } finally {
-      fs.rmSync(dir, { recursive: true, force: true });
-    }
+      const report = JSON.parse(execFileSync(process.execPath,
+        ['scripts/validate-bank.mjs', '--chapter', 'c11-01', '--json'], { cwd: dir, encoding: 'utf8' }));
+      expect(report.chapters[0].status).toBe('COMPLETE');
+      expect(report.chapters[0].reviewComplete).toBe(false);
+      expect(report.chapters[0].reviewSnapshotCurrent).toBe(false);
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
   });
 });
 

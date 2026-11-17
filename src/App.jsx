@@ -467,7 +467,7 @@ export default function App() {
   const requestDeletePersonalQuestion = (question) => {
     setConfirmDialog({
       title: 'Delete personal question?',
-      message: `Remove "${question.question.slice(0, 90)}${question.question.length > 90 ? '…' : ''}" from your device? Verified curriculum questions are unaffected.`,
+      message: `Remove "${question.question.slice(0, 90)}${question.question.length > 90 ? '…' : ''}" from your device? Curriculum questions are unaffected.`,
       confirmLabel: 'Delete question',
       onConfirm: async () => {
         await deletePersonalQuestion(question.id);
@@ -1098,10 +1098,10 @@ export default function App() {
                 <ShieldCheck size={18} />
                 <span>
                   <b>Honest content &amp; study notice:</b> This build is{' '}
-                  <b>in progress ({BANK_MANIFEST.totalValid.toLocaleString()} / {BANK_MANIFEST.totalRequired.toLocaleString()} automatically checked records)</b>.
-                  Automated checks do not establish content quality or replace independent human review;
-                  no chapter is complete until its review and all completion gates pass. These are practice
-                  items, not official PYQs, and are not endorsed by NCERT/NMC/NTA. Regular practice cannot
+                  <b>{BANK_MANIFEST.bankComplete ? 'complete by automated gates' : 'in progress'} ({BANK_MANIFEST.totalValid.toLocaleString()} / {BANK_MANIFEST.totalRequired.toLocaleString()} automatically checked records)</b>.
+                  Automated checks do not establish factual accuracy, originality or conceptual distinctness.
+                  A complete status refers to the automated count and quality gates, not human review.
+                  These are practice items, not official PYQs, and are not endorsed by NCERT/NMC/NTA. Regular practice cannot
                   guarantee any exam score, rank, or admission—always study alongside official NCERT
                   textbooks.
                 </span>
@@ -1291,7 +1291,7 @@ export default function App() {
                         ? 'Revisit missed concepts with full explanations and freshly shuffled options.'
                         : activeChapter
                           ? `${activeChapter.title} — ${getChapterCompletionMeta(MANIFEST_BY_CHAPTER_ID.get(activeChapter.chapterId)).badgeText}`
-                          : `Verified bank in progress: ${BANK_MANIFEST.totalValid.toLocaleString()} of ${BANK_MANIFEST.totalRequired.toLocaleString()} target questions authored.`}
+                          : `Curriculum bank in progress: ${BANK_MANIFEST.totalValid.toLocaleString()} of ${BANK_MANIFEST.totalRequired.toLocaleString()} target questions authored.`}
                   </p>
                 </div>
                 <div className="head-btn-group">
@@ -1823,7 +1823,7 @@ export default function App() {
                 <h1>{activeQuestion.question}</h1>
                 {!activeQuestion.custom &&
                   MANIFEST_BY_CHAPTER_ID.get(activeQuestion.chapterId)?.reviewSnapshotCurrent === false && (
-                    <p role="note">This chapter contains content changed since the project owner's review and requires renewed human review.</p>
+                    <p role="note">This chapter contains content not covered by the project owner's earlier review. Automated checks cannot guarantee accuracy or originality.</p>
                   )}
 
                 <div className="answer-options" role="group" aria-label="Answer choices">

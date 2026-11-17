@@ -46,7 +46,7 @@ export function filterQuestions(
 }
 
 /**
- * Computes verified chapter completion status — NEVER mixes personal items into verified count
+ * Computes automated chapter completion status — NEVER mixes personal items into the bank count
  * and NEVER marks any chapter complete below CHAPTER_TARGET (400).
  */
 export function getChapterCompletionMeta(manifestChapter) {
@@ -54,8 +54,7 @@ export function getChapterCompletionMeta(manifestChapter) {
   const target = CHAPTER_TARGET;
   const isComplete =
     validCount === target &&
-    manifestChapter?.status === 'complete' &&
-    manifestChapter?.reviewComplete === true;
+    manifestChapter?.status === 'complete';
   const percent = Math.min(100, Math.round((validCount / target) * 100));
   return {
     validCount,
@@ -65,7 +64,7 @@ export function getChapterCompletionMeta(manifestChapter) {
     percent,
     badgeText: isComplete
       ? `Complete · ${validCount}/${target}`
-      : validCount === target ? 'In progress · review pending' : `In progress · ${validCount}/${target}`,
+      : validCount === target ? 'In progress · checks pending' : `In progress · ${validCount}/${target}`,
   };
 }
 
