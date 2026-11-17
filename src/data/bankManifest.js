@@ -3,19 +3,19 @@
 export const BANK_MANIFEST = {
   "generatedAt": "2026-11-17",
   "bankComplete": false,
-  "totalValid": 1530,
+  "totalValid": 1605,
   "totalRequired": 7600,
   "completeChapters": 2,
   "inProgressChapters": 17,
   "totalChapters": 19,
   "stageTotals": {
-    "Class 11": 1018,
-    "NEET practice": 512
+    "Class 11": 1067,
+    "NEET practice": 538
   },
   "diffTotals": {
-    "easy": 551,
-    "medium": 705,
-    "hard": 274
+    "easy": 562,
+    "medium": 750,
+    "hard": 293
   },
   "chapters": [
     {
@@ -130,31 +130,31 @@ export const BANK_MANIFEST = {
       "order": 4,
       "classStage": "Class 11",
       "title": "Animal Kingdom",
-      "validCount": 205,
+      "validCount": 230,
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
-      "reviewSnapshotCurrent": true,
+      "reviewSnapshotCurrent": false,
       "stageCounts": {
-        "Class 11": 145,
-        "NEET practice": 60
+        "Class 11": 161,
+        "NEET practice": 69
       },
       "diffCounts": {
-        "easy": 60,
-        "medium": 113,
-        "hard": 32
+        "easy": 63,
+        "medium": 127,
+        "hard": 40
       },
       "typeCounts": {
-        "recall": 46,
-        "concept": 91,
-        "application": 35,
-        "statement-analysis": 11,
-        "case-based": 6,
+        "recall": 49,
+        "concept": 102,
+        "application": 42,
+        "statement-analysis": 14,
+        "case-based": 7,
         "data-based": 16
       },
       "sectionCounts": {
-        "c11-04-s1": 26,
-        "c11-04-s2": 51,
+        "c11-04-s1": 36,
+        "c11-04-s2": 66,
         "c11-04-s3": 51,
         "c11-04-s4": 41,
         "c11-04-s5": 36
@@ -270,34 +270,34 @@ export const BANK_MANIFEST = {
       "order": 8,
       "classStage": "Class 11",
       "title": "Cell: The Unit of Life",
-      "validCount": 130,
+      "validCount": 180,
       "target": 400,
       "status": "in-progress",
       "reviewComplete": false,
       "reviewSnapshotCurrent": false,
       "stageCounts": {
-        "Class 11": 86,
-        "NEET practice": 44
+        "Class 11": 119,
+        "NEET practice": 61
       },
       "diffCounts": {
-        "easy": 28,
-        "medium": 69,
-        "hard": 33
+        "easy": 36,
+        "medium": 100,
+        "hard": 44
       },
       "typeCounts": {
-        "recall": 18,
-        "concept": 58,
-        "application": 27,
-        "statement-analysis": 11,
-        "case-based": 8,
-        "data-based": 8
+        "recall": 27,
+        "concept": 81,
+        "application": 39,
+        "statement-analysis": 13,
+        "case-based": 10,
+        "data-based": 10
       },
       "sectionCounts": {
         "c11-08-s1": 26,
         "c11-08-s2": 26,
         "c11-08-s3": 51,
-        "c11-08-s4": 24,
-        "c11-08-s5": 3
+        "c11-08-s4": 49,
+        "c11-08-s5": 28
       }
     },
     {

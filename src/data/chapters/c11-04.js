@@ -1,4 +1,4 @@
-// Animal Kingdom: the project owner approved the current reviewed batches.
+// Animal Kingdom: automatically checked, IN PROGRESS. Earlier batches have a historical owner attestation.
 import { starterQuestions } from './c11-04/starter.js';
 import { animalClassificationDraft } from './c11-04/pack1-classification-draft.js';
 import { lowerNonchordateDraft } from './c11-04/pack2-lower-nonchordates-draft.js';
@@ -8,9 +8,10 @@ import { molluscEchinodermDraft } from './c11-04/pack5-molluscs-echinoderms-draf
 import { chordateDraft } from './c11-04/pack6-chordates-draft.js';
 import { fishesAmphibiaDraft } from './c11-04/pack7-fishes-amphibia-draft.js';
 import { amnioteDraft } from './c11-04/pack8-amniotes-draft.js';
+import { bodyPlansPack } from './c11-04/pack9-body-plans.js';
 
 export const questions = [
   ...starterQuestions, ...animalClassificationDraft, ...lowerNonchordateDraft,
   ...wormDraft, ...annelidArthropodDraft, ...molluscEchinodermDraft,
-  ...chordateDraft, ...fishesAmphibiaDraft, ...amnioteDraft,
+  ...chordateDraft, ...fishesAmphibiaDraft, ...amnioteDraft, ...bodyPlansPack,
 ];

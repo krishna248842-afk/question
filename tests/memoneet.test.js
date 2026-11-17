@@ -147,23 +147,27 @@ describe('Publication of reviewed batches', () => {
       import('../src/data/chapters/c11-04/pack8-amniotes-draft.js').then(m => m.amnioteDraft),
     ]);
     const published = await loadChapterPack('c11-04');
-    expect(published.slice(animals.length)).toEqual(batches.flat());
+    expect(published.slice(animals.length, animals.length + batches.flat().length)).toEqual(batches.flat());
   });
 });
 
 describe('Newly published, not owner-reviewed batches', () => {
   it('includes each new item once and records that the earlier review no longer covers the chapter', async () => {
     const plantBatch = (await import('../src/data/chapters/c11-03/pack9-comparative-botany-draft.js')).comparativeBotanyDraft;
+    const animalBatch = (await import('../src/data/chapters/c11-04/pack9-body-plans.js')).bodyPlansPack;
     const cellBatches = await Promise.all([
       import('../src/data/chapters/c11-08/pack1-cell-diversity-draft.js').then(m => m.cellDiversityDraft),
       import('../src/data/chapters/c11-08/pack2-prokaryote-draft.js').then(m => m.prokaryoteDraft),
       import('../src/data/chapters/c11-08/pack3-membranes-draft.js').then(m => m.membranesDraft),
       import('../src/data/chapters/c11-08/pack4-endomembrane-draft.js').then(m => m.endomembraneDraft),
       import('../src/data/chapters/c11-08/pack5-energy-organelles.js').then(m => m.energyOrganelles),
+      import('../src/data/chapters/c11-08/pack6-cytoskeleton.js').then(m => m.cytoskeletonPack),
+      import('../src/data/chapters/c11-08/pack7-nucleus.js').then(m => m.nucleusPack),
     ]);
     expect(plantBatch).toHaveLength(25);
-    expect(cellBatches.flat()).toHaveLength(125);
-    for (const [id, added] of [['c11-03', plantBatch], ['c11-08', cellBatches.flat()]]) {
+    expect(animalBatch).toHaveLength(25);
+    expect(cellBatches.flat()).toHaveLength(175);
+    for (const [id, added] of [['c11-03', plantBatch], ['c11-04', animalBatch], ['c11-08', cellBatches.flat()]]) {
       const published = await loadChapterPack(id);
       const ids = published.map(q => q.id);
       expect(new Set(ids).size).toBe(ids.length);
