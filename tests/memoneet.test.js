@@ -2,6 +2,7 @@ import 'fake-indexeddb/auto';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   CHAPTER_TARGET,
@@ -78,22 +79,20 @@ describe('Syllabus audit & completion honesty gates', () => {
     }
   });
 
-  it('marks c11-01 Complete at 400/400 and honestly marks all incomplete chapters In progress', () => {
+  it('marks every chapter without human sign-off in progress', () => {
     expect(BANK_MANIFEST.bankComplete).toBe(false);
-    expect(BANK_MANIFEST.completeChapters).toBe(1);
+    expect(BANK_MANIFEST.completeChapters).toBe(0);
     expect(BANK_MANIFEST.totalChapters).toBe(32);
-    expect(BANK_MANIFEST.totalValid).toBe(575);
     expect(BANK_MANIFEST.totalRequired).toBe(12800);
-
-    const c1 = getChapterCompletionMeta(MANIFEST_BY_CHAPTER_ID.get('c11-01'));
-    expect(c1.isComplete).toBe(true);
-    expect(c1.badgeText).toBe('Complete · 400/400');
-
-    for (const ch of SYLLABUS_CHAPTERS.filter((c) => c.chapterId !== 'c11-01')) {
-      const meta = getChapterCompletionMeta(MANIFEST_BY_CHAPTER_ID.get(ch.chapterId));
+    expect(BANK_MANIFEST.totalValid).toBe(BANK_MANIFEST.chapters.reduce((n, c) => n + c.validCount, 0));
+    for (const ch of BANK_MANIFEST.chapters) {
+      const meta = getChapterCompletionMeta(ch);
       expect(meta.isComplete).toBe(false);
-      expect(meta.badgeText).toMatch(/^In progress · \d+\/400$/);
+      expect(meta.badgeText).toMatch(/^In progress · /);
+      if (ch.validCount === CHAPTER_TARGET) expect(meta.badgeText).toContain('review pending');
     }
+    expect(getChapterCompletionMeta({ validCount: 400, status: 'complete', reviewComplete: true }).isComplete).toBe(true);
+    expect(getChapterCompletionMeta({ validCount: 399, status: 'complete', reviewComplete: true }).isComplete).toBe(false);
   });
 
   it('passes validate:authored (0 quality errors) and fails strict validate:bank while chapters < 400', () => {
@@ -102,7 +101,7 @@ describe('Syllabus audit & completion honesty gates', () => {
       ['scripts/validate-bank.mjs', '--allow-incomplete'],
       { cwd: ROOT, encoding: 'utf8' }
     );
-    expect(authoredOut).toContain('0 quality/duplicate errors across 575 valid questions');
+    expect(authoredOut).toContain(`0 detected schema/distribution/duplicate errors across ${BANK_MANIFEST.totalValid} records`);
 
     let strictFailed = false;
     try {
@@ -113,14 +112,60 @@ describe('Syllabus audit & completion honesty gates', () => {
       });
     } catch (err) {
       strictFailed = err.status === 1;
-      expect(String(err.stderr)).toContain('31 completion-gate error(s)');
+      expect(String(err.stderr)).toContain('32 completion-gate error(s)');
     }
     expect(strictFailed).toBe(true);
   });
 });
 
+describe('Documented human review', () => {
+  it('does not accept an unsigned checklist as human review', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-review-'));
+    try {
+      fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'src/data'), path.join(dir, 'src/data'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'scripts'), path.join(dir, 'scripts'), { recursive: true });
+      fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
+      fs.writeFileSync(path.join(dir, 'src/data/reviewRegistry.js'),
+        `export const PACK_REVIEWS = { 'c11-01': { checklistComplete: true, reviewedCount: 400, reviewedDate: '2026-11-17' } };`);
+      let result;
+      try {
+        execFileSync(process.execPath, ['scripts/validate-bank.mjs', '--chapter', 'c11-01'], { cwd: dir, encoding: 'utf8', stdio: 'pipe' });
+      } catch (err) { result = err; }
+      expect(result?.status).toBe(1);
+      expect(String(result.stderr)).toContain('human review checklist sign-off is incomplete');
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('Cross-chapter duplicate detection', () => {
+  it('rejects reworded stems across chapters, not only exact matches', async () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoneet-validator-'));
+    try {
+      fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'src/data'), path.join(dir, 'src/data'), { recursive: true });
+      fs.cpSync(path.join(ROOT, 'scripts'), path.join(dir, 'scripts'), { recursive: true });
+      fs.writeFileSync(path.join(dir, 'package.json'), '{"type":"module"}');
+      const [source] = await loadChapterPack('c11-01');
+      const fixture = path.join(dir, 'src/data/chapters/c11-04.js');
+      fs.appendFileSync(fixture, `\nquestions[0].question = ${JSON.stringify(source.question + ' independently')};\n`);
+      let result;
+      try {
+        execFileSync(process.execPath, ['scripts/validate-bank.mjs', '--allow-incomplete'], { cwd: dir, encoding: 'utf8', stdio: 'pipe' });
+      } catch (err) { result = err; }
+      expect(result?.status).toBe(1);
+      expect(String(result.stderr)).toContain('Cross-chapter near-duplicate stems');
+      expect(String(result.stderr)).toContain('c11-04-q001 and c11-01-q001');
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+});
+
 describe('Answer-index correctness, option shuffling & lazy chapter packs', () => {
-  it('validates 0-based answer index, 4 distinct options, and metadata across all 575 authored items', async () => {
+  it('validates 0-based answer index, 4 distinct options, and metadata across all authored items', async () => {
     clearChapterPackCache();
     expect(getCachedChapterCount()).toBe(0);
 
@@ -135,7 +180,7 @@ describe('Answer-index correctness, option shuffling & lazy chapter packs', () =
 
     const allIds = resolveChapterIdsForSelection({ stage: 'All stages', chapterId: 'all' });
     const allQuestions = await loadChapterPacks(allIds);
-    expect(allQuestions).toHaveLength(575);
+    expect(allQuestions).toHaveLength(BANK_MANIFEST.totalValid);
     expect(getCachedChapterCount()).toBe(32);
 
     const idSet = new Set();
@@ -261,9 +306,9 @@ describe('IndexedDB progress persistence, CRUD, bookmarks, wrong-answer retry & 
     // Personal questions never show up in verified Question bank view and never change manifest count
     const c2 = await loadChapterPack('c11-02');
     const pool = [updatedQ, ...c2];
-    expect(filterQuestions(pool, { page: 'Question bank' })).toHaveLength(25);
+    expect(filterQuestions(pool, { page: 'Question bank' })).toHaveLength(c2.length);
     expect(filterQuestions(pool, { page: 'My questions' })).toHaveLength(1);
-    expect(MANIFEST_BY_CHAPTER_ID.get('c11-02').validCount).toBe(25);
+    expect(MANIFEST_BY_CHAPTER_ID.get('c11-02').validCount).toBe(c2.length);
 
     // Notes CRUD
     const note = await saveStudyNote({

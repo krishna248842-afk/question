@@ -65,7 +65,7 @@ export function getChapterCompletionMeta(manifestChapter) {
     percent,
     badgeText: isComplete
       ? `Complete · ${validCount}/${target}`
-      : `In progress · ${validCount}/${target}`,
+      : validCount === target ? 'In progress · review pending' : `In progress · ${validCount}/${target}`,
   };
 }
 

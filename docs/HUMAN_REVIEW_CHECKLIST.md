@@ -11,6 +11,8 @@ Every 25–50-question batch and every complete 400-question chapter pack must s
 7. **Substantive teaching explanation:** Every explanation clearly states why the correct option holds and clarifies the chief distractor misconception(s).
 8. **Honest source attribution:** `isVerifiedOfficialPYQ` is `false` on all original items, and `NEET practice` items are explicitly labelled *Original NEET-pattern practice (not a verified official PYQ)*.
 
-## Signed-Off Chapters
-- **`c11-01` — The Living World (Class 11):** `pack1`–`pack8` (Q001–Q400, 400/400) — Passed strict automated validation (0 errors, 0 near-duplicate warnings across 79,800 stem pairs) and full checklist inspection (`reviewRegistry.js`).
-- **`c11-02`..`c11-19`, `c12-01`..`c12-13`:** Remain `IN PROGRESS` (`checklistComplete: false`) until all 8 reviewable 50-question packs per chapter reach 400/400 validated unique items.
+## Review status
+
+No human sign-off is documented for any chapter. Earlier registry entries for `c11-01` and `c11-02` did not identify a human reviewer and have been withdrawn; automated validation is not a substitute for human review. Both chapters contain 400 automatically checked records, but remain **in progress** until a human reviews every item for this checklist. Other chapters have fewer than 400 published records.
+
+A completed review entry in `src/data/reviewRegistry.js` must record the human reviewer's name, review date, count and checklist completion, alongside pack-level details. Reviewers must resolve all similarity flags and document their decisions before sign-off. Automated checks cannot establish originality, factual correctness, plausible distractors or genuine conceptual distinctness on their own.

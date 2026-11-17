@@ -578,7 +578,7 @@ export default function App() {
       setBankLoading(true);
       await loadChapterPacks(SYLLABUS_CHAPTERS.map((c) => c.chapterId));
       setBankLoading(false);
-      notify(`All ${SYLLABUS_CHAPTERS.length} chapter packs verified ready offline`);
+      notify(`All ${SYLLABUS_CHAPTERS.length} chapter packs ready offline`);
     } catch {
       setBankLoading(false);
       notify('Could not preload all chapter packs.');
@@ -858,14 +858,14 @@ export default function App() {
                     <span className="hero-spark" aria-hidden="true">
                       <Sparkles size={13} />
                     </span>
-                    VERIFIED CHAPTER HIGHLIGHT
+                    IN-PROGRESS CHAPTER HIGHLIGHT
                   </div>
                   <h2>
-                    The Living World is ready with 400/400 validated original MCQs.
+                    Practice The Living World while its questions await human review.
                   </h2>
                   <p>
                     Practice across all 6 chapter sections with shuffled options and misconception-aware
-                    explanations, or explore verified starter packs across all 31 remaining in-progress
+                    explanations, or explore starter packs across the remaining in-progress
                     chapters.
                   </p>
                   <div className="hero-buttons">
@@ -874,7 +874,7 @@ export default function App() {
                       className="primary-btn"
                       onClick={() => startQuickChapterSession('c11-01', 'Overview')}
                     >
-                      Practice The Living World (400/400) <ArrowRight size={16} />
+                      Practice The Living World <ArrowRight size={16} />
                     </button>
                     {overallProgress.wrong > 0 && (
                       <button
@@ -962,7 +962,7 @@ export default function App() {
                   label="CLASS 11 BIOLOGY · 19 CHAPTERS"
                   title="Build your foundation"
                   count={BANK_MANIFEST.stageTotals['Class 11']}
-                  statusNote="1 complete (400/400) · 18 in progress"
+                  statusNote={`${BANK_MANIFEST.chapters.filter((c) => c.classStage === 'Class 11' && c.status === 'complete').length} complete · ${BANK_MANIFEST.chapters.filter((c) => c.classStage === 'Class 11' && c.status !== 'complete').length} in progress`}
                   desc="Diversity, structural organisation, cell biology, plant & human physiology (incl. Locomotion & Chemical Coordination)."
                   onClick={() => openStage('Class 11')}
                 />
@@ -1098,13 +1098,10 @@ export default function App() {
                 <ShieldCheck size={18} />
                 <span>
                   <b>Honest content &amp; study notice:</b> This build is{' '}
-                  <b>in progress ({BANK_MANIFEST.totalValid.toLocaleString()} / 12,800 verified MCQs)</b>.{' '}
-                  <i>The Living World</i> is complete with <b>400/400</b> validated original questions;{' '}
-                  <i>Biological Classification</i> has <b>25/400</b>; and the remaining 30 audited NCERT
-                  chapters contain <b>5/400</b> validated section-spanning starter MCQs each (all legacy
-                  templated duplicates were discarded). All items are original NCERT-aligned or original
-                  NEET-pattern practice—never copied textbook passages, not endorsed by NCERT/NMC/NTA,
-                  and not verified official PYQs. Regular practice supports exam readiness but cannot
+                  <b>in progress ({BANK_MANIFEST.totalValid.toLocaleString()} / {BANK_MANIFEST.totalRequired.toLocaleString()} automatically checked records)</b>.
+                  Automated checks do not establish content quality or replace independent human review;
+                  no chapter is complete until its review and all completion gates pass. These are practice
+                  items, not official PYQs, and are not endorsed by NCERT/NMC/NTA. Regular practice cannot
                   guarantee any exam score, rank, or admission—always study alongside official NCERT
                   textbooks.
                 </span>
@@ -1123,7 +1120,7 @@ export default function App() {
                   <p className="subhead">
                     Overall bank complete: <b>{BANK_MANIFEST.bankComplete ? 'Yes' : 'No (In progress)'}</b>{' '}
                     · {BANK_MANIFEST.totalValid.toLocaleString()} of{' '}
-                    {BANK_MANIFEST.totalRequired.toLocaleString()} verified original MCQs (
+                    {BANK_MANIFEST.totalRequired.toLocaleString()} automatically checked records (
                     {BANK_MANIFEST.completeChapters}/32 chapters at 400/400).
                   </p>
                 </div>
@@ -1212,7 +1209,7 @@ export default function App() {
                               />
                             </div>
                             <span className="syllabus-count-text">
-                              {meta.validCount}/{meta.target} verified
+                              {meta.validCount}/{meta.target} automatically checked
                               {uAcc !== null
                                 ? ` · Your progress: ${uStat.attempted} answered (${uAcc}% acc)`
                                 : ''}
@@ -1283,13 +1280,13 @@ export default function App() {
                   <div className="eyebrow">
                     <Library size={14} />{' '}
                     {page === 'My questions'
-                      ? 'PERSONAL DEVICE LIBRARY (SEPARATE FROM VERIFIED BANK)'
+                      ? 'PERSONAL DEVICE LIBRARY (SEPARATE FROM CURRICULUM BANK)'
                       : 'ORIGINAL NCERT-ALIGNED & NEET-PATTERN PRACTICE'}
                   </div>
                   <h1>{page === 'Question bank' ? 'Biology question bank' : page}</h1>
                   <p className="subhead">
                     {page === 'My questions'
-                      ? 'Create, edit, and practice your own questions. Personal items never inflate verified 400/chapter counts.'
+                      ? 'Create, edit, and practice your own questions. Personal items never inflate chapter counts.'
                       : page === 'Wrong answers'
                         ? 'Revisit missed concepts with full explanations and freshly shuffled options.'
                         : activeChapter
@@ -1566,7 +1563,7 @@ export default function App() {
                           : page === 'Wrong answers'
                             ? 'Questions you miss during practice automatically collect here for focused retry.'
                             : page === 'My questions'
-                              ? 'Add your own revision MCQs—kept completely separate from the verified NCERT bank.'
+                              ? 'Add your own revision MCQs—kept completely separate from the curriculum bank.'
                               : 'Reset one or more filters to broaden your practice set.'}
                       </p>
                       <div className="empty-actions">
@@ -2021,7 +2018,7 @@ function StageCard({ tone, number, label, title, count, statusNote, desc, onClic
       <p>{desc}</p>
       <div className="stage-card-bottom">
         <span>
-          <b>{count}</b> verified · {statusNote}
+          <b>{count}</b> available · {statusNote}
         </span>
         <span className="circle-arrow" aria-hidden="true">
           <ArrowUpRight size={16} />
@@ -2086,7 +2083,7 @@ function QuestionModal({ initial, onClose, onSave }) {
         <div className="modal-head">
           <div>
             <span className="eyebrow">
-              <Edit3 size={13} /> PERSONAL STUDY QUESTION (EXCLUDED FROM VERIFIED COUNT)
+              <Edit3 size={13} /> PERSONAL STUDY QUESTION (EXCLUDED FROM CHAPTER COUNT)
             </span>
             <h2 id="q-modal-title">{initial ? 'Edit personal question' : 'Create a question'}</h2>
           </div>

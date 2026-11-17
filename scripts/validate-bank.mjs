@@ -148,6 +148,7 @@ async function main() {
   // 2. Validate every chapter pack and every question record
   const globalIds = new Map();
   const globalStems = new Map();
+  const globalSimilarityItems = [];
   const chapterSummaries = [];
   let totalValid = 0;
 
@@ -429,6 +430,25 @@ async function main() {
       }
     }
 
+    // Compare with earlier chapters too: exact global matching alone cannot catch
+    // reworded stems that cross a syllabus boundary. A chapter-filtered run is
+    // intentionally scoped; the full-bank gate performs the cross-chapter check.
+    for (const a of preparedForSimilarity) {
+      for (const b of globalSimilarityItems) {
+        const stemSim = jaccard(a.stemTokens, b.stemTokens);
+        if (stemSim >= QUALITY_TOLERANCES.nearDuplicateErrorJaccard ||
+            (a.optKey === b.optKey && stemSim >= 0.45) ||
+            (a.answerText === b.answerText && a.answerText.length > 3 && stemSim >= 0.62)) {
+          qualityErrors.push(`Cross-chapter near-duplicate stems (${(stemSim * 100).toFixed(0)}% overlap) between ${a.id} and ${b.id}`);
+        } else if (stemSim >= QUALITY_TOLERANCES.nearDuplicateWarnJaccard) {
+          nearDupFlags++;
+          b.crossChapterFlags++;
+          if (nearDupFlags <= 5) warnings.push(`[HUMAN REVIEW] cross-chapter ${a.id} vs ${b.id} stem similarity ${(stemSim * 100).toFixed(0)}%`);
+        }
+      }
+    }
+    globalSimilarityItems.push(...preparedForSimilarity.map((q) => ({ ...q, chapterId: ch.chapterId, crossChapterFlags: 0 })));
+
     // 4. Distribution tolerance checks (for any chapter with >= 25 items)
     const n = items.length;
     if (n >= 25) {
@@ -499,13 +519,19 @@ async function main() {
     // 5. Human review checklist check for completed 400-item chapters
     const review = PACK_REVIEWS[ch.chapterId];
     const reviewComplete = Boolean(
-      review && review.checklistComplete === true && review.reviewedCount === CHAPTER_TARGET
+      review && review.checklistComplete === true && review.reviewedCount === CHAPTER_TARGET &&
+      typeof review.reviewerName === 'string' && review.reviewerName.trim().length > 0 &&
+      typeof review.reviewedDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(review.reviewedDate)
     );
 
     if (chapterValidCount === CHAPTER_TARGET && items.length === CHAPTER_TARGET && !reviewComplete) {
       countErrors.push(
         `${ch.chapterId} (${ch.title}): has ${CHAPTER_TARGET} questions but human review checklist sign-off is incomplete in src/data/reviewRegistry.js`
       );
+    }
+
+    if (chapterValidCount === CHAPTER_TARGET && nearDupFlags > 0) {
+      countErrors.push(`${ch.chapterId} (${ch.title}): ${nearDupFlags} similarity flag(s) require resolution before completion`);
     }
 
     if (chapterValidCount !== CHAPTER_TARGET || items.length !== CHAPTER_TARGET) {
@@ -517,7 +543,7 @@ async function main() {
     const isComplete =
       chapterValidCount === CHAPTER_TARGET &&
       items.length === CHAPTER_TARGET &&
-      reviewComplete;
+      reviewComplete && nearDupFlags === 0;
 
     totalValid += chapterValidCount;
     chapterSummaries.push({
@@ -537,6 +563,21 @@ async function main() {
       answerCounts,
       sectionCounts,
     });
+  }
+
+  // Cross-chapter flags are discovered when the later chapter is inspected;
+  // apply them to earlier chapters as well, before producing completion status.
+  for (const summary of chapterSummaries) {
+    const earlierFlags = globalSimilarityItems
+      .filter((item) => item.chapterId === summary.chapterId)
+      .reduce((sum, item) => sum + item.crossChapterFlags, 0);
+    if (earlierFlags) {
+      summary.nearDupFlags += earlierFlags;
+      summary.status = 'IN PROGRESS';
+      if (summary.validCount === CHAPTER_TARGET) {
+        countErrors.push(`${summary.chapterId} (${summary.title}): ${earlierFlags} cross-chapter similarity flag(s) require resolution before completion`);
+      }
+    }
   }
 
   const totalRequired = targetChapters.length * CHAPTER_TARGET;
@@ -572,7 +613,7 @@ async function main() {
   } else {
     console.log(`Syllabus: ${SYLLABUS_META.editionLabel} · ${SYLLABUS_META.examAlignmentLabel}`);
     console.log(
-      `Verified bank total: ${totalValid} / ${totalRequired} questions (${completeChapters}/${targetChapters.length} chapters at ${CHAPTER_TARGET}/${CHAPTER_TARGET})`
+        `Automatically checked records: ${totalValid} / ${totalRequired} questions (${completeChapters}/${targetChapters.length} chapters complete)`
     );
     console.log(`Overall bank complete: ${bankComplete ? 'YES' : 'NO (IN PROGRESS — do not label complete)'}`);
     console.log('\nPer-chapter gate:');
@@ -604,10 +645,10 @@ async function main() {
   } else if (allowIncomplete && countErrors.length > 0) {
     if (!jsonOutput) {
       console.log(
-        `\nAUTHORED PACK QUALITY PASSED (0 quality/duplicate errors across ${totalValid} valid questions).`
+        `\nAUTOMATED CHECKS PASSED (0 detected schema/distribution/duplicate errors across ${totalValid} records; human review remains necessary).`
       );
       console.log(
-        `COMPLETION GATE STILL OPEN: ${countErrors.length} chapter(s) remain below ${CHAPTER_TARGET}/400 (run "npm run validate:bank" for strict failure gate).`
+        `COMPLETION GATE STILL OPEN: ${countErrors.length} count or review requirement(s) unmet (run "npm run validate:bank" for strict failure gate).`
       );
     }
   } else if (!jsonOutput) {

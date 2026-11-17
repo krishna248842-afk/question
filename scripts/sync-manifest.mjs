@@ -70,5 +70,5 @@ export const MANIFEST_BY_CHAPTER_ID = new Map(
 
 fs.writeFileSync(OUT, content, 'utf8');
 console.log(
-  `Synced src/data/bankManifest.js: ${manifest.totalValid}/${manifest.totalRequired} verified questions (${manifest.completeChapters}/${manifest.totalChapters} chapters complete; bankComplete=${manifest.bankComplete}).`
+  `Synced src/data/bankManifest.js: ${manifest.totalValid}/${manifest.totalRequired} automatically checked records (${manifest.completeChapters}/${manifest.totalChapters} chapters complete; bankComplete=${manifest.bankComplete}).`
 );

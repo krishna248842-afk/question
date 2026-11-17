@@ -2,8 +2,7 @@
 
 MemoNeet is a private, offline-first Progressive Web App (PWA) and installable Capacitor Android app (`com.memoneet.study`) for NCERT-aligned Class 11 Biology, Class 12 Biology, and original NEET-pattern Biology practice—with no login, no cloud account, and full on-device IndexedDB persistence plus JSON backup export/import.
 
-> **Current Question-Bank Status: IN PROGRESS (`575 / 12,800` verified unique MCQs; `1 / 32` chapters at `400/400 COMPLETE`).**
-> MemoNeet enforces a strict honesty gate: `c11-01` (*The Living World*) is complete with **400/400** validated original MCQs; `c11-02` (*Biological Classification*) is in progress at **25/400**; and the remaining **30** audited NCERT chapters are in progress at **5/400** section-spanning starter MCQs each. Every incomplete chapter is explicitly labelled `In progress` in the UI, `npm run validate:bank` exits non-zero until all 32 chapters reach 400/400, and CI labels the Android artifact `memoneet-in-progress-debug-apk`.
+> **Question bank: IN PROGRESS.** There are 950 automatically checked records out of 12,800 required. The Living World and Biological Classification each contain 400 records; the other 30 chapters contain 5 each. No chapter has documented human review, so none is marked complete. Automated checks cannot establish factual accuracy, originality or conceptual distinctness. Plant Kingdom has additional unpublished drafts that are not included in these counts. See `docs/HUMAN_REVIEW_CHECKLIST.md` and run the validator for current counts.
 
 ## Key Features
 
@@ -11,7 +10,7 @@ MemoNeet is a private, offline-first Progressive Web App (PWA) and installable C
 - **Rich filtering & search:** Filter by study stage, chapter (`c11-01`..`c12-13`), chapter section, question type (`recall`, `concept`, `application`, `statement-analysis`, `case-based`, `data-based`), difficulty (`easy`, `medium`, `hard`), and full-text search.
 - **Focused practice & option shuffling:** Single-best-answer practice with deterministic answer-preserving option shuffling (`src/lib/shuffle.js`), keyboard shortcuts (`A–D` / `1–4`, `←` / `→`, `R` retry), immediate misconception-aware explanations, bookmarks, and a dedicated **Wrong answers** retry queue.
 - **32-chapter Syllabus & Status dashboard:** Transparent per-chapter `X/400` completion bars, expandable NCERT section checklists, per-chapter accuracy, and documented NCERT rationalisation / NMC NEET migration notes (`docs/AUDIT_AND_SYLLABUS.md`).
-- **Private on-device IndexedDB storage + JSON backup:** Stores answered progress, study streak, bookmarks, personal questions (full CRUD, kept strictly excluded from verified 400/chapter counts), and study notes (full CRUD) in IndexedDB (`src/lib/storage.js`), with one-time migration from legacy `localStorage['memoneet-v1']` and JSON export/import (`merge` or `replace`).
+- **Private on-device IndexedDB storage + JSON backup:** Stores answered progress, study streak, bookmarks, personal questions (full CRUD, kept strictly excluded from curriculum chapter counts), and study notes (full CRUD) in IndexedDB (`src/lib/storage.js`), with one-time migration from legacy `localStorage['memoneet-v1']` and JSON export/import (`merge` or `replace`).
 - **True offline support:** Lazy-loaded per-chapter chunks bundled locally inside `dist/` and precached by a SHA-256 content-versioned service worker (`scripts/build-sw.mjs`), plus self-contained offline assets inside the Capacitor Android APK.
 
 ## Scripts & Quality Gates
@@ -20,7 +19,7 @@ MemoNeet is a private, offline-first Progressive Web App (PWA) and installable C
 npm ci                     # Install locked dependencies
 npm run validate:authored  # Validate quality, schema, metadata & deduplication of all authored packs (exits 0)
 npm run validate:bank      # Strict completion gate: exits 1 until ALL 32 chapters reach 400/400 + review sign-off
-node scripts/sync-manifest.mjs # Regenerate src/data/bankManifest.js from verified chapter packs
+node scripts/sync-manifest.mjs # Regenerate src/data/bankManifest.js from automatically checked chapter packs
 npm run dev                # Start local Vite dev server (0.0.0.0)
 npm run build              # Build production bundle + SHA-256 versioned offline service worker (dist/sw.js)
 npx cap sync android       # Copy offline dist/ bundle into Capacitor Android project
@@ -30,7 +29,7 @@ npm test                   # Run automated Vitest suite (bank integrity, shuffli
 ## Building & Installing the Android APK
 
 ### Via GitHub Actions (recommended)
-Every push to `main` or `arena/d2ec1aaf-question` (or manual `workflow_dispatch`) runs `.github/workflows/android-apk.yml`, which executes `npm ci`, `npm run validate:authored`, `npm run build`, `npx cap sync android`, `npm test`, and `./gradlew assembleDebug`, then uploads the APK artifact (`memoneet-in-progress-debug-apk` while any chapter is below 400/400; `memoneet-complete-debug-apk` once `npm run validate:bank` passes across all 32 chapters).
+Every push to `main` or `arena/d2ec1aaf-question` (or manual `workflow_dispatch`) runs `.github/workflows/android-apk.yml`, which executes `npm ci`, `npm run validate:authored`, `npm run build`, `npx cap sync android`, `npm test`, and `./gradlew assembleDebug`, then uploads the APK artifact (`memoneet-in-progress-debug-apk` while any chapter fails a count, review, or other completion gate; `memoneet-complete-debug-apk` once `npm run validate:bank` passes across all 32 chapters).
 
 ### Local Android build (with JDK 21 + Android SDK 36)
 ```bash
@@ -49,7 +48,7 @@ The debug APK is written to `android/app/build/outputs/apk/debug/app-debug.apk`.
 
 ## Content, Copyright & Study Boundaries
 
-- All bundled questions and explanations are original NCERT-aligned and original NEET-pattern educational items authored specifically for MemoNeet.
+- The bundled items are intended as original NCERT-aligned and NEET-pattern educational practice; originality, accuracy, and distinctness still require independent human review.
 - MemoNeet is an independent study tool and is **not affiliated with or endorsed by NCERT, NMC, or NTA**.
 - No item is claimed to be a verified official past-year NEET question (`isVerifiedOfficialPYQ: false`).
 - MemoNeet supports structured biology revision and self-testing; it makes **no guarantee of any NEET score, qualification, rank, or medical admission**. Always study alongside official NCERT Class 11 and Class 12 Biology textbooks.

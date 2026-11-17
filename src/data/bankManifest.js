@@ -5,8 +5,8 @@ export const BANK_MANIFEST = {
   "bankComplete": false,
   "totalValid": 950,
   "totalRequired": 12800,
-  "completeChapters": 2,
-  "inProgressChapters": 30,
+  "completeChapters": 0,
+  "inProgressChapters": 32,
   "totalChapters": 32,
   "stageTotals": {
     "Class 11": 586,
@@ -26,8 +26,8 @@ export const BANK_MANIFEST = {
       "title": "The Living World",
       "validCount": 400,
       "target": 400,
-      "status": "complete",
-      "reviewComplete": true,
+      "status": "in-progress",
+      "reviewComplete": false,
       "stageCounts": {
         "Class 11": 267,
         "Class 12": 0,
@@ -62,8 +62,8 @@ export const BANK_MANIFEST = {
       "title": "Biological Classification",
       "validCount": 400,
       "target": 400,
-      "status": "complete",
-      "reviewComplete": true,
+      "status": "in-progress",
+      "reviewComplete": false,
       "stageCounts": {
         "Class 11": 268,
         "Class 12": 0,
